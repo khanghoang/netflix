@@ -1,0 +1,58 @@
+{
+    "parser": "babel-eslint",
+    "extends": [
+      "airbnb",
+    ],
+    "plugins": [
+      "react",
+      "react-native",
+      "immutable",
+    ],
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "sourceType": "module"
+    },
+    "env": {
+      "browser": true,
+      "jasmine": true,
+      "mocha": true
+    },
+    "rules": {
+      "no-var": 2,
+      "prefer-const": 2,
+      "no-undef": 2,
+      "no-unused-vars": 2,
+      "no-console": 1,
+      "new-cap": 1,
+      "strict": 0,
+      "react/prop-types": 1,
+      "immutable/no-let": 2,
+      "immutable/no-this": 2,
+      "immutable/no-mutation": 2,
+
+      "react/jsx-filename-extension": 0,
+      "import/prefer-default-export": 0,
+      "indent": 0,
+      "react/jsx-indent" : 0,
+      "react/jsx-indent-props" : 0,
+      "react-native/no-color-literals": 1,
+      "no-use-before-define": 0, // disallow use of variables before they are defined,
+      "global-require": 0, // since we need to load images by `require`
+      "react/require-extension": "off",
+      generator-star-spacing: 0,
+    },
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "extensions": [
+            ".js",
+            ".android.js",
+            ".ios.js"
+          ]
+        }
+      }
+    }
+}
