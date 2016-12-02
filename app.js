@@ -13,6 +13,8 @@ import {
   createRouter,
   NavigationProvider,
   StackNavigation,
+  TabNavigation,
+  TabNavigationItem as TabItem,
 } from '@exponent/ex-navigation';
 import MoviesBlock from './src/components/MoviesBlock';
 
@@ -22,6 +24,8 @@ const Router = createRouter(() => ({
 
 const Dashboard = () => (
   <ScrollView style={styles.container}>
+    <MoviesBlock />
+    <MoviesBlock />
     <MoviesBlock />
     <MoviesBlock />
     <MoviesBlock />
@@ -43,7 +47,39 @@ Dashboard.route = {
 
 export default () => (
   <NavigationProvider router={Router}>
-    <StackNavigation initialRoute={Router.getRoute('dashboard')} />
+    <TabNavigation
+      tabBarColor="#2B2C2D"
+      tabBarHeight={50}
+      translucent
+      tabBarStyle={{
+        borderTopWidth: 1,
+        borderTopColor: '#2B2C2D',
+      }}
+      id="main"
+      navigatorUID="main"
+      initialTab="dashboard"
+    >
+      <TabItem
+        id="dashboard"
+        title="Home"
+        renderIcon={() => null}
+      >
+        <StackNavigation
+          id="dashboard"
+          initialRoute={Router.getRoute('dashboard')}
+        />
+      </TabItem>
+      <TabItem
+        id="search"
+        title="Search"
+        renderIcon={() => null}
+      >
+        <StackNavigation
+          id="search"
+          initialRoute={Router.getRoute('dashboard')}
+        />
+      </TabItem>
+    </TabNavigation>
   </NavigationProvider>
 );
 
