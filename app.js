@@ -9,14 +9,42 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
+import {
+  createRouter,
+  NavigationProvider,
+  StackNavigation,
+} from '@exponent/ex-navigation';
 import MoviesBlock from './src/components/MoviesBlock';
 
-export default () => (
+const Router = createRouter(() => ({
+  dashboard: () => Dashboard,
+}));
+
+const Dashboard = () => (
   <ScrollView style={styles.container}>
     <MoviesBlock />
     <MoviesBlock />
     <MoviesBlock />
   </ScrollView>
+);
+
+// eslint-disable-next-line immutable/no-mutation
+Dashboard.route = {
+  navigationBar: {
+    title: 'Nextflix',
+    backgroundColor: '#28292A',
+    borderBottomWidth: 1,
+    borderBottomColor: '#2B2C2D',
+    titleStyle: {
+      color: '#E7E8E9',
+    },
+  },
+};
+
+export default () => (
+  <NavigationProvider router={Router}>
+    <StackNavigation initialRoute={Router.getRoute('dashboard')} />
+  </NavigationProvider>
 );
 
 const styles = StyleSheet.create({
