@@ -4,34 +4,27 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React from 'react';
 import {
   StyleSheet,
-  Text,
-  View,
+  ScrollView,
 } from 'react-native';
-import MovieCell from './src/components/MovieCell';
+import MoviesBlock from './src/components/MoviesBlock';
 
-export default class netflix extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-	<MovieCell />
-	<MovieCell />
-	<MovieCell />
-      </View>
-    );
-  }
-}
+export default () => (
+  <ScrollView style={styles.container}>
+    <MoviesBlock />
+    <MoviesBlock />
+    <MoviesBlock />
+  </ScrollView>
+);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: 'column',
     padding: 7,
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#171819',
   },
   welcome: {
     fontSize: 20,
