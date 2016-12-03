@@ -11,6 +11,7 @@ import {
   Text,
   View,
   StatusBar,
+  Modal,
 } from 'react-native';
 import {
   createRouter,
@@ -22,6 +23,7 @@ import {
 import Icon from 'react-native-vector-icons/Entypo';
 import MoviesBlock from './src/components/MoviesBlock';
 import Search from './src/components/SearchScreen';
+import MoviesDetails from './src/components/DetailsScreen';
 
 const Router = createRouter(() => ({
   dashboard: () => Dashboard,
@@ -30,6 +32,12 @@ const Router = createRouter(() => ({
 
 const Dashboard = () => (
   <View style={{ flex: 1 }}>
+    <Modal
+      animation="slide"
+      visible
+    >
+      <MoviesDetails />
+    </Modal>
     <ScrollView
       contentContainerStyle={styles.contentContainer}
       style={styles.container}
