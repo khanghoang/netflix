@@ -31,6 +31,7 @@
 		4C72803B1DF203E500DE67DD /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4C7280321DF203E500DE67DD /* Octicons.ttf */; };
 		4C72803C1DF203E500DE67DD /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4C7280331DF203E500DE67DD /* SimpleLineIcons.ttf */; };
 		4C72803D1DF203E500DE67DD /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4C7280341DF203E500DE67DD /* Zocial.ttf */; };
+		4CE178851DF342B600EE3787 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE178821DF3427400EE3787 /* libRCTAnimation.a */; };
 		4F149E288388803267D8C24F /* libPods-netflix.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F46AF2A3BA2A7B730BB3ED9E /* libPods-netflix.a */; };
 		59ED2A2805EABF79CF524CC7 /* libPods-netflixTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F5FC1D730015DED111688EC /* libPods-netflixTests.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -149,6 +150,20 @@
 			remoteGlobalIDString = 2D2A28131D9B038B00D4039D;
 			remoteInfo = "React-tvOS";
 		};
+		4CE178811DF3427400EE3787 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4CE1787C1DF3427300EE3787 /* RCTAnimation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTAnimation;
+		};
+		4CE178831DF3427400EE3787 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4CE1787C1DF3427300EE3787 /* RCTAnimation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2D2A28201D9B03D100D4039D;
+			remoteInfo = "RCTAnimation-tvOS";
+		};
 		78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */;
@@ -195,6 +210,7 @@
 		4C7280321DF203E500DE67DD /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		4C7280331DF203E500DE67DD /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		4C7280341DF203E500DE67DD /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
+		4CE1787C1DF3427300EE3787 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		579FDAED66ECA062A094C66B /* Pods-netflixTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-netflixTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-netflixTests/Pods-netflixTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5F5FC1D730015DED111688EC /* libPods-netflixTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-netflixTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
@@ -218,6 +234,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CE178851DF342B600EE3787 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -353,6 +370,15 @@
 			path = "node_modules/react-native-vector-icons/Fonts";
 			sourceTree = "<group>";
 		};
+		4CE1787D1DF3427300EE3787 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4CE178821DF3427400EE3787 /* libRCTAnimation.a */,
+				4CE178841DF3427400EE3787 /* libRCTAnimation-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		59219F8D188673909E3E2EE6 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -385,6 +411,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				4CE1787C1DF3427300EE3787 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
 				00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */,
@@ -506,6 +533,10 @@
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
+				},
+				{
+					ProductGroup = 4CE1787D1DF3427300EE3787 /* Products */;
+					ProjectRef = 4CE1787C1DF3427300EE3787 /* RCTAnimation.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
@@ -656,6 +687,20 @@
 			fileType = archive.ar;
 			path = "libReact-tvOS.a";
 			remoteRef = 4C49BCD81DF2038A00DDF61C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4CE178821DF3427400EE3787 /* libRCTAnimation.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTAnimation.a;
+			remoteRef = 4CE178811DF3427400EE3787 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4CE178841DF3427400EE3787 /* libRCTAnimation-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRCTAnimation-tvOS.a";
+			remoteRef = 4CE178831DF3427400EE3787 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		78C398B91ACF4ADC00677621 /* libRCTLinking.a */ = {
