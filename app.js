@@ -8,6 +8,7 @@ import React from 'react';
 import {
   StyleSheet,
   ScrollView,
+  Text,
 } from 'react-native';
 import {
   createRouter,
@@ -16,6 +17,7 @@ import {
   TabNavigation,
   TabNavigationItem as TabItem,
 } from '@exponent/ex-navigation';
+import Icon from 'react-native-vector-icons/Entypo';
 import MoviesBlock from './src/components/MoviesBlock';
 
 const Router = createRouter(() => ({
@@ -45,6 +47,12 @@ Dashboard.route = {
   },
 };
 
+const DashboardIcon = ({ color }) => (<Icon name="home" size={20} color={color} />);
+const SearchIcon = ({ color }) => (<Icon name="magnifying-glass" size={20} color={color} />);
+const renderTitle = (selected, title) => (
+  <Text style={{ color: selected ? '#CD1729' : '#919293' }}>{title}</Text>
+);
+
 export default () => (
   <NavigationProvider router={Router}>
     <TabNavigation
@@ -62,7 +70,8 @@ export default () => (
       <TabItem
         id="dashboard"
         title="Home"
-        renderIcon={() => null}
+        renderTitle={renderTitle}
+        renderIcon={(selected) => <DashboardIcon color={selected ? '#CD1729' : '#919293'} />}
       >
         <StackNavigation
           id="dashboard"
@@ -72,7 +81,8 @@ export default () => (
       <TabItem
         id="search"
         title="Search"
-        renderIcon={() => null}
+        renderTitle={renderTitle}
+        renderIcon={(selected) => <SearchIcon color={selected ? '#CD1729' : '#919293'} />}
       >
         <StackNavigation
           id="search"
