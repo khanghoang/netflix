@@ -5,8 +5,36 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Entypo';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+const { width, height } = Dimensions.get('window');
+
+const CloseButton = () => (
+  <TouchableOpacity>
+    <Icon name="ios-close-circle-outline" size={40} color="white" />
+  </TouchableOpacity>
+);
+
+const PlayButton = () => (
+  <View
+    style={{
+      height: 80,
+      width: 80,
+      borderRadius: 40,
+      borderWidth: 1,
+      borderColor: '#fff',
+      backgroundColor: 'rgba(0, 0, 0, 0.3)',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}
+  >
+    <TouchableOpacity>
+      <Icon style={{ textAlign: 'center', alignSelf: 'center', paddingLeft: 5 }} name="ios-play" size={50} color="white" />
+    </TouchableOpacity>
+  </View>
+);
 
 const TopFeatureImage = () => (
   <View
@@ -14,14 +42,43 @@ const TopFeatureImage = () => (
       height: 270,
     }}
   >
-    <Image
+    <View
       style={{
-        flex: 1,
+        height: 270,
       }}
-      source={{
-        uri: 'https://image.tmdb.org/t/p/w1066_and_h600_bestv2/qCqGdMqt4YUeNijzuISH8NVLyjM.jpg',
-      }}
-    />
+    >
+      <Image
+        style={{
+          flex: 1,
+        }}
+        source={{
+          uri: 'https://image.tmdb.org/t/p/w1066_and_h600_bestv2/qCqGdMqt4YUeNijzuISH8NVLyjM.jpg',
+        }}
+      />
+      <View
+        style={{
+          position: 'absolute',
+          top: 20,
+          right: 20,
+          alignItems: 'center',
+          backgroundColor: 'transparent',
+        }}
+      >
+        <CloseButton />
+      </View>
+      <View
+        style={{
+          width,
+          height: 270,
+          top: 0,
+          position: 'absolute',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <PlayButton />
+      </View>
+    </View>
   </View>
 );
 
@@ -61,7 +118,7 @@ const AddToPlaylist = () => (
   >
     <TouchableOpacity>
       <View>
-        <Icon style={{ textAlign: 'center' }} name="plus" size={30} color="#E5E6E7" />
+        <Icon style={{ textAlign: 'center' }} name="ios-add-outline" size={30} color="#E5E6E7" />
         <Text
           style={{
             fontSize: 12,
@@ -88,7 +145,7 @@ const Share = () => (
   >
     <TouchableOpacity>
       <View>
-        <Icon style={{ textAlign: 'center' }} name="share" size={25} color="#E5E6E7" />
+        <Icon style={{ textAlign: 'center' }} name="ios-share-outline" size={25} color="#E5E6E7" />
         <Text
           style={{
             fontSize: 12,
