@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  ScrollView,
   View,
   TextInput,
+  Text,
+  ListView,
+  TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
-import MoviesBlock from '../MoviesBlock';
 
 const SearchBarSearchIcon = () => (
   <Icon
@@ -18,7 +19,7 @@ const SearchBarSearchIcon = () => (
       backgroundColor: 'transparent',
     }}
     size={18}
-    color="#6A6B6C"
+    color="#7E7F80"
   />
 );
 
@@ -52,18 +53,51 @@ const Search = () => (
         <SearchBarSearchIcon />
       </TextInput>
     </View>
-    <ScrollView
-      contentContainerStyle={styles.contentContainer}
-      style={styles.container}
-    >
-      <MoviesBlock />
-      <MoviesBlock />
-      <MoviesBlock />
-      <MoviesBlock />
-      <MoviesBlock />
-    </ScrollView>
+    <ListSuggestions />
   </View>
 );
+
+const ListSuggestions = () => {
+  const ds = new ListView.DataSource({
+    rowHasChanged: (r1, r2) => r1 !== r2,
+  });
+  const data = ds.cloneWithRows([
+    'Netflix originals',
+    'TV Shows',
+    'Action & Adventure',
+    'Award-winning Movies',
+    'Children & Family Movies',
+    'Comedies',
+    'Crime Movies',
+    'Documentaries',
+    'Dramas',
+    'Horror Movies',
+  ]);
+
+  return (
+    <ListView
+      style={{
+        flex: 1,
+        backgroundColor: '#171819',
+      }}
+      dataSource={data}
+      renderRow={(rowData) => (
+        <TouchableOpacity>
+          <Text
+            style={{
+              color: '#9A9B9C',
+              textAlign: 'center',
+              padding: 10,
+              fontSize: 16,
+            }}
+          >
+            {rowData}
+          </Text>
+        </TouchableOpacity>
+      )}
+    />
+  );
+};
 
 /* eslint-disable */
 export default class SearchScreen extends Component {
