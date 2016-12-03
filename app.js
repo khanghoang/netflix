@@ -49,6 +49,7 @@ Dashboard.route = {
 
 const DashboardIcon = ({ color }) => (<Icon name="home" size={20} color={color} />);
 const SearchIcon = ({ color }) => (<Icon name="magnifying-glass" size={20} color={color} />);
+const UserIcon = ({ color }) => (<Icon name="user" size={20} color={color} />);
 const renderTitle = (selected, title) => (
   <Text style={{ color: selected ? '#CD1729' : '#919293' }}>{title}</Text>
 );
@@ -79,10 +80,21 @@ export default () => (
         />
       </TabItem>
       <TabItem
+        id="settings"
+        title="User"
+        renderTitle={renderTitle}
+        renderIcon={(selected) => <SearchIcon color={selected ? '#CD1729' : '#919293'} />}
+      >
+        <StackNavigation
+          id="search"
+          initialRoute={Router.getRoute('dashboard')}
+        />
+      </TabItem>
+      <TabItem
         id="search"
         title="Search"
         renderTitle={renderTitle}
-        renderIcon={(selected) => <SearchIcon color={selected ? '#CD1729' : '#919293'} />}
+        renderIcon={(selected) => <UserIcon color={selected ? '#CD1729' : '#919293'} />}
       >
         <StackNavigation
           id="search"
