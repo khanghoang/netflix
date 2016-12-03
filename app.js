@@ -10,7 +10,6 @@ import {
   ScrollView,
   Text,
   View,
-  TextInput,
   StatusBar,
 } from 'react-native';
 import {
