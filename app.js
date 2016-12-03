@@ -83,8 +83,8 @@ export default () => (
         />
       </TabItem>
       <TabItem
-        id="settings"
-        title="User"
+        id="search"
+        title="Search"
         renderTitle={renderTitle}
         renderIcon={(selected) => <SearchIcon color={selected ? '#CD1729' : '#919293'} />}
       >
@@ -94,8 +94,8 @@ export default () => (
         />
       </TabItem>
       <TabItem
-        id="search"
-        title="Search"
+        id="settings"
+        title="User"
         renderTitle={renderTitle}
         renderIcon={(selected) => <UserIcon color={selected ? '#CD1729' : '#919293'} />}
       >
