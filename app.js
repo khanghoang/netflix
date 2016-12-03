@@ -25,7 +25,10 @@ const Router = createRouter(() => ({
 }));
 
 const Dashboard = () => (
-  <ScrollView style={styles.container}>
+  <ScrollView
+    contentContainerStyle={styles.contentContainer}
+    style={styles.container}
+  >
     <MoviesBlock />
     <MoviesBlock />
     <MoviesBlock />
@@ -106,6 +109,9 @@ export default () => (
 );
 
 const styles = StyleSheet.create({
+  contentContainer: {
+    paddingBottom: 70,
+  },
   container: {
     flex: 1,
     flexDirection: 'column',
