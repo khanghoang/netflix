@@ -22,68 +22,12 @@ import {
 } from '@exponent/ex-navigation';
 import Icon from 'react-native-vector-icons/Entypo';
 import MoviesBlock from './src/components/MoviesBlock';
+import Search from './src/components/SearchScreen';
 
 const Router = createRouter(() => ({
   dashboard: () => Dashboard,
   search: () => Search,
 }));
-
-const SearchBarSearchIcon = () => (
-  <Icon
-    name="magnifying-glass"
-    style={{
-      position: 'absolute',
-      left: 6,
-      top: 2,
-      backgroundColor: 'transparent',
-    }}
-    size={18}
-    color="#6A6B6C"
-  />
-);
-
-const Search = () => (
-  <View style={{ flex: 1 }}>
-    <View
-      style={{
-        height: 64,
-        borderBottomWidth: 1,
-        borderBottomColor: '#292A2B',
-        backgroundColor: '#252627',
-      }}
-    >
-      <TextInput
-        style={{
-          marginTop: 30,
-          marginHorizontal: 10,
-          height: 25,
-          backgroundColor: '#313233',
-          borderRadius: 2,
-          paddingLeft: 30,
-          paddingRight: 10,
-          fontSize: 14,
-          color: '#808081',
-        }}
-        returnKeyType="search"
-        value=""
-        placeholder="Search"
-        placeholderTextColor="#808081"
-      >
-        <SearchBarSearchIcon />
-      </TextInput>
-    </View>
-    <ScrollView
-      contentContainerStyle={styles.contentContainer}
-      style={styles.container}
-    >
-      <MoviesBlock />
-      <MoviesBlock />
-      <MoviesBlock />
-      <MoviesBlock />
-      <MoviesBlock />
-    </ScrollView>
-  </View>
-);
 
 const Dashboard = () => (
   <View style={{ flex: 1 }}>
@@ -183,15 +127,5 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     padding: 7,
     backgroundColor: '#171819',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
   },
 });
