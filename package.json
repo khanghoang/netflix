@@ -10,7 +10,10 @@
     "@exponent/ex-navigation": "^2.1.5",
     "react": "15.4.1",
     "react-native": "0.38.0",
-    "react-native-vector-icons": "^3.0.0"
+    "react-native-vector-icons": "^3.0.0",
+    "react-redux": "^4.4.6",
+    "recompose": "^0.20.2",
+    "redux": "^3.6.0"
   },
   "jest": {
     "preset": "react-native"
