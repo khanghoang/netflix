@@ -4,6 +4,7 @@ import {
   Image,
   ScrollView,
   Text,
+  TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 
@@ -58,17 +59,22 @@ const AddToPlaylist = () => (
       alignItems: 'center',
     }}
   >
-    <Icon style={{ textAlign: 'center' }} name="plus" size={30} color="#E5E6E7" />
-    <Text
-      style={{
-        fontSize: 12,
-        color: '#727374',
-      }}
-    >
-      My List
-    </Text>
+    <TouchableOpacity>
+      <View>
+        <Icon style={{ textAlign: 'center' }} name="plus" size={30} color="#E5E6E7" />
+        <Text
+          style={{
+            fontSize: 12,
+            color: '#727374',
+          }}
+        >
+          My List
+        </Text>
+      </View>
+    </TouchableOpacity>
   </View>
 );
+
 const Share = () => (
   <View
     style={{
@@ -80,15 +86,19 @@ const Share = () => (
       color: '#727374',
     }}
   >
-    <Icon style={{ textAlign: 'center' }} name="share" size={25} color="#E5E6E7" />
-    <Text
-      style={{
-        fontSize: 12,
-        color: '#727374',
-      }}
-    >
-      Share
-    </Text>
+    <TouchableOpacity>
+      <View>
+        <Icon style={{ textAlign: 'center' }} name="share" size={25} color="#E5E6E7" />
+        <Text
+          style={{
+            fontSize: 12,
+            color: '#727374',
+          }}
+        >
+          Share
+        </Text>
+      </View>
+    </TouchableOpacity>
   </View>
 );
 
