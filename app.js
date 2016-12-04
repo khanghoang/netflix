@@ -37,7 +37,7 @@ const Dashboard = () => (
   <View style={{ flex: 1 }}>
     <Modal
       animation="slide"
-      visible={false}
+      visible
     >
       <MoviesDetails />
     </Modal>

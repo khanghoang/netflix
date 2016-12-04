@@ -104,7 +104,7 @@ const CastsText = ({ casts }) => (
       color: '#8B8C8D',
     }}
   >
-    Casts: {casts}
+    Casts: {casts} Khang Hoang, Quang
   </Text>
 );
 

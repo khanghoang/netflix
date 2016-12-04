@@ -35,9 +35,9 @@ const Search = () => (
     >
       <TextInput
         style={{
-          marginTop: 30,
+          marginTop: 25,
           marginHorizontal: 10,
-          height: 25,
+          height: 30,
           backgroundColor: '#313233',
           borderRadius: 2,
           paddingLeft: 30,
