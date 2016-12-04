@@ -3120,6 +3120,10 @@ jstransform@^11.0.3:
     object-assign "^2.0.0"
     source-map "^0.4.2"
 
+keymirror@0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/keymirror/-/keymirror-0.1.1.tgz#918889ea13f8d0a42e7c557250eee713adc95c35"
+
 kind-of@^3.0.2:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-3.0.4.tgz#7b8ecf18a4e17f8269d73b501c9f232c96887a74"
@@ -4025,6 +4029,12 @@ react-native-vector-icons:
   dependencies:
     lodash "^4.0.0"
     yargs "^6.3.0"
+
+react-native-video:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/react-native-video/-/react-native-video-0.9.0.tgz#684f8fcc4e8ba6cd73226c70845bee8ee85a8b3b"
+  dependencies:
+    keymirror "0.1.1"
 
 react-native@0.38.0:
   version "0.38.0"
