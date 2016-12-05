@@ -11,8 +11,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const { width, height } = Dimensions.get('window');
 
-const CloseButton = () => (
-  <TouchableOpacity>
+const CloseButton = ({ onPress }) => (
+  <TouchableOpacity
+    onPress={onPress}
+  >
     <Icon name="ios-close-circle-outline" size={40} color="white" />
   </TouchableOpacity>
 );
@@ -191,7 +193,7 @@ const MovieDetails = () => (
 /* eslint-disable */
 export default class DetailsView extends Component {
   render() {
-    return <MovieDetails />
+    return <MovieDetails {...this.props}/>
   }
 };
 /* eslint-enable */
