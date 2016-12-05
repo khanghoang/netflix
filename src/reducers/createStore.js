@@ -6,6 +6,7 @@ import {
   combineReducers,
   createStore,
 } from 'redux';
+import Details from '../containers/Details/state';
 
 const createStoreWithNavigation = createNavigationEnabledStore({
   createStore,
@@ -15,6 +16,7 @@ const createStoreWithNavigation = createNavigationEnabledStore({
 const store = createStoreWithNavigation(
   combineReducers({
     navigation: NavigationReducer,
+    ...Details,
   })
 );
 

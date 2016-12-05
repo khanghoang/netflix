@@ -4,7 +4,21 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
+import { compose } from 'recompose';
+import { connect } from 'react-redux';
 import MovieCell from './MovieCell';
+import {
+  showDetails,
+} from '../../containers/Details/state';
+
+const EnhancedMovieCell = compose(
+  connect(
+    null,
+    ({
+      onPress: showDetails,
+    })
+  )
+)(MovieCell);
 
 export default () => (
   <View
@@ -56,9 +70,9 @@ export default () => (
         justifyContent: 'space-between',
       }}
     >
-      <MovieCell />
-      <MovieCell />
-      <MovieCell />
+      <EnhancedMovieCell />
+      <EnhancedMovieCell />
+      <EnhancedMovieCell />
     </View>
   </View>
 );

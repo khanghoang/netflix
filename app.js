@@ -25,7 +25,7 @@ import { Provider } from 'react-redux';
 import Icon from 'react-native-vector-icons/Entypo';
 import { MoviesBlock } from './src/components/Movie';
 import Search from './src/components/Search';
-import EnhancedMovieDetails from './src/containers/MovieDetails';
+import EnhancedMovieDetails from './src/containers/Details/MovieDetails';
 import store from './src/reducers/createStore';
 import EnhancedPlayer from './src/components/Player';
 

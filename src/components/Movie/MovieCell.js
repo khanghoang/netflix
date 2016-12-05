@@ -4,9 +4,9 @@ import {
   Image,
 } from 'react-native';
 
-export default () => (
+export default ({ onPress }) => (
   <TouchableOpacity
-    onPress={() => {}}
+    onPress={onPress}
   >
     <Image
       style={{

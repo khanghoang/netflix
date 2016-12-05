@@ -9,6 +9,12 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
+import { compose } from 'recompose';
+import { connect } from 'react-redux';
+import {
+  showDetails,
+  hideDetails,
+} from '../../containers/Details/state';
 
 const { width } = Dimensions.get('window');
 
@@ -20,7 +26,16 @@ const CloseButton = ({ onPress }) => (
   </TouchableOpacity>
 );
 
-const PlayButton = () => (
+const EnhancedCloseButton = compose(
+  connect(
+    null,
+    ({
+      onPress: hideDetails,
+    })
+  )
+)(CloseButton);
+
+const PlayButton = ({ showDetails }) => (
   <View
     style={{
       height: 80,
@@ -33,7 +48,7 @@ const PlayButton = () => (
       justifyContent: 'center',
     }}
   >
-    <TouchableOpacity>
+    <TouchableOpacity onPress={showDetails} >
       <Icon
         style={{
           textAlign: 'center',
@@ -48,36 +63,24 @@ const PlayButton = () => (
   </View>
 );
 
+const EnhancedPlayButton = compose(
+  connect(
+    null,
+    ({
+      showDetails,
+    })
+  )
+)(PlayButton);
+
 const TopFeatureImage = () => (
-  <View
-    style={{
-      height: 270,
-    }}
-  >
-    <View
-      style={{
-        height: 270,
-      }}
-    >
+  <View style={{ height: 270 }}>
+    <View style={{ height: 270 }} >
       <Image
-        style={{
-          flex: 1,
-        }}
+        style={{ flex: 1 }}
         source={{
           uri: 'https://image.tmdb.org/t/p/w1066_and_h600_bestv2/qCqGdMqt4YUeNijzuISH8NVLyjM.jpg',
         }}
       />
-      <View
-        style={{
-          position: 'absolute',
-          top: 20,
-          right: 20,
-          alignItems: 'center',
-          backgroundColor: 'transparent',
-        }}
-      >
-        <CloseButton />
-      </View>
       <View
         style={{
           width,
@@ -88,7 +91,18 @@ const TopFeatureImage = () => (
           justifyContent: 'center',
         }}
       >
-        <PlayButton />
+        <EnhancedPlayButton />
+      </View>
+      <View
+        style={{
+          position: 'absolute',
+          top: 20,
+          right: 20,
+          alignItems: 'center',
+          backgroundColor: 'transparent',
+        }}
+      >
+        <EnhancedCloseButton />
       </View>
       <LinearGradient
         style={{ position: 'absolute', height: 100, left: 0, right: 0, bottom: 0 }}
