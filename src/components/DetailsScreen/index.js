@@ -8,8 +8,9 @@ import {
   Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import LinearGradient from 'react-native-linear-gradient';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const CloseButton = ({ onPress }) => (
   <TouchableOpacity
@@ -33,7 +34,16 @@ const PlayButton = () => (
     }}
   >
     <TouchableOpacity>
-      <Icon style={{ textAlign: 'center', alignSelf: 'center', paddingLeft: 5 }} name="ios-play" size={50} color="white" />
+      <Icon
+        style={{
+          textAlign: 'center',
+          alignSelf: 'center',
+          paddingLeft: 5,
+        }}
+        name="ios-play"
+        size={50}
+        color="white"
+      />
     </TouchableOpacity>
   </View>
 );
@@ -80,6 +90,10 @@ const TopFeatureImage = () => (
       >
         <PlayButton />
       </View>
+      <LinearGradient
+        style={{ position: 'absolute', height: 100, left: 0, right: 0, bottom: 0 }}
+        colors={['transparent', '#161718']}
+      />
     </View>
   </View>
 );

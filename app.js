@@ -45,7 +45,6 @@ const ModalMovieDetails = ({ isVisible }) => (
     visible={isVisible}
   >
     <MoviesDetails />
-    <EnhancedPlayer />
   </Modal>
 );
 
