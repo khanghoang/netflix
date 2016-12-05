@@ -23,10 +23,9 @@ import {
 } from '@exponent/ex-navigation';
 import { Provider } from 'react-redux';
 import Icon from 'react-native-vector-icons/Entypo';
-import { compose, withState } from 'recompose';
 import { MoviesBlock } from './src/components/Movie';
-import Search from './src/components/SearchScreen';
-import MoviesDetails from './src/components/DetailsScreen';
+import Search from './src/components/Search';
+import EnhancedMovieDetails from './src/containers/MovieDetails';
 import store from './src/reducers/createStore';
 import EnhancedPlayer from './src/components/Player';
 
@@ -34,19 +33,6 @@ const Router = createRouter(() => ({
   dashboard: () => Dashboard,
   search: () => Search,
 }));
-
-const ModalMovieDetails = ({ isVisible }) => (
-  <Modal
-    animation="fade"
-    visible={isVisible}
-  >
-    <MoviesDetails />
-  </Modal>
-);
-
-const EnhancedMovieDetails = compose(
-  withState('isVisible', 'setVisible', true),
-)(ModalMovieDetails);
 
 const Dashboard = () => (
   <View style={{ flex: 1 }}>
