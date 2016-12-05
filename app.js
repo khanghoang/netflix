@@ -13,6 +13,7 @@ import {
   StatusBar,
   Modal,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import {
   createRouter,
@@ -25,25 +26,26 @@ import {
 import { Provider } from 'react-redux';
 import Icon from 'react-native-vector-icons/Entypo';
 import Video from 'react-native-video';
-import Orientation from 'react-native-orientation';
-import { compose, lifecycle, withState } from 'recompose';
+import { compose, withState } from 'recompose';
 import MoviesBlock from './src/components/MoviesBlock';
 import Search from './src/components/SearchScreen';
 import MoviesDetails from './src/components/DetailsScreen';
 import store from './src/reducers/createStore';
+
+const { width, height } = Dimensions.get('window');
 
 const Router = createRouter(() => ({
   dashboard: () => Dashboard,
   search: () => Search,
 }));
 
-const ModalMovieDetails = ({ isVisible, setVisible }) => (
+const ModalMovieDetails = ({ isVisible }) => (
   <Modal
     animation="fade"
     visible={isVisible}
   >
-    <EnhancedPlayer />
     <MoviesDetails />
+    <EnhancedPlayer />
   </Modal>
 );
 
@@ -72,51 +74,61 @@ const Player = ({ isVisible, setVisible }) => (
   <Modal
     animation="fade"
     visible={isVisible}
-    supportedOrientations={["landscape"]}
   >
-    <Video source={{uri: "https://r5---sn-8pxuuxa-nboek.googlevideo.com/videoplayback?requiressl=yes&id=df36087b6715b21b&itag=18&source=webdrive&ttl=transient&app=explorer&ip=116.102.230.186&ipbits=8&expire=1480858989&sparams=requiressl%2Cid%2Citag%2Csource%2Cttl%2Cip%2Cipbits%2Cexpire&signature=D2C1AD7E9B7CD79698D63BD5CA35088792FFFD0.2F0AFF9B04F9BE287CBE597D351EED247575044C&key=ck2&mm=31&mn=sn-8pxuuxa-nboek&ms=au&mt=1480844299&mv=m&pl=20?title=SD/360p"}}   // Can be a URL or a local file.
-      rate={1.0}                     // 0 is paused, 1 is normal.
-      volume={1.0}                   // 0 is muted, 1 is normal.
-      muted={false}                  // Mutes the audio entirely.
-      paused={false}                 // Pauses playback entirely.
-      resizeMode="cover"             // Fill the whole screen at aspect ratio.
-      repeat={true}                  // Repeat forever.
-      playInBackground={false}       // Audio continues to play when app entering background.
-      playWhenInactive={false}       // [iOS] Video continues to play when control or notification center are shown.
-      progressUpdateInterval={250.0} // [iOS] Interval to fire onProgress (default to ~250ms)
-      onEnd={() => { setVisible(false); }}
+    <View
       style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0,
+        left: -(height - width) / 2,
+        top: (height - width) / 2,
+        height: width,
+        width: height,
+        transform: [{
+          rotate: '90deg',
+        }],
       }}
-    />
-    <TouchableOpacity
-      onPress={() => { setVisible(false); }}
-      style={{
-        height: 50,
-        width: 50,
-        position: 'absolute',
-        backgroundColor: 'green',
-        top: 0,
-        left: 0,
-      }}
-    />
+    >
+      <StatusBar
+        barStyle="light-content"
+        hidden
+      />
+      <Video
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+        }}
+        source={{
+          uri: "https://redirector.googlevideo.com/videoplayback?requiressl=yes&id=df36087b6715b21b&itag=22&source=webdrive&ttl=transient&app=explorer&ip=113.161.94.162&ipbits=8&expire=1480924474&sparams=requiressl%2Cid%2Citag%2Csource%2Cttl%2Cip%2Cipbits%2Cexpire&signature=8670613E3F9B54D339AC15ECB31912CBACB3DCBC.303FFB67F9B46DA284CE6AF4FB727B192453A328&key=ck2&mm=31&mn=sn-8qj-nboez&ms=au&mt=1480909902&mv=m&pl=26?title=HD/720p"
+        }}
+        rate={1.0}
+        volume={1.0}
+        muted={false}
+        paused={false}
+        resizeMode="cover"
+        repeat={false}
+        playInBackground={false}
+        playWhenInactive={false}
+        progressUpdateInterval={250.0}
+        onEnd={() => { setVisible(false); }}
+      />
+      <TouchableOpacity
+        onPress={() => { setVisible(false); }}
+        style={{
+          height: 50,
+          width: 50,
+          position: 'absolute',
+          backgroundColor: 'green',
+          top: 0,
+          right: 0,
+        }}
+      />
+    </View>
   </Modal>
 );
 
 const EnhancedPlayer = compose(
   withState('isVisible', 'setVisible', true),
-  lifecycle({
-    componentDidMount: () => {
-      Orientation.lockToLandscape();
-    },
-    componentWillUnmount: () => {
-      Orientation.lockToPortrait();
-    },
-  })
 )(Player);
 
 // eslint-disable-next-line immutable/no-mutation
