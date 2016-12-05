@@ -24,7 +24,7 @@ import {
 import { Provider } from 'react-redux';
 import Icon from 'react-native-vector-icons/Entypo';
 import { compose, withState } from 'recompose';
-import MoviesBlock from './src/components/MoviesBlock';
+import { MoviesBlock } from './src/components/Movie';
 import Search from './src/components/SearchScreen';
 import MoviesDetails from './src/components/DetailsScreen';
 import store from './src/reducers/createStore';
