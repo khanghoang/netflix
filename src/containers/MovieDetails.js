@@ -7,6 +7,7 @@ import MoviesDetails from '../components/Details';
 
 const ModalMovieDetails = ({ isVisible }) => (
   <Modal
+    onRequestClose={() => {}}
     animation="fade"
     visible={isVisible}
   >

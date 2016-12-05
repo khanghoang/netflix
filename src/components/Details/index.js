@@ -155,8 +155,6 @@ const Share = () => (
       width: 50,
       alignItems: 'center',
       paddingTop: 5,
-      fontSize: 13,
-      color: '#727374',
     }}
   >
     <TouchableOpacity>
