@@ -1,19 +1,21 @@
 import React from 'react';
-import {
-  Modal,
-} from 'react-native';
+import Modal from 'react-native-modalbox';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import MoviesDetails from '../../components/Details';
 import {
   isShowPopupDetail,
+  hideDetails,
 } from './state';
 
-const ModalMovieDetails = ({ isVisible }) => (
+const ModalMovieDetails = ({
+  isVisible,
+  hideDetails,
+}) => (
   <Modal
-    onRequestClose={() => {}}
-    animation="slide"
-    visible={isVisible}
+    isOpen={isVisible}
+    onClosed={hideDetails}
+    swipeToClose={false}
   >
     <MoviesDetails />
   </Modal>
@@ -23,6 +25,9 @@ export default compose(
   connect(
     (state) => ({
       isVisible: isShowPopupDetail(state),
+    }),
+    ({
+      hideDetails,
     })
   )
 )(ModalMovieDetails);

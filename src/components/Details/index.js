@@ -187,7 +187,7 @@ const Share = () => (
   </View>
 );
 
-const Actions = () => (
+const Actions = ({ onLayout }) => (
   <View
     style={{
       flex: 1,
@@ -195,6 +195,7 @@ const Actions = () => (
       paddingHorizontal: 10,
       paddingTop: 20,
     }}
+    onLayout={onLayout}
   >
     <AddToPlaylist />
     <View style={{ padding: 10 }} />
@@ -219,7 +220,7 @@ const MovieDetails = () => (
 /* eslint-disable */
 export default class DetailsView extends Component {
   render() {
-    return <MovieDetails {...this.props}/>
+    return <MovieDetails />
   }
 };
 /* eslint-enable */

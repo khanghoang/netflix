@@ -36,7 +36,6 @@ const Router = createRouter(() => ({
 
 const Dashboard = () => (
   <View style={{ flex: 1 }}>
-    <EnhancedMovieDetails />
     <ScrollView
       contentContainerStyle={styles.contentContainer}
       style={styles.container}
@@ -127,6 +126,7 @@ export default () => (
           />
         </TabItem>
       </TabNavigation>
+      <EnhancedMovieDetails />
     </NavigationProvider>
   </Provider>
 );
