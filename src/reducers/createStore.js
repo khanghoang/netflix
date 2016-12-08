@@ -7,7 +7,7 @@ import {
   createStore,
 } from 'redux';
 import Details from '../containers/Details/state';
-import Player from '../containers/Player/state';
+import Player from '../components/Player/state';
 
 const createStoreWithNavigation = createNavigationEnabledStore({
   createStore,
