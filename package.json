@@ -18,7 +18,8 @@
     "react-redux": "^4.4.6",
     "recompose": "^0.20.2",
     "redux": "^3.6.0",
-    "redux-actions": "^1.1.0"
+    "redux-actions": "^1.1.0",
+    "reselect": "^2.5.4"
   },
   "jest": {
     "preset": "react-native"
