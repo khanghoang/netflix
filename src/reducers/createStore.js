@@ -19,7 +19,9 @@ const store = createStoreWithNavigation(
     navigation: NavigationReducer,
     ...Details,
     ...Player,
-  })
+  }),
+  {},
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__({/* options */})
 );
 
 export default store;
