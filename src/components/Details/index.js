@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 import {
   showDetails,
   hideDetails,
-} from '../../containers/Details/state';
+} from '../Details/state';
 import { playMovieWithID } from '../Player/state';
 
 const { width } = Dimensions.get('window');

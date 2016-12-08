@@ -9,7 +9,7 @@ import {
   compose,
 } from 'redux';
 import { reducers as apiReducers, middleware as apiMiddleware } from 'redux-api-call';
-import Details from '../containers/Details/state';
+import Details from '../components/Details/state';
 import Player from '../components/Player/state';
 
 const createStoreWithNavigation = createNavigationEnabledStore({

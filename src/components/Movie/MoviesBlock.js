@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import MovieCell from './MovieCell';
 import {
   showDetails,
-} from '../../containers/Details/state';
+} from '../Details/state';
 
 const EnhancedMovieCell = compose(
   connect(
