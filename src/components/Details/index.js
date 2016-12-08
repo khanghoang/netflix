@@ -15,6 +15,7 @@ import {
   showDetails,
   hideDetails,
 } from '../../containers/Details/state';
+import { playMovieWithID } from '../Player/state';
 
 const { width } = Dimensions.get('window');
 
@@ -35,7 +36,7 @@ const EnhancedCloseButton = compose(
   )
 )(CloseButton);
 
-const PlayButton = ({ showDetails }) => (
+const PlayButton = ({ playMovieWithID: openPlayer }) => (
   <View
     style={{
       height: 80,
@@ -48,7 +49,7 @@ const PlayButton = ({ showDetails }) => (
       justifyContent: 'center',
     }}
   >
-    <TouchableOpacity onPress={showDetails} >
+    <TouchableOpacity onPress={() => openPlayer(1)} >
       <Icon
         style={{
           textAlign: 'center',
@@ -67,7 +68,7 @@ const EnhancedPlayButton = compose(
   connect(
     null,
     ({
-      showDetails,
+      playMovieWithID,
     })
   )
 )(PlayButton);

@@ -127,6 +127,7 @@ export default () => (
         </TabItem>
       </TabNavigation>
       <EnhancedMovieDetails />
+      <EnhancedPlayer />
     </NavigationProvider>
   </Provider>
 );

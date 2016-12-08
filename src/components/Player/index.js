@@ -7,14 +7,19 @@ import {
   Dimensions,
 } from 'react-native';
 import Video from 'react-native-video';
-import { compose, withState } from 'recompose';
+import { compose } from 'recompose';
+import { connect } from 'react-redux';
+import {
+  closePlayer,
+  currentPlayedMovieSelector,
+} from './state';
 
 const { width, height } = Dimensions.get('window');
 
-const Player = ({ isVisible, setVisible }) => (
+const Player = ({ isVisible, closePlayer }) => (
   <Modal
     animation="fade"
-    visible={isVisible}
+    visible={Boolean(isVisible)}
   >
     <View
       style={{
@@ -40,7 +45,7 @@ const Player = ({ isVisible, setVisible }) => (
           right: 0,
         }}
         source={{
-          uri: "https://redirector.googlevideo.com/videoplayback?requiressl=yes&id=df36087b6715b21b&itag=22&source=webdrive&ttl=transient&app=explorer&ip=113.161.94.162&ipbits=8&expire=1480942908&sparams=requiressl%2Cid%2Citag%2Csource%2Cttl%2Cip%2Cipbits%2Cexpire&signature=B8E4E0C6F40E77A5F433EEC038D0DF01F7826F0A.334B5573DA3CD4DBBC8EECF0DE686AEB051A4B51&key=ck2&mm=31&mn=sn-8qj-nboez&ms=au&mt=1480928280&mv=m&pl=26?title=HD/720p"
+          uri: "https://r6---sn-a5mekned.googlevideo.com/videoplayback?requiressl=yes&id=fb79b30acfce7b24&itag=18&source=webdrive&ttl=transient&app=explorer&ip=116.102.230.186&ipbits=32&expire=1481223479&sparams=expire,id,ip,ipbits,itag,mm,mn,ms,mv,nh,pl,requiressl,source,ttl&signature=096F1AFDCE2B00BBF17CF01988DDEF7B2EB1A889.4C340E473CC2EFC3FCD1DD46789145239E49C057&key=cms1&pl=20&safm=0&cm2rm=sn-8pxuuxa-nboll7d,sn-npoer76&req_id=58c14aca444536e2&redirect_counter=2&cms_redirect=yes&mm=34&mn=sn-a5mekned&ms=ltu&mt=1481209020&mv=m&nh=IgpwcjAyLmxheDAyKg43NC4xMjUuMTQ2LjEyNQ"
         }}
         rate={1.0}
         volume={1.0}
@@ -51,10 +56,10 @@ const Player = ({ isVisible, setVisible }) => (
         playInBackground={false}
         playWhenInactive={false}
         progressUpdateInterval={250.0}
-        onEnd={() => { setVisible(false); }}
+        onEnd={closePlayer}
       />
       <TouchableOpacity
-        onPress={() => { setVisible(false); }}
+        onPress={closePlayer}
         style={{
           height: 50,
           width: 50,
@@ -69,7 +74,14 @@ const Player = ({ isVisible, setVisible }) => (
 );
 
 const EnhancedPlayer = compose(
-  withState('isVisible', 'setVisible', true),
+  connect(
+    state => ({
+      isVisible: currentPlayedMovieSelector(state),
+    }),
+    ({
+      closePlayer,
+    })
+  )
 )(Player);
 
 export default class EnhancedPlayerClass extends Component {
