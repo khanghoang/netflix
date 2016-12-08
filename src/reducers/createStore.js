@@ -5,7 +5,10 @@ import {
 import {
   combineReducers,
   createStore,
+  applyMiddleware,
+  compose,
 } from 'redux';
+import { reducers as apiReducers, middleware as apiMiddleware } from 'redux-api-call';
 import Details from '../containers/Details/state';
 import Player from '../components/Player/state';
 
@@ -14,14 +17,23 @@ const createStoreWithNavigation = createNavigationEnabledStore({
   navigationStateKey: 'navigation',
 });
 
+const middlewares = applyMiddleware(
+  apiMiddleware(),
+);
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const store = createStoreWithNavigation(
   combineReducers({
     navigation: NavigationReducer,
+    ...apiReducers,
     ...Details,
     ...Player,
   }),
   {},
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__({/* options */})
+  composeEnhancers(
+    middlewares,
+  ),
 );
 
 if (window.__REDUX_DEVTOOLS_EXTENSION__) {
