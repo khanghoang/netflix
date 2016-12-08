@@ -3,6 +3,7 @@ import {
   View,
   TouchableOpacity,
   Text,
+  ActivityIndicator,
 } from 'react-native';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
@@ -20,7 +21,22 @@ const EnhancedMovieCell = compose(
   )
 )(MovieCell);
 
-export default () => (
+const MovieCells = ({ movies = [] }) => {
+  const movieCells = movies.map(m => <EnhancedMovieCell />)
+  return (
+    <View
+      style={{
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+      }}
+    >
+      {movieCells}
+    </View>
+  );
+};
+
+export default ({ isFetching, movies }) => (
   <View
     style={{
       flex: 1,
@@ -63,16 +79,17 @@ export default () => (
         </TouchableOpacity>
       </View>
     </View>
-    <View
-      style={{
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-      }}
-    >
-      <EnhancedMovieCell />
-      <EnhancedMovieCell />
-      <EnhancedMovieCell />
-    </View>
+    {
+      isFetching ?
+      <ActivityIndicator
+        animating
+        style={{
+          height: 165,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        size="large"
+      /> : <MovieCells movies={movies} />
+    }
   </View>
 );

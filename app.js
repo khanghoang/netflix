@@ -28,26 +28,12 @@ import Search from './src/components/Search';
 import EnhancedMovieDetails from './src/containers/Details/MovieDetails';
 import store from './src/reducers/createStore';
 import EnhancedPlayer from './src/components/Player';
+import Dashboard from './src/components/Home';
 
 const Router = createRouter(() => ({
   dashboard: () => Dashboard,
   search: () => Search,
 }));
-
-const Dashboard = () => (
-  <View style={{ flex: 1 }}>
-    <ScrollView
-      contentContainerStyle={styles.contentContainer}
-      style={styles.container}
-    >
-      <MoviesBlock />
-      <MoviesBlock />
-      <MoviesBlock />
-      <MoviesBlock />
-      <MoviesBlock />
-    </ScrollView>
-  </View>
-);
 
 // eslint-disable-next-line immutable/no-mutation
 Dashboard.route = {
