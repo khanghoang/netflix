@@ -22,7 +22,7 @@ const EnhancedMovieCell = compose(
 )(MovieCell);
 
 const MovieCells = ({ movies = [] }) => {
-  const movieCells = movies.map(m => <EnhancedMovieCell />)
+  const movieCells = movies.map(movie => <EnhancedMovieCell movie={movie} />)
   return (
     <View
       style={{
@@ -36,7 +36,7 @@ const MovieCells = ({ movies = [] }) => {
   );
 };
 
-export default ({ isFetching, movies }) => (
+export default ({ headerText = "Popuplar", isFetching, movies }) => (
   <View
     style={{
       flex: 1,
@@ -63,7 +63,7 @@ export default ({ isFetching, movies }) => (
             flex: 1,
           }}
         >
-          Popuplar on Netflix
+          {headerText}
         </Text>
         <TouchableOpacity>
           <Text

@@ -4,8 +4,9 @@ import {
   View,
   StyleSheet,
 } from 'react-native';
-import { compose, lifecycle } from 'recompose';
+import { compose, lifecycle, withProps } from 'recompose';
 import { connect } from 'react-redux';
+import { flow, take } from 'lodash/fp';
 import { MoviesBlock } from '../Movie';
 import {
   fetchHighlightMovies,
@@ -38,10 +39,14 @@ export default class DashboardClass extends Component {
 };
 
 const HighlightMovieBlock = compose(
+  withProps(props => ({
+    ...props,
+    headerText: 'Highlights',
+  })),
   connect(
     state => ({
       isFetching: isFetchingHighlightMoviesSelector(state),
-      movies: highlightMoviesSelector(state),
+      movies: flow(highlightMoviesSelector, take(4))(state),
     }),
     ({
       fetchHighlightMovies,
@@ -55,10 +60,14 @@ const HighlightMovieBlock = compose(
 )(MoviesBlock);
 
 const HotMovieBlock = compose(
+  withProps(props => ({
+    ...props,
+    headerText: 'Hot movies',
+  })),
   connect(
     state => ({
       isFetching: isFetchingHotMoviesSelector(state),
-      movies: hotMoviesSelector(state),
+      movies: flow(hotMoviesSelector, take(4))(state),
     }),
     ({
       fetchHotMovies,

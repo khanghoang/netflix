@@ -4,17 +4,21 @@ import {
   Image,
 } from 'react-native';
 
-export default ({ onPress }) => (
+export default ({
+  onPress: openDetails,
+  movie: { poster: imageURI, movie_id: movieID },
+}) => (
   <TouchableOpacity
-    onPress={onPress}
+    onPress={() => { openDetails(movieID); }}
   >
     <Image
       style={{
         width: 115,
         height: 165,
+        backgroundColor: 'green',
       }}
       source={{
-        uri: 'https://image.tmdb.org/t/p/w500/e1mjopzAS2KNsvpbpahQ1a6SkSn.jpg',
+        uri: `http://hdvn.tv/${imageURI}`,
       }}
     />
   </TouchableOpacity>
