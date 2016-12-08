@@ -3,6 +3,7 @@
  * https://github.com/facebook/react-native
  * @flow
  */
+import 'es6-symbol/implement';
 import './ReactotronConfig';
 import React from 'react';
 import {
