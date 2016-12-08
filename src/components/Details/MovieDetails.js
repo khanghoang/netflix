@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from 'react-native-modalbox';
-import { noop } from 'lodash';
+import { isEmpty } from 'lodash';
 import { compose, lifecycle } from 'recompose';
 import { connect } from 'react-redux';
 import MoviesDetails from '../../components/Details';
@@ -37,7 +37,8 @@ export default compose(
         isVisible: Boolean(isShowPopupDetail(state)),
         movieID,
         movie: dataSelector(state),
-        isFetching: isFetching(state),
+        // use cache data
+        isFetching: !isEmpty(dataSelector(state)) ? false : isFetching(state),
       };
     },
     ({
