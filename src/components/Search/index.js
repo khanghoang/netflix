@@ -14,8 +14,8 @@ const SearchBarSearchIcon = () => (
     name="magnifying-glass"
     style={{
       position: 'absolute',
-      left: 6,
-      top: 2,
+      left: 18,
+      top: 30,
       backgroundColor: 'transparent',
     }}
     size={18}
@@ -35,7 +35,7 @@ const Search = () => (
     >
       <TextInput
         style={{
-          marginTop: 25,
+          marginTop: 26,
           marginHorizontal: 10,
           height: 30,
           backgroundColor: '#313233',
@@ -49,9 +49,8 @@ const Search = () => (
         value=""
         placeholder="Search"
         placeholderTextColor="#808081"
-      >
-        <SearchBarSearchIcon />
-      </TextInput>
+      />
+      <SearchBarSearchIcon />
     </View>
     <ListSuggestions />
   </View>
