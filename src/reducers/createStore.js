@@ -24,4 +24,13 @@ const store = createStoreWithNavigation(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__({/* options */})
 );
 
+if (window.__REDUX_DEVTOOLS_EXTENSION__) {
+  // const bak = global.XMLHttpRequest;
+  const xhr = global.originalXMLHttpRequest ?
+    global.originalXMLHttpRequest :
+    global.XMLHttpRequest;
+
+  global.XMLHttpRequest = xhr;
+}
+
 export default store;
