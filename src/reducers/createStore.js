@@ -1,3 +1,4 @@
+import 'rxjs';
 import {
   createNavigationEnabledStore,
   NavigationReducer,
@@ -9,7 +10,11 @@ import {
   compose,
 } from 'redux';
 import { reducers as apiReducers, middleware as apiMiddleware } from 'redux-api-call';
-import Details from '../components/Details/state';
+import { combineEpics, createEpicMiddleware } from 'redux-observable';
+import Details, {
+  HOCMakeFetchAction,
+  isShowPopupDetail as selectedMovieID,
+} from '../components/Details/state';
 import Player from '../components/Player/state';
 
 const createStoreWithNavigation = createNavigationEnabledStore({
@@ -17,8 +22,23 @@ const createStoreWithNavigation = createNavigationEnabledStore({
   navigationStateKey: 'navigation',
 });
 
+const openDetailsEpic = (actions$, { getState }) =>
+  actions$.filter(({ type }) => type === 'SHOW_DETAILS')
+    .map(() => {
+      const movieID = selectedMovieID(getState());
+      const { fetchMovieDetails } = HOCMakeFetchAction(movieID);
+      return fetchMovieDetails();
+    });
+
+const rootEpic = combineEpics(
+  openDetailsEpic,
+);
+
+const epicMiddleware = createEpicMiddleware(rootEpic);
+
 const middlewares = applyMiddleware(
   apiMiddleware(),
+  epicMiddleware,
 );
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -4472,6 +4472,10 @@ redux-batched-actions@^0.1.2:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/redux-batched-actions/-/redux-batched-actions-0.1.4.tgz#f9ec8a5dcb255b0e79dac7357323f4cc042bbe87"
 
+redux-observable:
+  version "0.12.2"
+  resolved "https://registry.yarnpkg.com/redux-observable/-/redux-observable-0.12.2.tgz#4bc1657c7eedace577e114b74ffe6f6fb2b36ccf"
+
 redux@^3.5.2, redux@^3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/redux/-/redux-3.6.0.tgz#887c2b3d0b9bd86eca2be70571c27654c19e188d"

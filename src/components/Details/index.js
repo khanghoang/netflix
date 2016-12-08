@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   Dimensions,
+  ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
@@ -73,13 +74,13 @@ const EnhancedPlayButton = compose(
   )
 )(PlayButton);
 
-const TopFeatureImage = () => (
+const TopFeatureImage = ({ source: backgroundImageURI }) => (
   <View style={{ height: 270 }}>
     <View style={{ height: 270 }} >
       <Image
         style={{ flex: 1 }}
         source={{
-          uri: 'https://image.tmdb.org/t/p/w1066_and_h600_bestv2/qCqGdMqt4YUeNijzuISH8NVLyjM.jpg',
+          uri: `http://hdvn.tv/${backgroundImageURI}`,
         }}
       />
       <View
@@ -113,7 +114,7 @@ const TopFeatureImage = () => (
   </View>
 );
 
-const MoviesDescription = () => (
+const MoviesDescription = ({ text = '' }) => (
   <Text
     style={{
       fontSize: 14,
@@ -121,9 +122,7 @@ const MoviesDescription = () => (
       padding: 10,
     }}
   >
-    The gritty drama charts the exploits of Viking Hero Ragnar Lothbork
-    as he extends the Norse reach by challenging an unfit leader who lacks
-    vision
+    {text}
   </Text>
 );
 
@@ -135,7 +134,7 @@ const CastsText = ({ casts }) => (
       color: '#8B8C8D',
     }}
   >
-    Casts: {casts} Khang Hoang, Quang
+    Casts: {casts}
   </Text>
 );
 
@@ -204,16 +203,40 @@ const Actions = ({ onLayout }) => (
   </View>
 );
 
-const MovieDetails = () => (
+const MovieDetails = ({
+  movie: {
+    story,
+    big_img: backgroundImageURI,
+    actor: actorString,
+  } = {},
+  isFetching,
+}) => (
+  isFetching ?
   <ScrollView
     style={{
       flex: 1,
       backgroundColor: '#161718',
     }}
   >
-    <TopFeatureImage />
-    <MoviesDescription />
-    <CastsText />
+    <ActivityIndicator
+      animating
+      style={{
+        height: 165,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+      size="large"
+    />
+  </ScrollView> :
+  <ScrollView
+    style={{
+      flex: 1,
+      backgroundColor: '#161718',
+    }}
+  >
+    <TopFeatureImage source={backgroundImageURI} />
+    <MoviesDescription text={story} />
+    <CastsText cast={actorString} />
     <Actions />
   </ScrollView>
 );
@@ -221,7 +244,7 @@ const MovieDetails = () => (
 /* eslint-disable */
 export default class DetailsView extends Component {
   render() {
-    return <MovieDetails />
+    return <MovieDetails {...this.props}/>
   }
 };
 /* eslint-enable */
