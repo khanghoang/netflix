@@ -15,7 +15,9 @@ import Details, {
   HOCMakeFetchAction,
   isShowPopupDetail as selectedMovieID,
 } from '../components/Details/state';
-import Player from '../components/Player/state';
+import Player, {
+  fetchEspisodeAction,
+} from '../components/Player/state';
 
 const createStoreWithNavigation = createNavigationEnabledStore({
   createStore,
@@ -23,15 +25,27 @@ const createStoreWithNavigation = createNavigationEnabledStore({
 });
 
 const openDetailsEpic = (actions$, { getState }) =>
-  actions$.filter(({ type }) => type === 'SHOW_DETAILS')
+  actions$.ofType('SHOW_DETAILS')
     .map(() => {
       const movieID = selectedMovieID(getState());
       const { fetchMovieDetails } = HOCMakeFetchAction(movieID);
       return fetchMovieDetails();
     });
 
+const playerDetailsEpic = (actions$, { getState }) =>
+  actions$.ofType('PLAY_MOVIE')
+    .map(() => {
+      const state = getState();
+      const movieID = selectedMovieID(state);
+      const { espisodesSelector } = HOCMakeFetchAction(movieID);
+      const { fetchEspisode } = fetchEspisodeAction(movieID);
+      const espisodes = espisodesSelector(state);
+      return fetchEspisode(espisodes[0].episode_id);
+    });
+
 const rootEpic = combineEpics(
   openDetailsEpic,
+  playerDetailsEpic,
 );
 
 const epicMiddleware = createEpicMiddleware(rootEpic);
