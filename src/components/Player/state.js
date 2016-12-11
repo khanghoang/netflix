@@ -12,16 +12,12 @@ export const fetchEspisodeAction = (espisodeID) => {
     `esposide_${espisodeID}`,
     () => {
       return {
-        // endpoint: `http://hdvn.tv/api/phim-x-${espisodeID}.html`,
         headers: {
-          'X-Formatter': 'jsonapi',
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
-        endpoint: `http://hdvn.tv/ajax/loadep/10661`,
+        endpoint: `http://hdvn.tv/ajax/loadep/${espisodeID}`,
         method: 'POST',
-        body: JSON.stringify({
-          epid: '10661',
-        })
+        body: `epid=${espisodeID}`,
       };
     }
   );
