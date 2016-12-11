@@ -27,7 +27,7 @@ const Dashboard = () => (
       <HighlightMovieBlock />
       <HotMovieBlock />
       <SeriesMovieBlock />
-      <MoviesBlock />
+      <RecentMoviesBlock />
       <MoviesBlock />
     </ScrollView>
   </View>
@@ -85,7 +85,7 @@ const {
   actionCreator: fetchRecentSeries,
   isFetchingSelector: isFetchingRecentSeries,
   dataSelector: seriesSelector,
-} = HighOrderHomeFetchMovies({ name: 'SERIES', url: 'http://hdvn.tv/api/list/recently-tv-series.html' })
+} = HighOrderHomeFetchMovies({ name: 'SERIES', url: 'http://hdvn.tv/api/list/recently-tv-series.html' });
 
 const SeriesMovieBlock = compose(
   withProps(props => ({
@@ -104,6 +104,33 @@ const SeriesMovieBlock = compose(
   lifecycle({
     componentDidMount() {
       this.props.fetchRecentSeries();
+    },
+  })
+)(MoviesBlock);
+
+const {
+  actionCreator: fetchRecentMovies,
+  isFetchingSelector: isFetchingRecentMovies,
+  dataSelector: moviesSelector,
+} = HighOrderHomeFetchMovies({ name: 'RECENT_MOVIES', url: 'http://hdvn.tv/api/list/recently-movies.html' });
+
+const RecentMoviesBlock = compose(
+  withProps(props => ({
+    ...props,
+    headerText: 'Recent Movies',
+  })),
+  connect(
+    state => ({
+      isFetching: isFetchingRecentMovies(state),
+      movies: flow(moviesSelector, take(4))(state),
+    }),
+    ({
+      fetchRecentMovies,
+    }),
+  ),
+  lifecycle({
+    componentDidMount() {
+      this.props.fetchRecentMovies();
     },
   })
 )(MoviesBlock);
