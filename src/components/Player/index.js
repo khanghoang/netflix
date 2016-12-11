@@ -16,6 +16,10 @@ import {
   currentPlayedMovieSelector,
   fetchEspisodeAction,
 } from './state';
+import {
+  HeaderComponent,
+  ControllerComponent,
+} from './PlayerController';
 
 const { width, height } = Dimensions.get('window');
 
@@ -82,17 +86,8 @@ const Player = ({
           progressUpdateInterval={250.0}
           onEnd={closePlayer}
         />
-        <TouchableOpacity
-          onPress={closePlayer}
-          style={{
-            height: 50,
-            width: 50,
-            position: 'absolute',
-            backgroundColor: 'green',
-            top: 0,
-            right: 0,
-          }}
-        />
+        <HeaderComponent />
+        <ControllerComponent />
       </View>
       }
   </Modal>
