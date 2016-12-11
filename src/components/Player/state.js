@@ -5,8 +5,8 @@ import { makeFetchAction } from 'redux-api-call';
 
 export const fetchEspisodeAction = (espisodeID) => {
   const {
-    isFetchingSelector,
-    dataSelector,
+    isFetchingSelector: isFetchingEspisode,
+    dataSelector: espisodeSelector,
     actionCreator: fetchEspisode,
   } = makeFetchAction(
     `esposide_${espisodeID}`,
@@ -21,8 +21,8 @@ export const fetchEspisodeAction = (espisodeID) => {
   );
 
   return {
-    isFetchingEspisode: isFetchingSelector,
-    espisodeSelector: dataSelector,
+    isFetchingEspisode,
+    espisodeSelector,
     fetchEspisode,
   };
 };

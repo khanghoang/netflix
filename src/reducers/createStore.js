@@ -17,6 +17,7 @@ import Details, {
 } from '../components/Details/state';
 import Player, {
   fetchEspisodeAction,
+  currentPlayedMovieSelector as currentEpisodeID,
 } from '../components/Player/state';
 
 const createStoreWithNavigation = createNavigationEnabledStore({
@@ -36,12 +37,9 @@ const playerDetailsEpic = (actions$, { getState }) =>
   actions$.ofType('PLAY_MOVIE')
     .map(() => {
       const state = getState();
-      const movieID = selectedMovieID(state);
-      const { espisodesSelector } = HOCMakeFetchAction(movieID);
+      const movieID = currentEpisodeID(state);
       const { fetchEspisode } = fetchEspisodeAction(movieID);
-      const espisodes = espisodesSelector(state);
-      // return fetchEspisode(espisodes[0].episode_id);
-      return fetchEspisode(espisodes[0].episode_id);
+      return fetchEspisode(movieID);
     });
 
 const rootEpic = combineEpics(
