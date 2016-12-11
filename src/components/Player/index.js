@@ -15,6 +15,8 @@ import {
   closePlayer,
   currentPlayedMovieSelector,
   fetchEspisodeAction,
+  updateDuration,
+  updateProgress,
 } from './state';
 import {
   HeaderComponent,
@@ -28,6 +30,8 @@ const Player = ({
   closePlayer,
   isFetching = true,
   contentURL = '',
+  updateDuration,
+  updateProgress,
 }) => (
   <Modal
     animation="fade"
@@ -72,15 +76,15 @@ const Player = ({
             right: 0,
             backgroundColor: '#171819',
           }}
-          source={{
-            uri: contentURL
-          }}
+          source={{ uri: contentURL }}
           rate={1.0}
           volume={1.0}
           muted={false}
           paused={false}
           resizeMode="cover"
           repeat={false}
+          onLoad={e => { updateDuration(e.duration); }}
+          onProgress={e => { updateProgress(e.currentTime); }}
           playInBackground={false}
           playWhenInactive={false}
           progressUpdateInterval={250.0}
@@ -110,6 +114,8 @@ const EnhancedPlayer = compose(
     },
     ({
       closePlayer,
+      updateDuration,
+      updateProgress,
     })
   )
 )(Player);

@@ -9,11 +9,13 @@ import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {
   closePlayer,
+  durationSelector,
+  progressSelector,
 } from './state';
 
 const WHITE_COLOR = '#E6E7E8';
 
-const Header = ({}) => (
+const Header = () => (
   <View
     style={{
       height: 40,
@@ -79,10 +81,18 @@ const Seeker = ({ progress, width = 0, setWidth }) => (
 );
 
 const EnhancedSeeker = compose(
-  mapProps(() => ({
-    progress: 0.5,
-  })),
   withState('width', 'setWidth', 0),
+  connect(
+    state => {
+      const duration = durationSelector(state);
+      const progress = progressSelector(state);
+      const percent = progress / duration;
+      return {
+        progress: percent,
+      };
+    },
+    null
+  ),
 )(Seeker);
 
 const Timer = ({ text }) => (
@@ -100,6 +110,27 @@ const Timer = ({ text }) => (
   </Text>
 );
 
+const ConnectedTimer = compose(
+  connect(
+    state => {
+      const duration = durationSelector(state);
+      const progress = progressSelector(state);
+      const timeLeft = duration - progress;
+      const mins = parseInt(timeLeft / 60, 10);
+      const secs = parseInt(timeLeft - mins * 60, 10);
+      if (mins === 0 && secs === 0) {
+        return {
+          text: ``,
+        }
+      }
+      return {
+        text: `${mins}:${secs}`,
+      };
+    },
+    null,
+  )
+)(Timer);
+
 const Controller = () => (
   <View
     style={{
@@ -115,7 +146,7 @@ const Controller = () => (
   >
     <PlayButton />
     <EnhancedSeeker />
-    <Timer />
+    <ConnectedTimer />
   </View>
 );
 

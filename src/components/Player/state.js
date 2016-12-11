@@ -2,6 +2,7 @@ import { createAction, handleActions } from 'redux-actions';
 import { identity, constant } from 'lodash';
 import { getOr } from 'lodash/fp';
 import { makeFetchAction } from 'redux-api-call';
+import { combineReducers } from 'redux';
 
 export const fetchEspisodeAction = (espisodeID) => {
   const {
@@ -37,13 +38,37 @@ export const playMovieWithID = (epid) => ({
 });
 export const closePlayer = createAction(CLOSE_PLAY_MOVIE, identity);
 
-const reducer = handleActions({
+const currentEpisodeReducer = handleActions({
   [PLAY_MOVIE]: (state, { payload }) => payload,
   [CLOSE_PLAY_MOVIE]: constant(null),
 }, null);
 
-export const currentPlayedMovieSelector = getOr(null, 'player');
+const UPDATE_DURATION = 'UPDATE_DURATION';
+
+const duration = handleActions({
+  [UPDATE_DURATION]: (state, { payload }) => payload,
+  [CLOSE_PLAY_MOVIE]: constant(0),
+}, 0);
+
+export const updateDuration = createAction(UPDATE_DURATION, identity);
+
+const UPDATE_PROGRESS = 'UPDATE_PROGRESS';
+
+const progress = handleActions({
+  [UPDATE_PROGRESS]: (state, { payload }) => payload,
+  [CLOSE_PLAY_MOVIE]: constant(0),
+}, 0);
+
+export const updateProgress = createAction(UPDATE_PROGRESS, identity);
+
+export const currentPlayedMovieSelector = getOr(null, 'player.currentEpisode');
+export const durationSelector = getOr(null, 'player.duration');
+export const progressSelector = getOr(null, 'player.progress');
 
 export default {
-  player: reducer,
+  player: combineReducers({
+    currentEpisode: currentEpisodeReducer,
+    duration,
+    progress,
+  }),
 };

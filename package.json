@@ -15,7 +15,7 @@
     "react-native-linear-gradient": "^1.5.15",
     "react-native-modalbox": "^1.3.8",
     "react-native-vector-icons": "^3.0.0",
-    "react-native-video": "^0.9.0",
+    "react-native-video": "git+https://github.com/drivetribe/react-native-video#feature\/custom-direct-event-type-deprecation",
     "react-redux": "^4.4.6",
     "recompose": "^0.20.2",
     "redux": "^3.6.0",
