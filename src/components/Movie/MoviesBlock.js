@@ -22,7 +22,12 @@ const EnhancedMovieCell = compose(
 )(MovieCell);
 
 const MovieCells = ({ movies = [] }) => {
-  const movieCells = movies.map(movie => <EnhancedMovieCell movie={movie} />)
+  const movieCells = movies.map(movie =>
+    <EnhancedMovieCell
+      key={movie.movie_id}
+      movie={movie}
+    />
+  );
   return (
     <View
       style={{
