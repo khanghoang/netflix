@@ -15,7 +15,6 @@ export default ({
       style={{
         width: 115,
         height: 165,
-        backgroundColor: 'green',
       }}
       source={{
         uri: `http://hdvn.tv/${imageURI}`,

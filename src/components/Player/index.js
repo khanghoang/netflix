@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import {
   closePlayer,
   currentPlayedMovieSelector,
+  fetchEspisodeAction,
 } from './state';
 
 const { width, height } = Dimensions.get('window');
@@ -21,8 +22,8 @@ const { width, height } = Dimensions.get('window');
 const Player = ({
   isVisible,
   closePlayer,
-  isFetching,
-  contentURL,
+  isFetching = true,
+  contentURL = '',
 }) => (
   <Modal
     animation="fade"
@@ -97,10 +98,13 @@ const Player = ({
 const EnhancedPlayer = compose(
   connect(
     state => {
-      const { isFetchingSelector, espisodeSelector } = fetchEspisodeAction(currentPlayedMovieSelector(state))
+      const {
+        isFetchingEspisode,
+        espisodeSelector,
+      } = fetchEspisodeAction(currentPlayedMovieSelector(state));
       return {
-        isVisible: currentPlayedMovieSelector(state),
-        isFetching: isFetchingSelector(state),
+        isVisible: espisodeSelector(state),
+        isFetching: isFetchingEspisode(state),
         contentURL: flow(espisodeSelector, getOr('', 'link.l[0]'))(state),
       };
     },
@@ -110,8 +114,10 @@ const EnhancedPlayer = compose(
   )
 )(Player);
 
+/* eslint-disable */
 export default class EnhancedPlayerClass extends Component {
   render() {
     return <EnhancedPlayer />
   }
 }
+/* eslint-enable */

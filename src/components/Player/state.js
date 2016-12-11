@@ -10,13 +10,20 @@ export const fetchEspisodeAction = (espisodeID) => {
     actionCreator: fetchEspisode,
   } = makeFetchAction(
     `esposide_${espisodeID}`,
-    () => ({
-      endpoint: `esposide_${espisodeID}`,
-      method: 'POST',
-      body: JSON.stringify({
-        epid: espisodeID,
-      }),
-    })
+    () => {
+      return {
+        // endpoint: `http://hdvn.tv/api/phim-x-${espisodeID}.html`,
+        headers: {
+          'X-Formatter': 'jsonapi',
+          'Content-Type': 'application/json',
+        },
+        endpoint: `http://hdvn.tv/ajax/loadep/10661`,
+        method: 'POST',
+        body: JSON.stringify({
+          epid: '10661',
+        })
+      };
+    }
   );
 
   return {
@@ -29,7 +36,11 @@ export const fetchEspisodeAction = (espisodeID) => {
 const PLAY_MOVIE = 'PLAY_MOVIE';
 const CLOSE_PLAY_MOVIE = 'CLOSE_PLAY_MOVIE';
 
-export const playMovieWithID = createAction(PLAY_MOVIE, identity);
+// export const playMovieWithID = createAction(PLAY_MOVIE, identity);
+export const playMovieWithID = (epid) => ({
+  type: PLAY_MOVIE,
+  payload: epid,
+});
 export const closePlayer = createAction(CLOSE_PLAY_MOVIE, identity);
 
 const reducer = handleActions({

@@ -35,11 +35,13 @@ const openDetailsEpic = (actions$, { getState }) =>
 const playerDetailsEpic = (actions$, { getState }) =>
   actions$.ofType('PLAY_MOVIE')
     .map(() => {
+      debugger;
       const state = getState();
       const movieID = selectedMovieID(state);
       const { espisodesSelector } = HOCMakeFetchAction(movieID);
       const { fetchEspisode } = fetchEspisodeAction(movieID);
       const espisodes = espisodesSelector(state);
+      // return fetchEspisode(espisodes[0].episode_id);
       return fetchEspisode(espisodes[0].episode_id);
     });
 

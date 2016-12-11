@@ -10,11 +10,14 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
+import { flow, getOr } from 'lodash/fp';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import {
   showDetails,
   hideDetails,
+  isShowPopupDetail as selectedMovieID,
+  HOCMakeFetchAction,
 } from '../Details/state';
 import { playMovieWithID } from '../Player/state';
 
@@ -37,7 +40,10 @@ const EnhancedCloseButton = compose(
   )
 )(CloseButton);
 
-const PlayButton = ({ playMovieWithID: openPlayer }) => (
+const PlayButton = ({
+  episode,
+  playMovieWithID,
+}) => (
   <View
     style={{
       height: 80,
@@ -50,7 +56,11 @@ const PlayButton = ({ playMovieWithID: openPlayer }) => (
       justifyContent: 'center',
     }}
   >
-    <TouchableOpacity onPress={() => openPlayer(1)} >
+    <TouchableOpacity
+      onPress={() => {
+        playMovieWithID(episode);
+      }}
+    >
       <Icon
         style={{
           textAlign: 'center',
@@ -67,7 +77,13 @@ const PlayButton = ({ playMovieWithID: openPlayer }) => (
 
 const EnhancedPlayButton = compose(
   connect(
-    null,
+    state => {
+      const movieID = selectedMovieID(state);
+      const { espisodesSelector } = HOCMakeFetchAction(movieID);
+      return {
+        episode: flow(espisodesSelector, getOr(null, '[0].episode_id'))(state),
+      };
+    },
     ({
       playMovieWithID,
     })
