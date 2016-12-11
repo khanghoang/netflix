@@ -1,6 +1,6 @@
 import { createAction, handleActions } from 'redux-actions';
 import { identity, constant } from 'lodash';
-import { flow, getOr } from 'lodash/fp';
+import { flow, noop, getOr } from 'lodash/fp';
 import { makeFetchAction } from 'redux-api-call';
 
 const SHOW_DETAILS = 'SHOW_DETAILS';
@@ -36,6 +36,11 @@ const reducer = handleActions({
 }, false);
 
 export const isShowPopupDetail = getOr(false, 'isShowPopupDetail');
+export const selectedMovieDetails = state => {
+  const movieID = isShowPopupDetail(state);
+  const { dataSelector } = HOCMakeFetchAction(movieID);
+  return dataSelector(state);
+};
 
 export default {
   isShowPopupDetail: reducer,

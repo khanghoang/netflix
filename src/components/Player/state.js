@@ -61,14 +61,28 @@ const progress = handleActions({
 
 export const updateProgress = createAction(UPDATE_PROGRESS, identity);
 
+export const PAUSE = 'PAUSE';
+export const PLAY = 'PLAY';
+
+const isPaused = handleActions({
+  [PAUSE]: constant(true),
+  [PLAY]: constant(false),
+  [CLOSE_PLAY_MOVIE]: constant(false),
+}, false);
+
+export const playCurrentMovie = createAction(PLAY, identity);
+export const pauseCurrentMovie = createAction(PAUSE, identity);
+
 export const currentPlayedMovieSelector = getOr(null, 'player.currentEpisode');
 export const durationSelector = getOr(null, 'player.duration');
 export const progressSelector = getOr(null, 'player.progress');
+export const isPausedSelector = getOr(null, 'player.isPaused');
 
 export default {
   player: combineReducers({
     currentEpisode: currentEpisodeReducer,
     duration,
     progress,
+    isPaused,
   }),
 };

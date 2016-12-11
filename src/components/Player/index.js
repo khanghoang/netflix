@@ -17,6 +17,7 @@ import {
   fetchEspisodeAction,
   updateDuration,
   updateProgress,
+  isPausedSelector,
 } from './state';
 import {
   HeaderComponent,
@@ -32,6 +33,7 @@ const Player = ({
   contentURL = '',
   updateDuration,
   updateProgress,
+  isPaused,
 }) => (
   <Modal
     animation="fade"
@@ -80,7 +82,7 @@ const Player = ({
           rate={1.0}
           volume={1.0}
           muted={false}
-          paused={false}
+          paused={isPaused}
           resizeMode="cover"
           repeat={false}
           onLoad={e => { updateDuration(e.duration); }}
@@ -110,6 +112,7 @@ const EnhancedPlayer = compose(
         isVisible: currentPlayedMovieSelector(state),
         isFetching: isFetchingEspisode(state),
         contentURL: url,
+        isPaused: isPausedSelector(state),
       };
     },
     ({

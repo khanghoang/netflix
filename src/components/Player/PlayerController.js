@@ -4,13 +4,19 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import { compose, withState, mapProps } from 'recompose';
+import { compose, withState } from 'recompose';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {
+ selectedMovieDetails,
+} from '../Details/state';
 import {
   closePlayer,
   durationSelector,
   progressSelector,
+  isPausedSelector,
+  playCurrentMovie,
+  pauseCurrentMovie,
 } from './state';
 
 const WHITE_COLOR = '#E6E7E8';
@@ -24,26 +30,40 @@ const Header = () => (
       top: 0,
       right: 0,
       left: 0,
-      flex: 1,
-      flexDirection: 'row',
     }}
   >
     <ConnectedCloseButton />
-    <Text
-      style={{
-        lineHeight: 40,
-        color: WHITE_COLOR,
-        fontSize: 16,
-        backgroundColor: 'transparent',
-      }}
-    >
-      Game of thrones
-  </Text>
   </View>
 );
 
+const Title = ({ movie: { name_vi: title } }) => (
+  <Text
+    style={{
+      lineHeight: 40,
+      color: WHITE_COLOR,
+      fontSize: 16,
+      backgroundColor: 'transparent',
+    }}
+  >
+    {title}
+  </Text>
+);
+
+const ConnectedTitle = compose(
+  connect(
+    state => ({
+      movie: selectedMovieDetails(state),
+    }),
+    null,
+  )
+)(Title);
+
 const CloseButton = ({ closePlayer }) => (
   <TouchableOpacity
+    style={{
+      flex: 1,
+      flexDirection: 'row',
+    }}
     onPress={closePlayer}
   >
     <Icon
@@ -51,6 +71,7 @@ const CloseButton = ({ closePlayer }) => (
         backgroundColor: 'transparent',
         paddingHorizontal: 10, paddingVertical: 5 }} name="ios-arrow-back" size={30} color={WHITE_COLOR}
       />
+    <ConnectedTitle />
   </TouchableOpacity>
 );
 
@@ -63,11 +84,39 @@ const ConnectedCloseButton = compose(
   )
 )(CloseButton);
 
-const PlayButton = () => (
-  <Icon style={{
-    backgroundColor: 'transparent',
-    paddingHorizontal: 20, paddingVertical: 5 }} name="ios-play" size={30} color={WHITE_COLOR} />
+const PlayButton = ({ play }) => (
+  <TouchableOpacity onPress={play}>
+    <Icon style={{
+      backgroundColor: 'transparent',
+      paddingHorizontal: 20, paddingVertical: 5 }} name="ios-play" size={30} color={WHITE_COLOR} />
+  </TouchableOpacity>
 );
+
+const ConnectedPlayButton = compose(
+  connect(
+    null,
+    ({
+      play: playCurrentMovie,
+    })
+  )
+)(PlayButton);
+
+const PauseButton = ({ pause }) => (
+  <TouchableOpacity onPress={pause}>
+    <Icon style={{
+      backgroundColor: 'transparent',
+      paddingHorizontal: 20, paddingVertical: 5 }} name="ios-pause" size={30} color={WHITE_COLOR} />
+  </TouchableOpacity>
+);
+
+const ConnectedPauseButton = compose(
+  connect(
+    null,
+    ({
+      pause: pauseCurrentMovie,
+    })
+  )
+)(PauseButton);
 
 const Seeker = ({ progress, width = 0, setWidth }) => (
   <View
@@ -117,11 +166,12 @@ const ConnectedTimer = compose(
       const progress = progressSelector(state);
       const timeLeft = duration - progress;
       const mins = parseInt(timeLeft / 60, 10);
+      // eslint-disable-next-line no-mixed-operators
       const secs = parseInt(timeLeft - mins * 60, 10);
       if (mins === 0 && secs === 0) {
         return {
-          text: ``,
-        }
+          text: '',
+        };
       }
       return {
         text: `${mins}:${secs}`,
@@ -131,7 +181,7 @@ const ConnectedTimer = compose(
   )
 )(Timer);
 
-const Controller = () => (
+const Controller = ({ isPaused }) => (
   <View
     style={{
       height: 40,
@@ -144,11 +194,20 @@ const Controller = () => (
       flexDirection: 'row',
     }}
   >
-    <PlayButton />
+    { isPaused ? <ConnectedPlayButton /> : <ConnectedPauseButton /> }
     <EnhancedSeeker />
     <ConnectedTimer />
   </View>
 );
+
+const ConnectedController = compose(
+  connect(
+    state => ({
+      isPaused: isPausedSelector(state),
+    }),
+    null,
+  )
+)(Controller);
 
 class HeaderComponent extends Component {
   render() {
@@ -158,7 +217,7 @@ class HeaderComponent extends Component {
 
 class ControllerComponent extends Component {
   render() {
-    return <Controller />
+    return <ConnectedController />
   }
 }
 
