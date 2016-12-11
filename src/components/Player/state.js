@@ -10,16 +10,14 @@ export const fetchEspisodeAction = (espisodeID) => {
     actionCreator: fetchEspisode,
   } = makeFetchAction(
     `esposide_${espisodeID}`,
-    () => {
-      return {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        endpoint: `http://hdvn.tv/ajax/loadep/${espisodeID}`,
-        method: 'POST',
-        body: `epid=${espisodeID}`,
-      };
-    }
+    () => ({
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      endpoint: `http://hdvn.tv/ajax/loadep/${espisodeID}`,
+      method: 'POST',
+      body: `epid=${espisodeID}`,
+    })
   );
 
   return {
