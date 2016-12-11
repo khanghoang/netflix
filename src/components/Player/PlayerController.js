@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  ProgressViewIOS ,
+  TouchableOpacity,
 } from 'react-native';
 import { compose, withState, mapProps } from 'recompose';
+import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {
+  closePlayer,
+} from './state';
 
 const WHITE_COLOR = '#E6E7E8';
 
@@ -22,21 +26,40 @@ const Header = ({}) => (
       flexDirection: 'row',
     }}
   >
-    <CloseButton />
-    <Text style={{
-      lineHeight: 40,
-      color: WHITE_COLOR,
-      fontSize: 16,
-      backgroundColor: 'transparent',
-    }}>Game of thrones</Text>
+    <ConnectedCloseButton />
+    <Text
+      style={{
+        lineHeight: 40,
+        color: WHITE_COLOR,
+        fontSize: 16,
+        backgroundColor: 'transparent',
+      }}
+    >
+      Game of thrones
+  </Text>
   </View>
 );
 
-const CloseButton = () => (
-  <Icon style={{
-    backgroundColor: 'transparent',
-    paddingHorizontal: 10, paddingVertical: 5 }} name="ios-arrow-back" size={30} color={WHITE_COLOR} />
+const CloseButton = ({ closePlayer }) => (
+  <TouchableOpacity
+    onPress={closePlayer}
+  >
+    <Icon
+      style={{
+        backgroundColor: 'transparent',
+        paddingHorizontal: 10, paddingVertical: 5 }} name="ios-arrow-back" size={30} color={WHITE_COLOR}
+      />
+  </TouchableOpacity>
 );
+
+const ConnectedCloseButton = compose(
+  connect(
+    null,
+    ({
+      closePlayer,
+    })
+  )
+)(CloseButton);
 
 const PlayButton = () => (
   <Icon style={{
