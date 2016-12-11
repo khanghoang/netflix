@@ -15,6 +15,7 @@ import {
   fetchHotMovies,
   isFetchingHotMoviesSelector,
   hotMoviesSelector,
+  HighOrderHomeFetchMovies,
 } from './state';
 
 const Dashboard = () => (
@@ -25,7 +26,7 @@ const Dashboard = () => (
     >
       <HighlightMovieBlock />
       <HotMovieBlock />
-      <MoviesBlock />
+      <SeriesMovieBlock />
       <MoviesBlock />
       <MoviesBlock />
     </ScrollView>
@@ -76,6 +77,33 @@ const HotMovieBlock = compose(
   lifecycle({
     componentDidMount() {
       this.props.fetchHotMovies();
+    },
+  })
+)(MoviesBlock);
+
+const {
+  actionCreator: fetchRecentSeries,
+  isFetchingSelector: isFetchingRecentSeries,
+  dataSelector: seriesSelector,
+} = HighOrderHomeFetchMovies({ name: 'SERIES', url: 'http://hdvn.tv/api/list/recently-tv-series.html' })
+
+const SeriesMovieBlock = compose(
+  withProps(props => ({
+    ...props,
+    headerText: 'Series',
+  })),
+  connect(
+    state => ({
+      isFetching: isFetchingRecentSeries(state),
+      movies: flow(seriesSelector, take(4))(state),
+    }),
+    ({
+      fetchRecentSeries,
+    }),
+  ),
+  lifecycle({
+    componentDidMount() {
+      this.props.fetchRecentSeries();
     },
   })
 )(MoviesBlock);

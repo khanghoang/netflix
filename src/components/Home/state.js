@@ -28,6 +28,25 @@ const {
 
 const hotMoviesSelector = flow(rawHotMoviesSelector, get('response'));
 
+const HighOrderHomeFetchMovies = ({ name, url }) => {
+  const {
+    actionCreator,
+    isFetchingSelector,
+    dataSelector: rawDataSelector,
+  } = makeFetchAction(
+    name,
+    () => ({
+      endpoint: url,
+    }),
+  );
+
+  return {
+    actionCreator,
+    isFetchingSelector,
+    dataSelector: flow(rawDataSelector, get('response')),
+  };
+};
+
 export {
   fetchHighlightMovies,
   isFetchingHighlightMoviesSelector,
@@ -36,5 +55,7 @@ export {
   fetchHotMovies,
   isFetchingHotMoviesSelector,
   hotMoviesSelector,
+
+  HighOrderHomeFetchMovies,
 };
 
