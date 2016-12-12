@@ -21,8 +21,9 @@ import {
 
 const { width, height } = Dimensions.get('window');
 
-const CloseButton = ({ onPress }) => (
+const CloseButton = ({ onPress, style = {} }) => (
   <TouchableOpacity
+    style={style}
     onPress={onPress}
   >
     <Icon name="ios-close" size={40} color="white" />
@@ -237,7 +238,11 @@ const Series = () => (
           style={{ flex: 1, flexDirection: 'row' }}
         >
           <ListSeries listSeries={['SEASON 1', 'SEASON 2', 'SEASON 3']} />
-          <EnhancedCloseButton />
+          <EnhancedCloseButton
+            style={{
+              marginRight: 20,
+            }}
+          />
         </View>
       </View>
       <View
