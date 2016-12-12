@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import { compose, withState } from 'recompose';
 import { connect } from 'react-redux';
+import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {
  selectedMovieDetails,
@@ -22,18 +23,25 @@ import {
 const WHITE_COLOR = '#E6E7E8';
 
 const Header = () => (
-  <View
+  <LinearGradient
+    colors={['#161718', 'transparent']}
     style={{
-      height: 40,
       position: 'absolute',
-      backgroundColor: 'rgba(0, 0, 0, 0.7)',
+      height: 60,
       top: 0,
       right: 0,
       left: 0,
     }}
   >
-    <ConnectedCloseButton />
-  </View>
+    <View
+      style={{
+        height: 40,
+        backgroundColor: 'transparent',
+      }}
+    >
+      <ConnectedCloseButton />
+    </View>
+  </LinearGradient>
 );
 
 const Title = ({ movie: { name_vi: title } }) => (
@@ -182,22 +190,23 @@ const ConnectedTimer = compose(
 )(Timer);
 
 const Controller = ({ isPaused }) => (
-  <View
+  <LinearGradient
+    colors={['transparent', '#161718']}
     style={{
-      height: 40,
       position: 'absolute',
-      backgroundColor: 'rgba(0, 0, 0, 0.7)',
+      height: 60,
       bottom: 0,
       right: 0,
       left: 0,
       flex: 1,
       flexDirection: 'row',
+      paddingTop: 20,
     }}
   >
     { isPaused ? <ConnectedPlayButton /> : <ConnectedPauseButton /> }
     <EnhancedSeeker />
     <ConnectedTimer />
-  </View>
+  </LinearGradient>
 );
 
 const ConnectedController = compose(
