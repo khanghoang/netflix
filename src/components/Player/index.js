@@ -18,6 +18,7 @@ import {
   updateDuration,
   updateProgress,
   isPausedSelector,
+  isOpenEpisodesSelector,
 } from './state';
 import {
   HeaderComponent,
@@ -35,6 +36,7 @@ const Player = ({
   updateDuration,
   updateProgress,
   isPaused,
+  isOpenEpisodes,
 }) => (
   <Modal
     animation="fade"
@@ -97,7 +99,7 @@ const Player = ({
         <ControllerComponent />
         <Modal
           animation="fade"
-          visible
+          visible={isOpenEpisodes}
           style={{
             flex: 1,
           }}
@@ -123,6 +125,7 @@ const EnhancedPlayer = compose(
         isFetching: isFetchingEspisode(state),
         contentURL: url,
         isPaused: isPausedSelector(state),
+        isOpenEpisodes: isOpenEpisodesSelector(state),
       };
     },
     ({

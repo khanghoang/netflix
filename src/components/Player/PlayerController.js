@@ -20,6 +20,7 @@ import {
   isPausedSelector,
   playCurrentMovie,
   pauseCurrentMovie,
+  openEpisode,
 } from './state';
 
 const WHITE_COLOR = '#E6E7E8';
@@ -39,6 +40,15 @@ const EpisodeButton = ({ onPress = noop }) => (
     <MaterialIcons name="playlist-play" color="white" size={30} />
   </TouchableOpacity>
 );
+
+const ConnectedEpisodeButton = compose(
+  connect(
+    null,
+    ({
+      onPress: openEpisode,
+    })
+  )
+)(EpisodeButton);
 
 const Header = () => (
   <LinearGradient
@@ -60,7 +70,7 @@ const Header = () => (
       }}
     >
       <ConnectedCloseButton />
-      <EpisodeButton />
+      <ConnectedEpisodeButton />
     </View>
   </LinearGradient>
 );

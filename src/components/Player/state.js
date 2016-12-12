@@ -95,11 +95,24 @@ export {
   fetchDetailsEspisodes,
 };
 
+const OPEN_EPISODES = 'OPEN_EPISODES';
+const CLOSE_EPISODES = 'CLOSE_EPISODES';
+
+const isOpenEpisodes = handleActions({
+  [OPEN_EPISODES]: constant(true),
+  [CLOSE_EPISODES]: constant(false),
+}, false);
+
+export const openEpisode = createAction(OPEN_EPISODES, identity);
+export const closeEpisode = createAction(CLOSE_EPISODES, identity);
+export const isOpenEpisodesSelector = getOr(false, 'player.isOpenEpisodes');
+
 export default {
   player: combineReducers({
     currentEpisode: currentEpisodeReducer,
     duration,
     progress,
     isPaused,
+    isOpenEpisodes,
   }),
 };

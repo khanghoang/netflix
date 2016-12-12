@@ -16,6 +16,7 @@ import {
   isFetchingDetailsEpisodes,
   detailsEpisodesSelector,
   fetchDetailsEspisodes,
+  closeEpisode,
 } from './state';
 
 const { width, height } = Dimensions.get('window');
@@ -31,7 +32,9 @@ const CloseButton = ({ onPress }) => (
 const EnhancedCloseButton = compose(
   connect(
     null,
-    null,
+    ({
+      onPress: closeEpisode,
+    }),
   )
 )(CloseButton);
 
