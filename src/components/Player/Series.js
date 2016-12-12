@@ -1,8 +1,22 @@
 import React, { Component } from 'react';
-import { Image, ScrollView, Dimensions, View, Text, TouchableOpacity } from 'react-native';
+import {
+  ActivityIndicator,
+  Image,
+  ScrollView,
+  Dimensions,
+  View,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { flow, getOr } from 'lodash/fp';
+import {
+  isFetchingDetailsEpisodes,
+  detailsEpisodesSelector,
+  fetchDetailsEspisodes,
+} from './state';
 
 const { width, height } = Dimensions.get('window');
 
@@ -143,23 +157,35 @@ const Episode = ({
         <PlayButton />
       </View>
     </View>
-    <Text style={{ paddingVertical: 8, color: '#808182', }}>{`${episodeNumber}. ${name}`}</Text>
+    <Text style={{ paddingTop: 10, paddingBottom: 6, color: '#808182', }}>{`${episodeNumber}. ${name}`}</Text>
     <Text style={{ color: '#979899', }}>{overview}</Text>
   </View>
 );
 
-const ListEposides = ({}) => {
-  const listEposides = [1, 2, 3].map(e => (
+const ListEpisides = ({ isFetching, episodes = [] }) => {
+  if (isFetching) {
+    return (
+      <ActivityIndicator
+        animating
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#171819',
+        }}
+        size="large"
+        color='white'
+      />
+    );
+  }
+
+  const listEposides = episodes.map(e => (
     <Episode
-      episode={{
-        "episode_number": 1,
-        "name": "Hunter and the Sable Weaver",
-        "overview": "On Prince Jingim's wedding day, Kublai receives disturbing news about the ambitions of his cousin, while Marco navigates a delicate mission.",
-        "id": 1197048,
-        "still_path": "/uEqkAPnCN1cQXxP5TKHcbrZvyEE.jpg",
-      }}
+      key={e.id}
+      episode={e}
     />
   ));
+ 
   return (
     <ScrollView
       style={{ flex: 1 }}
@@ -169,6 +195,18 @@ const ListEposides = ({}) => {
     </ScrollView>
   );
 };
+
+const ConnectedListEpisodes = compose(
+  connect(
+    state => ({
+      isFetching: isFetchingDetailsEpisodes(state),
+      episodes: flow(detailsEpisodesSelector, getOr([], 'episodes'))(state),
+    }),
+    ({
+      fetchDetailsEspisodes,
+    })
+  )
+)(ListEpisides);
 
 const Series = () => (
   <View
@@ -205,7 +243,7 @@ const Series = () => (
           marginTop: 20,
         }}
       >
-        <ListEposides />
+        <ConnectedListEpisodes />
       </View>
     </View>
   </View>

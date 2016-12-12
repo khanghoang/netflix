@@ -78,6 +78,23 @@ export const durationSelector = getOr(null, 'player.duration');
 export const progressSelector = getOr(null, 'player.progress');
 export const isPausedSelector = getOr(null, 'player.isPaused');
 
+const {
+  isFetchingSelector: isFetchingDetailsEpisodes,
+  dataSelector: detailsEpisodesSelector,
+  actionCreator: fetchDetailsEspisodes,
+} = makeFetchAction(
+  'movie_details_episodes',
+  () => ({
+    endpoint: 'https://api.themoviedb.org/3/tv/60699/season/2?api_key=eb32a449fa8baebded9cd3b02bc0fef4',
+  })
+);
+
+export {
+  isFetchingDetailsEpisodes,
+  detailsEpisodesSelector,
+  fetchDetailsEspisodes,
+};
+
 export default {
   player: combineReducers({
     currentEpisode: currentEpisodeReducer,
