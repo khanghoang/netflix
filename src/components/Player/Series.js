@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Dimensions, View, Text, TouchableOpacity } from 'react-native';
+import { Image, ScrollView, Dimensions, View, Text, TouchableOpacity } from 'react-native';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -59,6 +59,117 @@ const ListSeries = ({ listSeries }) => {
   );
 }
 
+const StillImage = ({ width = 500, stillPath }) => (
+  <Image
+    source={{
+      uri: `https://image.tmdb.org/t/p/w${width}${stillPath}`
+    }}
+    resizeMode="cover"
+    style={{
+      flex: 1,
+      height: 140,
+      backgroundColor: 'purple',
+    }}
+  />
+)
+
+const PlayButton = ({
+  episode,
+  playMovieWithID,
+}) => (
+  <TouchableOpacity
+    onPress={() => {
+      playMovieWithID(episode);
+    }}
+  >
+    <View
+      style={{
+        height: 50,
+        width: 50,
+        borderRadius: 25,
+        borderWidth: 1,
+        borderColor: '#fff',
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <Icon
+        style={{
+          textAlign: 'center',
+          alignSelf: 'center',
+          paddingLeft: 0,
+        }}
+        name="ios-play"
+        size={35}
+        color="white"
+      />
+    </View>
+  </TouchableOpacity>
+);
+
+const Episode = ({
+  episode: {
+    episode_number: episodeNumber,
+    overview,
+    still_path: stillPath,
+    name,
+  }
+}) => (
+  <View
+    style={{
+      width: 250,
+      height: 245,
+      marginHorizontal: 5,
+    }}
+  >
+    <View
+      style={{
+        width: 250,
+        height: 140,
+      }}
+    >
+      <StillImage stillPath={stillPath} width={300} />
+      <View
+        style={{
+          width: 250,
+          height: 140,
+          top: 0,
+          position: 'absolute',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <PlayButton />
+      </View>
+    </View>
+    <Text style={{ paddingVertical: 8, color: '#808182', }}>{`${episodeNumber}. ${name}`}</Text>
+    <Text style={{ color: '#979899', }}>{overview}</Text>
+  </View>
+);
+
+const ListEposides = ({}) => {
+  const listEposides = [1, 2, 3].map(e => (
+    <Episode
+      episode={{
+        "episode_number": 1,
+        "name": "Hunter and the Sable Weaver",
+        "overview": "On Prince Jingim's wedding day, Kublai receives disturbing news about the ambitions of his cousin, while Marco navigates a delicate mission.",
+        "id": 1197048,
+        "still_path": "/uEqkAPnCN1cQXxP5TKHcbrZvyEE.jpg",
+      }}
+    />
+  ));
+  return (
+    <ScrollView
+      style={{ flex: 1 }}
+      horizontal
+    >
+      {listEposides}
+    </ScrollView>
+  );
+};
+
 const Series = () => (
   <View
     style={{
@@ -73,10 +184,29 @@ const Series = () => (
     }}
   >
     <View
-      style={{ flex: 1, flexDirection: 'row', }}
+      style={{
+        flex: 1,
+        flexDirection: 'column',
+      }}
     >
-      <ListSeries listSeries={['SEASON 1', 'SEASON 2', 'SEASON 3']} />
-      <EnhancedCloseButton />
+      <View
+        style={{ paddingTop: 20, height: 60 }}
+      >
+        <View
+          style={{ flex: 1, flexDirection: 'row' }}
+        >
+          <ListSeries listSeries={['SEASON 1', 'SEASON 2', 'SEASON 3']} />
+          <EnhancedCloseButton />
+        </View>
+      </View>
+      <View
+        style={{
+          flex: 1,
+          marginTop: 20,
+        }}
+      >
+        <ListEposides />
+      </View>
     </View>
   </View>
 );

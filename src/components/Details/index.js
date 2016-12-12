@@ -44,21 +44,21 @@ const PlayButton = ({
   episode,
   playMovieWithID,
 }) => (
-  <View
-    style={{
-      height: 80,
-      width: 80,
-      borderRadius: 40,
-      borderWidth: 1,
-      borderColor: '#fff',
-      backgroundColor: 'rgba(0, 0, 0, 0.3)',
-      alignItems: 'center',
-      justifyContent: 'center',
+  <TouchableOpacity
+    onPress={() => {
+      playMovieWithID(episode);
     }}
   >
-    <TouchableOpacity
-      onPress={() => {
-        playMovieWithID(episode);
+    <View
+      style={{
+        height: 80,
+        width: 80,
+        borderRadius: 40,
+        borderWidth: 1,
+        borderColor: '#fff',
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
       <Icon
@@ -71,8 +71,8 @@ const PlayButton = ({
         size={50}
         color="white"
       />
-    </TouchableOpacity>
-  </View>
+    </View>
+  </TouchableOpacity>
 );
 
 const EnhancedPlayButton = compose(
