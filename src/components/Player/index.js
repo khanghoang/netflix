@@ -23,6 +23,7 @@ import {
   HeaderComponent,
   ControllerComponent,
 } from './PlayerController';
+import Series from './Series';
 
 const { width, height } = Dimensions.get('window');
 
@@ -94,6 +95,15 @@ const Player = ({
         />
         <HeaderComponent />
         <ControllerComponent />
+        <Modal
+          animation="fade"
+          visible
+          style={{
+            flex: 1,
+          }}
+        >
+          <Series />
+        </Modal>
       </View>
       }
   </Modal>
