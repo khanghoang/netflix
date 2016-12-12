@@ -19,6 +19,8 @@ import Player, {
   fetchEspisodeAction,
   currentPlayedMovieSelector as currentEpisodeID,
   fetchDetailsEspisodes,
+  pauseCurrentMovie,
+  playCurrentMovie,
 } from '../components/Player/state';
 
 const createStoreWithNavigation = createNavigationEnabledStore({
@@ -36,9 +38,7 @@ const openDetailsEpic = (actions$, { getState }) =>
 
 const fetchEpisodesWhenPlayEpic = (actions$, { getState }) =>
   actions$.ofType('PLAY_MOVIE')
-    .map(() => {
-      return fetchDetailsEspisodes();
-    });
+    .map(fetchDetailsEspisodes);
 
 const playerDetailsEpic = (actions$, { getState }) =>
   actions$.ofType('PLAY_MOVIE')
@@ -49,10 +49,20 @@ const playerDetailsEpic = (actions$, { getState }) =>
       return fetchEspisode(movieID);
     });
 
+const pausePlayerWhenOpenEpisode = (actions$) =>
+  actions$.ofType('OPEN_EPISODES')
+    .map(pauseCurrentMovie);
+
+const playPlayerWhenCloseEpisode = (actions$) =>
+  actions$.ofType('CLOSE_EPISODES')
+    .map(playCurrentMovie);
+
 const rootEpic = combineEpics(
   openDetailsEpic,
   playerDetailsEpic,
   fetchEpisodesWhenPlayEpic,
+  pausePlayerWhenOpenEpisode,
+  playPlayerWhenCloseEpisode,
 );
 
 const epicMiddleware = createEpicMiddleware(rootEpic);
