@@ -8,6 +8,8 @@ import { compose, withState } from 'recompose';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { noop } from 'lodash';
 import {
  selectedMovieDetails,
 } from '../Details/state';
@@ -21,6 +23,22 @@ import {
 } from './state';
 
 const WHITE_COLOR = '#E6E7E8';
+
+const EpisodeButton = ({ onPress = noop }) => (
+  <TouchableOpacity
+    onPress={onPress}
+    style={{
+      height: 40,
+      justifyContent: 'center',
+      padding: 10,
+      position: 'absolute',
+      right: 0,
+      top: 5,
+    }}
+  >
+    <MaterialIcons name="playlist-play" color="white" size={30} />
+  </TouchableOpacity>
+);
 
 const Header = () => (
   <LinearGradient
@@ -37,9 +55,12 @@ const Header = () => (
       style={{
         height: 40,
         backgroundColor: 'transparent',
+        flex: 1,
+        flexDirection: 'row',
       }}
     >
       <ConnectedCloseButton />
+      <EpisodeButton />
     </View>
   </LinearGradient>
 );
@@ -68,18 +89,21 @@ const ConnectedTitle = compose(
 
 const CloseButton = ({ closePlayer }) => (
   <TouchableOpacity
-    style={{
-      flex: 1,
-      flexDirection: 'row',
-    }}
     onPress={closePlayer}
   >
-    <Icon
+    <View
       style={{
-        backgroundColor: 'transparent',
-        paddingHorizontal: 10, paddingVertical: 5 }} name="ios-arrow-back" size={30} color={WHITE_COLOR}
-      />
-    <ConnectedTitle />
+        flex: 1,
+        flexDirection: 'row',
+      }}
+    >
+      <Icon
+        style={{
+          backgroundColor: 'transparent',
+          paddingHorizontal: 10, paddingVertical: 5 }} name="ios-arrow-back" size={30} color={WHITE_COLOR}
+        />
+        <ConnectedTitle />
+      </View>
   </TouchableOpacity>
 );
 
@@ -93,7 +117,8 @@ const ConnectedCloseButton = compose(
 )(CloseButton);
 
 const PlayButton = ({ play }) => (
-  <TouchableOpacity onPress={play}>
+  <TouchableOpacity
+    onPress={play}>
     <Icon style={{
       backgroundColor: 'transparent',
       paddingHorizontal: 20, paddingVertical: 5 }} name="ios-play" size={30} color={WHITE_COLOR} />
