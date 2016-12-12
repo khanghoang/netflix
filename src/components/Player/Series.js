@@ -66,7 +66,12 @@ const SeasonCell = ({ title, isSelected }) => (
 );
 
 const ListSeries = ({ listSeries }) => {
-  const seriesCells = listSeries.map(series => <SeasonCell isSelected title={series} />);
+  const seriesCells = listSeries.map(series => (
+    <SeasonCell
+      key={series}
+      isSelected={series.toLowerCase() === 'season 1'}
+      title={series} />
+  ));
   return (
     <ScrollView
       style={{ flex: 1, height: 60, backgroundColor: 'transparent', }}
