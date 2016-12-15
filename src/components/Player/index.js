@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Video from 'react-native-video';
-import { compose } from 'recompose';
+import { compose, withState } from 'recompose';
 import { flow, getOr } from 'lodash/fp';
 import { connect } from 'react-redux';
 import {
@@ -37,6 +37,7 @@ const Player = ({
   updateProgress,
   isPaused,
   isOpenEpisodes,
+  progress,
 }) => (
   <Modal
     animation="fade"
@@ -96,7 +97,7 @@ const Player = ({
           onEnd={closePlayer}
         />
         <HeaderComponent />
-        <ControllerComponent />
+        <ControllerComponent progress={progress}/>
         <Modal
           animation="fade"
           visible={isOpenEpisodes}
@@ -131,9 +132,9 @@ const EnhancedPlayer = compose(
     ({
       closePlayer,
       updateDuration,
-      updateProgress,
-    })
-  )
+    }),
+  ),
+  withState('progress', 'updateProgress', null)
 )(Player);
 
 /* eslint-disable */

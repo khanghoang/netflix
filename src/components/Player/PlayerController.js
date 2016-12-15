@@ -16,7 +16,6 @@ import {
 import {
   closePlayer,
   durationSelector,
-  progressSelector,
   isPausedSelector,
   playCurrentMovie,
   pauseCurrentMovie,
@@ -110,10 +109,15 @@ const CloseButton = ({ closePlayer }) => (
       <Icon
         style={{
           backgroundColor: 'transparent',
-          paddingHorizontal: 10, paddingVertical: 5 }} name="ios-arrow-back" size={30} color={WHITE_COLOR}
-        />
-        <ConnectedTitle />
-      </View>
+          paddingHorizontal: 10,
+          paddingVertical: 5,
+        }}
+        name="ios-arrow-back"
+        size={30}
+        color={WHITE_COLOR}
+      />
+      <ConnectedTitle />
+    </View>
   </TouchableOpacity>
 );
 
@@ -128,10 +132,18 @@ const ConnectedCloseButton = compose(
 
 const PlayButton = ({ play }) => (
   <TouchableOpacity
-    onPress={play}>
-    <Icon style={{
-      backgroundColor: 'transparent',
-      paddingHorizontal: 20, paddingVertical: 5 }} name="ios-play" size={30} color={WHITE_COLOR} />
+    onPress={play}
+  >
+    <Icon
+      style={{
+        backgroundColor: 'transparent',
+        paddingHorizontal: 20,
+        paddingVertical: 5,
+      }}
+      name="ios-play"
+      size={30}
+      color={WHITE_COLOR}
+    />
   </TouchableOpacity>
 );
 
@@ -146,9 +158,16 @@ const ConnectedPlayButton = compose(
 
 const PauseButton = ({ pause }) => (
   <TouchableOpacity onPress={pause}>
-    <Icon style={{
-      backgroundColor: 'transparent',
-      paddingHorizontal: 20, paddingVertical: 5 }} name="ios-pause" size={30} color={WHITE_COLOR} />
+    <Icon
+      style={{
+        backgroundColor: 'transparent',
+        paddingHorizontal: 20,
+        paddingVertical: 5,
+      }}
+      name="ios-pause"
+      size={30}
+      color={WHITE_COLOR}
+    />
   </TouchableOpacity>
 );
 
@@ -168,16 +187,15 @@ const Seeker = ({ progress, width = 0, setWidth }) => (
   >
     <View style={{ backgroundColor:"#262728", height: 1 }} />
     <View style={{ top: 20, left: 0, width: progress * width, backgroundColor:"#DE1321", height: 1, position: 'absolute' }} />
-    <View style={{ borderRadius: 8, top: 13, left: progress * width, width: 16, height: 16, backgroundColor:"#DE1321", position: 'absolute' }} />
+    <View style={{ borderRadius: 8, top: 13, left: progress * width - 8, width: 16, height: 16, backgroundColor:"#DE1321", position: 'absolute' }} />
   </View>
 );
 
 const EnhancedSeeker = compose(
   withState('width', 'setWidth', 0),
   connect(
-    state => {
+    (state, { progress }) => {
       const duration = durationSelector(state);
-      const progress = progressSelector(state);
       const percent = progress / duration;
       return {
         progress: percent,
@@ -204,9 +222,8 @@ const Timer = ({ text }) => (
 
 const ConnectedTimer = compose(
   connect(
-    state => {
+    (state, { progress }) => {
       const duration = durationSelector(state);
-      const progress = progressSelector(state);
       const timeLeft = duration - progress;
       const mins = parseInt(timeLeft / 60, 10);
       // eslint-disable-next-line no-mixed-operators
@@ -224,7 +241,7 @@ const ConnectedTimer = compose(
   )
 )(Timer);
 
-const Controller = ({ isPaused }) => (
+const Controller = ({ isPaused, progress }) => (
   <LinearGradient
     colors={['transparent', '#161718']}
     style={{
@@ -239,9 +256,9 @@ const Controller = ({ isPaused }) => (
     }}
   >
     { isPaused ? <ConnectedPlayButton /> : <ConnectedPauseButton /> }
-    <EnhancedSeeker />
-    <ConnectedTimer />
-  </LinearGradient>
+    <EnhancedSeeker progress={progress} />
+    <ConnectedTimer progress={progress} />
+   </LinearGradient>
 );
 
 const ConnectedController = compose(
@@ -261,7 +278,7 @@ class HeaderComponent extends Component {
 
 class ControllerComponent extends Component {
   render() {
-    return <ConnectedController />
+    return <ConnectedController {...this.props}/>
   }
 }
 
