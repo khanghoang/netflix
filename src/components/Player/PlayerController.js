@@ -194,6 +194,7 @@ class Seeker extends Component {
     this.state = {
       pan: new Animated.ValueXY(),
     };
+    this.lastOffset = 0;
   }
 
   componentWillMount() {
@@ -209,6 +210,7 @@ class Seeker extends Component {
       onPanResponderGrant: (e) => {
         // console.log('grant: ');
         this.props.setIsDragging();
+        console.log('khang, khang: ');
         this.state.pan.setOffset({ x: this.state.pan.x._value, y: this.state.pan.y._value });
         this.state.pan.setValue({ x: 0, y: 0 });
       },
@@ -232,7 +234,7 @@ class Seeker extends Component {
       },
       onPanResponderRelease: () => {
         this.state.pan.flattenOffset();
-        this.props.updateSeekerProgress(0);
+        this.props.updateSeekerProgress(null);
         this.props.setIsNotDragging();
       },
     });
@@ -240,7 +242,7 @@ class Seeker extends Component {
 
   render() {
     const { isDragging, setWidth, progress, width } = this.props;
-    const translateX = isDragging ? this.state.pan.x : progress * width;
+    const translateX = isDragging ? this.state.pan.x  : progress * width;
     return (
       <View
         onLayout={(e) => { setWidth(e.nativeEvent.layout.width); }}
