@@ -22,6 +22,7 @@ import {
   playCurrentMovie,
   pauseCurrentMovie,
   openEpisode,
+  updateSeekerProgress,
 } from './state';
 
 const WHITE_COLOR = '#E6E7E8';
@@ -189,7 +190,6 @@ class Seeker extends Component {
     this.state = {
       pan: new Animated.ValueXY(),
     };
-
   }
 
   componentWillMount() {
@@ -218,12 +218,16 @@ class Seeker extends Component {
           dy = 0; 
         }
 
+        const nextProp = this.props.duration * ((gesture.moveY - 60) / this.props.width);
+        this.props.updateSeekerProgress(nextProp);
+
         return Animated.event([ null, {
           dy,
         }])(e, gesture);
       },
       onPanResponderRelease: () => {
         this.state.pan.flattenOffset();
+        this.props.updateSeekerProgress(null);
       },
     });
   }
@@ -273,10 +277,13 @@ const EnhancedSeeker = compose(
       const duration = durationSelector(state);
       const percent = progress / duration;
       return {
+        duration,
         progress: percent,
       };
     },
-    null
+    ({
+      updateSeekerProgress,
+    })
   ),
 )(Seeker);
 

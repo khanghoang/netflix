@@ -30,6 +30,7 @@ export const fetchEspisodeAction = (espisodeID) => {
 
 const PLAY_MOVIE = 'PLAY_MOVIE';
 const CLOSE_PLAY_MOVIE = 'CLOSE_PLAY_MOVIE';
+const UPDATE_SEEKER_PROGRESS = 'UPDATE_SEEKER_PROGRESS';
 
 // export const playMovieWithID = createAction(PLAY_MOVIE, identity);
 export const playMovieWithID = (epid) => ({
@@ -103,8 +104,15 @@ const isOpenEpisodes = handleActions({
   [CLOSE_EPISODES]: constant(false),
 }, false);
 
+const seekerProgress = handleActions({
+  [UPDATE_SEEKER_PROGRESS]: (state, { payload }) => payload,
+}, null);
+
 export const openEpisode = createAction(OPEN_EPISODES, identity);
 export const closeEpisode = createAction(CLOSE_EPISODES, identity);
+export const updateSeekerProgress = createAction(UPDATE_SEEKER_PROGRESS, identity);
+
+export const seekerProgressSelector = getOr(null, 'player.seekerProgress');
 export const isOpenEpisodesSelector = getOr(false, 'player.isOpenEpisodes');
 
 export default {
@@ -114,5 +122,6 @@ export default {
     progress,
     isPaused,
     isOpenEpisodes,
+    seekerProgress,
   }),
 };
