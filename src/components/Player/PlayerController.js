@@ -208,9 +208,18 @@ class Seeker extends Component {
         this.state.pan.setValue({ x: 0, y: 0 });
       },
       onPanResponderMove: (e, gesture) => {
-        // console.log('move move: ');
+        // console.log('move move: ', e, gesture);
+        const MIN_Y = 60;
+        const MAX_Y = this.props.width + 60;
+
+        let dy = this.state.pan.x;
+
+        if (gesture.moveY <= 60 || gesture.moveY >= MAX_Y) {
+          dy = 0; 
+        }
+
         return Animated.event([ null, {
-          dy: this.state.pan.x,
+          dy,
         }])(e, gesture);
       },
       onPanResponderRelease: () => {
@@ -238,7 +247,7 @@ class Seeker extends Component {
               width: 16,
               height: 16,
               backgroundColor:"#DE1321",
-              position: 'absolute'
+              position: 'absolute',
             },
             {
               transform: [
