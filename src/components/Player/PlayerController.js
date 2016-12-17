@@ -194,22 +194,25 @@ class Seeker extends Component {
 
   componentWillMount() {
     this.panResponder = PanResponder.create({
-      onMoveShouldSetResponderCapture: () => {
-        console.log('captrue: ');
+      onStartShouldSetResponderCapture: () => {
+        // console.log('captrue: ');
         return true;
       },
-      onMoveShouldSetPanResponderCapture: () => {
-        console.log('pan capture: ');
+      onStartShouldSetPanResponderCapture: () => {
+        // console.log('pan capture: ');
         return true;
       },
       onPanResponderGrant: (e) => {
-        console.log('grant: ', grant);
+        // console.log('grant: ');
         this.state.pan.setOffset({ x: this.state.pan.x._value, y: this.state.pan.y._value });
         this.state.pan.setValue({ x: 0, y: 0 });
       },
-      onPanResponderMove: Animated.event([ null, {
-        dy: this.state.pan.x,
-      }]),
+      onPanResponderMove: (e, gesture) => {
+        // console.log('move move: ');
+        return Animated.event([ null, {
+          dy: this.state.pan.x,
+        }])(e, gesture);
+      },
       onPanResponderRelease: () => {
         this.state.pan.flattenOffset();
       },
@@ -234,8 +237,7 @@ class Seeker extends Component {
               // left: progress * width - 8,
               width: 16,
               height: 16,
-              // backgroundColor:"#DE1321",
-              backgroundColor:"green",
+              backgroundColor:"#DE1321",
               position: 'absolute'
             },
             {
