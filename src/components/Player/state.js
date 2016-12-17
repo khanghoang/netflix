@@ -74,9 +74,9 @@ const isPaused = handleActions({
 export const playCurrentMovie = createAction(PLAY, identity);
 export const pauseCurrentMovie = createAction(PAUSE, identity);
 
-export const currentPlayedMovieSelector = getOr(null, 'player.currentEpisode');
-export const durationSelector = getOr(null, 'player.duration');
-export const progressSelector = getOr(null, 'player.progress');
+export const currentPlayedMovieSelector = getOr(0, 'player.currentEpisode');
+export const durationSelector = getOr(0, 'player.duration');
+export const progressSelector = getOr(0, 'player.progress');
 export const isPausedSelector = getOr(null, 'player.isPaused');
 
 const {
@@ -98,6 +98,7 @@ export {
 
 const OPEN_EPISODES = 'OPEN_EPISODES';
 const CLOSE_EPISODES = 'CLOSE_EPISODES';
+const DRAGGING = 'DRAGGING';
 
 const isOpenEpisodes = handleActions({
   [OPEN_EPISODES]: constant(true),
@@ -106,14 +107,22 @@ const isOpenEpisodes = handleActions({
 
 const seekerProgress = handleActions({
   [UPDATE_SEEKER_PROGRESS]: (state, { payload }) => payload,
-}, null);
+}, 0);
+
+const isDragging = handleActions({
+  [DRAGGING]: (state, { payload }) => payload,
+}, false);
 
 export const openEpisode = createAction(OPEN_EPISODES, identity);
 export const closeEpisode = createAction(CLOSE_EPISODES, identity);
 export const updateSeekerProgress = createAction(UPDATE_SEEKER_PROGRESS, identity);
 
-export const seekerProgressSelector = getOr(null, 'player.seekerProgress');
+export const setIsDragging = createAction(DRAGGING, constant(true));
+export const setIsNotDragging = createAction(DRAGGING, constant(false));
+
+export const seekerProgressSelector = getOr(0, 'player.seekerProgress');
 export const isOpenEpisodesSelector = getOr(false, 'player.isOpenEpisodes');
+export const isDraggingSelector = getOr(false, 'player.isDragging');
 
 export default {
   player: combineReducers({
@@ -123,5 +132,6 @@ export default {
     isPaused,
     isOpenEpisodes,
     seekerProgress,
+    isDragging,
   }),
 };

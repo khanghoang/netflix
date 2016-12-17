@@ -23,6 +23,10 @@ import {
   pauseCurrentMovie,
   openEpisode,
   updateSeekerProgress,
+  seekerProgressSelector,
+  setIsDragging,
+  setIsNotDragging,
+  isDraggingSelector,
 } from './state';
 
 const WHITE_COLOR = '#E6E7E8';
@@ -204,6 +208,7 @@ class Seeker extends Component {
       },
       onPanResponderGrant: (e) => {
         // console.log('grant: ');
+        this.props.setIsDragging();
         this.state.pan.setOffset({ x: this.state.pan.x._value, y: this.state.pan.y._value });
         this.state.pan.setValue({ x: 0, y: 0 });
       },
@@ -227,20 +232,29 @@ class Seeker extends Component {
       },
       onPanResponderRelease: () => {
         this.state.pan.flattenOffset();
-        this.props.updateSeekerProgress(null);
+        this.props.updateSeekerProgress(0);
+        this.props.setIsNotDragging();
       },
     });
   }
 
   render() {
-    const { setWidth, progress, width } = this.props;
+    const { isDragging, setWidth, progress, width } = this.props;
+    const translateX = isDragging ? this.state.pan.x : progress * width;
     return (
       <View
         onLayout={(e) => { setWidth(e.nativeEvent.layout.width); }}
         style={{ paddingVertical: 20, flex: 1 }}
       >
         <View style={{ backgroundColor:"#262728", height: 1 }} />
-        <View style={{ top: 20, left: 0, width: progress * width, backgroundColor:"#DE1321", height: 1, position: 'absolute' }} />
+        <View style={{
+          top: 20,
+          left: 0,
+          width: progress * width,
+          backgroundColor:"#DE1321",
+          height: 1,
+          position: 'absolute'
+        }} />
         <Animated.View
           {...this.panResponder.panHandlers}
           style={[
@@ -256,7 +270,7 @@ class Seeker extends Component {
             {
               transform: [
                 {
-                  translateX: this.state.pan.x
+                  translateX,
                 },
                 {
                   translateY: this.state.pan.y
@@ -279,10 +293,13 @@ const EnhancedSeeker = compose(
       return {
         duration,
         progress: percent,
+        isDragging: isDraggingSelector(state),
       };
     },
     ({
       updateSeekerProgress,
+      setIsDragging,
+      setIsNotDragging,
     })
   ),
   mapProps(({ updateSeekerProgress, ...other }) => ({
