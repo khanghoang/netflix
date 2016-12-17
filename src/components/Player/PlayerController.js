@@ -259,16 +259,16 @@ class Seeker extends Component {
 
 const EnhancedSeeker = compose(
   withState('width', 'setWidth', 0),
-  // connect(
-  //   (state, { progress }) => {
-  //     const duration = durationSelector(state);
-  //     const percent = progress / duration;
-  //     return {
-  //       progress: percent,
-  //     };
-  //   },
-  //   null
-  // ),
+  connect(
+    (state, { progress }) => {
+      const duration = durationSelector(state);
+      const percent = progress / duration;
+      return {
+        progress: percent,
+      };
+    },
+    null
+  ),
 )(Seeker);
 
 const Timer = ({ text }) => (
