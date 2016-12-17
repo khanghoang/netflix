@@ -6,12 +6,12 @@ import {
   Animated,
   PanResponder,
 } from 'react-native';
-import { compose, withState } from 'recompose';
+import { compose, withState, mapProps } from 'recompose';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { noop, constant } from 'lodash';
+import { noop, constant, debounce } from 'lodash';
 import {
  selectedMovieDetails,
 } from '../Details/state';
@@ -285,6 +285,10 @@ const EnhancedSeeker = compose(
       updateSeekerProgress,
     })
   ),
+  mapProps(({ updateSeekerProgress, ...other }) => ({
+    ...other,
+    updateSeekerProgress: debounce(updateSeekerProgress, 1000),
+  }))
 )(Seeker);
 
 const Timer = ({ text }) => (
