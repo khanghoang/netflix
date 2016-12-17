@@ -3,13 +3,15 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Animated,
+  PanResponder,
 } from 'react-native';
 import { compose, withState } from 'recompose';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { noop } from 'lodash';
+import { noop, constant } from 'lodash';
 import {
  selectedMovieDetails,
 } from '../Details/state';
@@ -180,29 +182,91 @@ const ConnectedPauseButton = compose(
   )
 )(PauseButton);
 
-const Seeker = ({ progress, width = 0, setWidth }) => (
-  <View
-    onLayout={(e) => { setWidth(e.nativeEvent.layout.width); }}
-    style={{ paddingVertical: 20, flex: 1 }}
-  >
-    <View style={{ backgroundColor:"#262728", height: 1 }} />
-    <View style={{ top: 20, left: 0, width: progress * width, backgroundColor:"#DE1321", height: 1, position: 'absolute' }} />
-    <View style={{ borderRadius: 8, top: 13, left: progress * width - 8, width: 16, height: 16, backgroundColor:"#DE1321", position: 'absolute' }} />
-  </View>
-);
+class Seeker extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      pan: new Animated.ValueXY(),
+    };
+
+  }
+
+  componentWillMount() {
+    this.panResponder = PanResponder.create({
+      onMoveShouldSetResponderCapture: () => {
+        console.log('captrue: ');
+        return true;
+      },
+      onMoveShouldSetPanResponderCapture: () => {
+        console.log('pan capture: ');
+        return true;
+      },
+      onPanResponderGrant: (e) => {
+        console.log('grant: ', grant);
+        this.state.pan.setOffset({ x: this.state.pan.x._value, y: this.state.pan.y._value });
+        this.state.pan.setValue({ x: 0, y: 0 });
+      },
+      onPanResponderMove: Animated.event([ null, {
+        dy: this.state.pan.x,
+      }]),
+      onPanResponderRelease: () => {
+        this.state.pan.flattenOffset();
+      },
+    });
+  }
+
+  render() {
+    const { setWidth, progress, width } = this.props;
+    return (
+      <View
+        onLayout={(e) => { setWidth(e.nativeEvent.layout.width); }}
+        style={{ paddingVertical: 20, flex: 1 }}
+      >
+        <View style={{ backgroundColor:"#262728", height: 1 }} />
+        <View style={{ top: 20, left: 0, width: progress * width, backgroundColor:"#DE1321", height: 1, position: 'absolute' }} />
+        <Animated.View
+          {...this.panResponder.panHandlers}
+          style={[
+            {
+              borderRadius: 8,
+              top: 13,
+              // left: progress * width - 8,
+              width: 16,
+              height: 16,
+              // backgroundColor:"#DE1321",
+              backgroundColor:"green",
+              position: 'absolute'
+            },
+            {
+              transform: [
+                {
+                  translateX: this.state.pan.x
+                },
+                {
+                  translateY: this.state.pan.y
+                },
+              ]
+            },
+          ]}
+        />
+      </View>
+    )
+  }
+}
 
 const EnhancedSeeker = compose(
   withState('width', 'setWidth', 0),
-  connect(
-    (state, { progress }) => {
-      const duration = durationSelector(state);
-      const percent = progress / duration;
-      return {
-        progress: percent,
-      };
-    },
-    null
-  ),
+  // connect(
+  //   (state, { progress }) => {
+  //     const duration = durationSelector(state);
+  //     const percent = progress / duration;
+  //     return {
+  //       progress: percent,
+  //     };
+  //   },
+  //   null
+  // ),
 )(Seeker);
 
 const Timer = ({ text }) => (
