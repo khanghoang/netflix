@@ -20,6 +20,8 @@ import {
   isPausedSelector,
   isOpenEpisodesSelector,
   seekerProgressSelector,
+  isShowControllerSelector,
+  toggleController,
 } from './state';
 import {
   HeaderComponent,
@@ -28,115 +30,6 @@ import {
 import Series from './Series';
 
 const { width, height } = Dimensions.get('window');
-
-const Player = ({
-  isVisible,
-  closePlayer,
-  isFetching = true,
-  contentURL = '',
-  updateDuration,
-  updateProgress,
-  isPaused,
-  isOpenEpisodes,
-  progress,
-}) => (
-  <Modal
-    animation="fade"
-    visible={Boolean(isVisible)}
-  >
-    {
-      isFetching ?
-        <ActivityIndicator
-          animating
-          style={{
-            height: 165,
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: '#171819',
-          }}
-          size="large"
-          color='white'
-        /> :
-      <View
-        style={{
-          left: -(height - width) / 2,
-          top: (height - width) / 2,
-          height: width,
-          width: height,
-          transform: [{
-            rotate: '90deg',
-          }],
-          backgroundColor: '#171819',
-        }}
-      >
-        <StatusBar
-          barStyle="light-content"
-          hidden
-        />
-        <Video
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-            backgroundColor: '#171819',
-          }}
-          source={{ uri: contentURL }}
-          rate={1.0}
-          volume={1.0}
-          muted={false}
-          paused={isPaused}
-          resizeMode="cover"
-          repeat={false}
-          onLoad={e => { updateDuration(e.duration); }}
-          onProgress={e => { updateProgress(e.currentTime); }}
-          playInBackground={false}
-          playWhenInactive={false}
-          progressUpdateInterval={250.0}
-          onEnd={closePlayer}
-        />
-        <HeaderComponent />
-        <ControllerComponent progress={progress}/>
-        <Modal
-          animation="fade"
-          visible={isOpenEpisodes}
-          style={{
-            flex: 1,
-          }}
-        >
-          <Series />
-        </Modal>
-      </View>
-      }
-  </Modal>
-);
-
-const EnhancedPlayer = compose(
-  connect(
-    state => {
-      const currentPlayedMovieID = currentPlayedMovieSelector(state);
-      const {
-        isFetchingEspisode,
-        espisodeSelector,
-      } = fetchEspisodeAction(currentPlayedMovieID);
-      const url = flow(espisodeSelector, getOr(null, 'link.l[0]'))(state);
-      return {
-        isVisible: currentPlayedMovieSelector(state),
-        isFetching: isFetchingEspisode(state),
-        contentURL: url,
-        isPaused: isPausedSelector(state),
-        isOpenEpisodes: isOpenEpisodesSelector(state),
-      };
-    },
-    ({
-      closePlayer,
-      updateDuration,
-    }),
-  ),
-  withState('progress', 'updateProgress', null)
-)(Player);
 
 /* eslint-disable */
 @connect(
@@ -154,11 +47,13 @@ const EnhancedPlayer = compose(
       isPaused: isPausedSelector(state),
       isOpenEpisodes: isOpenEpisodesSelector(state),
       seekerProgress: seekerProgressSelector(state),
+      isShowController: isShowControllerSelector(state),
     };
   },
   ({
     closePlayer,
     updateDuration,
+    toggleController,
   }),
 )
 @withState('progress', 'updateProgress', null)
@@ -180,6 +75,8 @@ export default class EnhancedPlayerClass extends Component {
       isPaused,
       isOpenEpisodes,
       progress,
+      isShowController,
+      toggleController,
     } = this.props;
     return (
       <Modal
@@ -242,8 +139,13 @@ export default class EnhancedPlayerClass extends Component {
               progressUpdateInterval={250.0}
               onEnd={closePlayer}
             />
-            <HeaderComponent />
-            <ControllerComponent progress={progress}/>
+            <HeaderComponent
+              visiable={isShowController}
+            />
+            <ControllerComponent
+              visiable={isShowController}
+              progress={progress}
+            />
             <Modal
               animation="fade"
               visible={isOpenEpisodes}

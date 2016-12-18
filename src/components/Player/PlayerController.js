@@ -60,11 +60,7 @@ const Header = () => (
   <LinearGradient
     colors={['#161718', 'transparent']}
     style={{
-      position: 'absolute',
       height: 60,
-      top: 0,
-      right: 0,
-      left: 0,
     }}
   >
     <View
@@ -244,9 +240,12 @@ class Seeker extends Component {
     const { isDragging, setWidth, progress, width } = this.props;
     const translateX = isDragging ? this.state.pan.x  : progress * width;
     return (
-      <View
+      <Animated.View
         onLayout={(e) => { setWidth(e.nativeEvent.layout.width); }}
-        style={{ paddingVertical: 20, flex: 1 }}
+        style={{
+          paddingVertical: 20,
+          flex: 1
+        }}
       >
         <View style={{ backgroundColor:"#262728", height: 1 }} />
         <View style={{
@@ -281,7 +280,7 @@ class Seeker extends Component {
             },
           ]}
         />
-      </View>
+      </Animated.View>
     )
   }
 }
@@ -350,14 +349,9 @@ const Controller = ({ isPaused, progress }) => (
   <LinearGradient
     colors={['transparent', '#161718']}
     style={{
-      position: 'absolute',
       height: 60,
-      bottom: 0,
-      right: 0,
-      left: 0,
       flex: 1,
       flexDirection: 'row',
-      paddingTop: 20,
     }}
   >
     { isPaused ? <ConnectedPlayButton /> : <ConnectedPauseButton /> }
@@ -376,14 +370,82 @@ const ConnectedController = compose(
 )(Controller);
 
 class HeaderComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      fadeAnimation: new Animated.Value(1),
+    }
+  }
+
+  componentWillReceiveProps({ visiable }) {
+    const { visiable: oldVisiable } = this.props;
+    if (visiable !== oldVisiable) {
+      Animated.timing(       // Uses easing functions
+        this.state.fadeAnimation, // The value to drive
+        {
+          toValue: visiable ? 1 : 0,        // Target
+          duration: 2000,    // Configuration
+        },
+      ).start();             // Don't forget start!
+    }
+  }
+
   render() {
-    return <Header />
+    return (
+      <Animated.View
+        style={{
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          left: 0,
+          opacity: this.state.fadeAnimation,
+        }}
+      >
+        <Header {...this.props}/>
+      </Animated.View>
+    );
   }
 };
 
 class ControllerComponent extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      fadeAnimation: new Animated.Value(1),
+    }
+  }
+
+  componentWillReceiveProps(newProps) {
+    const { visiable: oldVisiable } = this.props;
+    const { visiable } = newProps
+    console.log('visiable', newProps, this.props);
+    if (visiable !== oldVisiable) {
+      Animated.timing(       // Uses easing functions
+        this.state.fadeAnimation, // The value to drive
+        {
+          toValue: visiable ? 1 : 0,        // Target
+          duration: 2000,    // Configuration
+        },
+      ).start();             // Don't forget start!
+    }
+  }
+
   render() {
-    return <ConnectedController {...this.props}/>
+    return (
+      <Animated.View
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          right: 0,
+          left: 0,
+          paddingTop: 20,
+          opacity: this.state.fadeAnimation,
+        }}
+      >
+        <ConnectedController {...this.props}/>
+      </Animated.View>
+    );
   }
 }
 

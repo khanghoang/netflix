@@ -1,5 +1,5 @@
 import { createAction, handleActions } from 'redux-actions';
-import { identity, constant } from 'lodash';
+import { identity, constant, noop } from 'lodash';
 import { getOr } from 'lodash/fp';
 import { makeFetchAction } from 'redux-api-call';
 import { combineReducers } from 'redux';
@@ -113,16 +113,23 @@ const isDragging = handleActions({
   [DRAGGING]: (state, { payload }) => payload,
 }, false);
 
+const TOGGLE_CONTROLLER = 'TOGGLE_CONTROLLER';
+
+const isShowController = handleActions({
+  [TOGGLE_CONTROLLER]: (state) => !state,
+}, true);
+
 export const openEpisode = createAction(OPEN_EPISODES, identity);
 export const closeEpisode = createAction(CLOSE_EPISODES, identity);
 export const updateSeekerProgress = createAction(UPDATE_SEEKER_PROGRESS, identity);
-
+export const toggleController = createAction(TOGGLE_CONTROLLER, noop);
 export const setIsDragging = createAction(DRAGGING, constant(true));
 export const setIsNotDragging = createAction(DRAGGING, constant(false));
 
 export const seekerProgressSelector = getOr(0, 'player.seekerProgress');
 export const isOpenEpisodesSelector = getOr(false, 'player.isOpenEpisodes');
 export const isDraggingSelector = getOr(false, 'player.isDragging');
+export const isShowControllerSelector = getOr(false, 'player.isShowController');
 
 export default {
   player: combineReducers({
@@ -133,5 +140,6 @@ export default {
     isOpenEpisodes,
     seekerProgress,
     isDragging,
+    isShowController,
   }),
 };
