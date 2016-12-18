@@ -113,34 +113,43 @@ export default class EnhancedPlayerClass extends Component {
               barStyle="light-content"
               hidden
             />
-            <Video
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                bottom: 0,
-                right: 0,
-                backgroundColor: '#171819',
-              }}
-              ref={(ref) => {
-                this.videoPlayer = ref;
-              }}
-              source={{ uri: contentURL }}
-              rate={1.0}
-              volume={1.0}
-              muted={false}
-              paused={isPaused}
-              resizeMode="cover"
-              repeat={false}
-              onLoad={e => { updateDuration(e.duration); }}
-              onProgress={e => { updateProgress(e.currentTime); }}
-              playInBackground={false}
-              playWhenInactive={false}
-              progressUpdateInterval={250.0}
-              onEnd={closePlayer}
-            />
+              <Video
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  bottom: 0,
+                  right: 0,
+                  backgroundColor: '#171819',
+                }}
+                ref={(ref) => {
+                  this.videoPlayer = ref;
+                }}
+                source={{ uri: contentURL }}
+                rate={1.0}
+                volume={1.0}
+                muted={false}
+                paused={isPaused}
+                resizeMode="cover"
+                repeat={false}
+                onLoad={e => { updateDuration(e.duration); }}
+                onProgress={e => { updateProgress(e.currentTime); }}
+                playInBackground={false}
+                playWhenInactive={false}
+                progressUpdateInterval={250.0}
+                onEnd={closePlayer}
+              />
             <HeaderComponent
               visiable={isShowController}
+            />
+            <TouchableOpacity onPress={toggleController}
+              style={{
+                flex: 1,
+                top: 60,
+                left: 0,
+                right: 0,
+                bottom: 60,
+              }}
             />
             <ControllerComponent
               visiable={isShowController}

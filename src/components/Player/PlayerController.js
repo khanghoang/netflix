@@ -384,7 +384,7 @@ class HeaderComponent extends Component {
         this.state.fadeAnimation, // The value to drive
         {
           toValue: visiable ? 1 : 0,        // Target
-          duration: 2000,    // Configuration
+          duration: 350,    // Configuration
         },
       ).start();             // Don't forget start!
     }
@@ -425,7 +425,7 @@ class ControllerComponent extends Component {
         this.state.fadeAnimation, // The value to drive
         {
           toValue: visiable ? 1 : 0,        // Target
-          duration: 2000,    // Configuration
+          duration: 350,    // Configuration
         },
       ).start();             // Don't forget start!
     }
