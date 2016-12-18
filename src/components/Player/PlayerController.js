@@ -206,7 +206,6 @@ class Seeker extends Component {
       onPanResponderGrant: (e) => {
         // console.log('grant: ');
         this.props.setIsDragging();
-        console.log('khang, khang: ');
         this.state.pan.setOffset({ x: this.state.pan.x._value, y: this.state.pan.y._value });
         this.state.pan.setValue({ x: 0, y: 0 });
       },
@@ -244,7 +243,7 @@ class Seeker extends Component {
         onLayout={(e) => { setWidth(e.nativeEvent.layout.width); }}
         style={{
           paddingVertical: 20,
-          flex: 1
+          flex: 1,
         }}
       >
         <View style={{ backgroundColor:"#262728", height: 1 }} />
@@ -352,6 +351,7 @@ const Controller = ({ isPaused, progress }) => (
       height: 60,
       flex: 1,
       flexDirection: 'row',
+      paddingTop: 20,
     }}
   >
     { isPaused ? <ConnectedPlayButton /> : <ConnectedPauseButton /> }
