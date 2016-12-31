@@ -3,16 +3,11 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-import 'es6-symbol/implement';
-import './ReactotronConfig';
 import React from 'react';
 import {
   StyleSheet,
-  ScrollView,
   Text,
-  View,
   StatusBar,
-  Modal,
 } from 'react-native';
 import {
   createRouter,
@@ -24,7 +19,6 @@ import {
 } from '@exponent/ex-navigation';
 import { Provider } from 'react-redux';
 import Icon from 'react-native-vector-icons/Entypo';
-import { MoviesBlock } from './src/components/Movie';
 import Search from './src/components/Search';
 import EnhancedMovieDetails from './src/components/Details/MovieDetails';
 import store from './src/reducers/createStore';
