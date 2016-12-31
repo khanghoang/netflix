@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Video from 'react-native-video';
 import { compose, withState } from 'recompose';
-import { flow, getOr, isNumber } from 'lodash/fp';
+import { flow, getOr, isNumber, noop } from 'lodash/fp';
 import { connect } from 'react-redux';
 import {
   closePlayer,
@@ -82,6 +82,7 @@ export default class EnhancedPlayerClass extends Component {
       <Modal
         animation="fade"
         visible={Boolean(isVisible)}
+        onRequestClose={noop}
       >
         {
           isFetching ?
@@ -161,6 +162,7 @@ export default class EnhancedPlayerClass extends Component {
               style={{
                 flex: 1,
               }}
+              onRequestClose={noop}
             >
               <Series />
             </Modal>
