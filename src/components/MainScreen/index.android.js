@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { View, Text } from 'react-native';
 import {
   createRouter,
   DrawerNavigation,
@@ -9,6 +9,7 @@ import {
   NavigationContext,
 } from '@exponent/ex-navigation';
 import { Provider } from 'react-redux';
+import Icon from 'react-native-vector-icons/Entypo';
 import EnhancedMovieDetails from '../Details/MovieDetails';
 import EnhancedPlayer from '../Player';
 import Dashboard from '../Home';
@@ -35,6 +36,18 @@ Dashboard.route = {
     titleStyle: {
       color: '#E7E8E9',
     },
+    renderRight: () => (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingHorizontal: 10,
+        }}
+      >
+        <Icon name="magnifying-glass" size={25} color="white" />
+      </View>
+    ),
   },
 };
 
