@@ -13,6 +13,7 @@ export default ({
   >
     <Image
       style={{
+        backgroundColor: 'black',
         width: 115,
         height: 165,
       }}

@@ -34,6 +34,7 @@ const MovieCells = ({ movies = [] }) => {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
+        height: 200,
       }}
     >
       {movieCells}
@@ -41,7 +42,7 @@ const MovieCells = ({ movies = [] }) => {
   );
 };
 
-export default ({ headerText = "Popuplar", isFetching, movies }) => (
+export default ({ headerText = "Popuplar", isFetching, movies, titleStyle = {} }) => (
   <View
     style={{
       flex: 1,
@@ -61,12 +62,15 @@ export default ({ headerText = "Popuplar", isFetching, movies }) => (
         }}
       >
         <Text
-          style={{
-            color: 'white',
-            fontWeight: '600',
-            fontSize: 16,
-            flex: 1,
-          }}
+          style={[
+            {
+              color: 'white',
+              fontWeight: '600',
+              fontSize: 16,
+              flex: 1,
+            },
+            titleStyle,
+          ]}
         >
           {headerText}
         </Text>

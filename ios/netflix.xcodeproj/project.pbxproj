@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -47,6 +46,7 @@
 		9AD4F7B15EBD4D399081B2AB /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EE2E428940A2490B9697177D /* Zocial.ttf */; };
 		BE2A4B8E15F24F5C9F0594CA /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 780211DC9C704D4CBF6454A9 /* libRCTVideo.a */; };
 		DEBE6416D3804C4897018EF4 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7FF35477B41A4F52A66D7ED8 /* Entypo.ttf */; };
+		600D4894CCE84855ACCB35C4 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 706D983406F94CB797C17913 /* MaterialCommunityIcons.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -266,6 +266,7 @@
 		F46AF2A3BA2A7B730BB3ED9E /* libPods-netflix.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-netflix.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB2C43AD97FEB12F235C9697 /* Pods-netflix.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-netflix.debug.xcconfig"; path = "Pods/Target Support Files/Pods-netflix/Pods-netflix.debug.xcconfig"; sourceTree = "<group>"; };
 		FF6BE312F3744BE1BEF6490B /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		706D983406F94CB797C17913 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; name = "MaterialCommunityIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -549,6 +550,7 @@
 				5D35EE9A27004A0D88EDA31F /* Octicons.ttf */,
 				579FE3628AAE4ECAB8C01CCC /* SimpleLineIcons.ttf */,
 				EE2E428940A2490B9697177D /* Zocial.ttf */,
+				706D983406F94CB797C17913 /* MaterialCommunityIcons.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -884,6 +886,7 @@
 				86F697B9F15D43CF88186535 /* Octicons.ttf in Resources */,
 				7D7A613151ED493C9FEFC190 /* SimpleLineIcons.ttf in Resources */,
 				9AD4F7B15EBD4D399081B2AB /* Zocial.ttf in Resources */,
+				600D4894CCE84855ACCB35C4 /* MaterialCommunityIcons.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
