@@ -185,11 +185,12 @@ const ConnectedPauseButton = compose(
 
 class Seeker extends Component {
 
+  state = {
+    pan: new Animated.ValueXY({ x: 0, y: 0 }),
+  }
+
   constructor(props) {
     super(props);
-    this.state = {
-      pan: new Animated.ValueXY(),
-    };
     this.lastOffset = 0;
   }
 
@@ -236,11 +237,15 @@ class Seeker extends Component {
   }
 
   render() {
-    const { isDragging, setWidth, progress, width } = this.props;
-    const translateX = isDragging ? this.state.pan.x  : progress * width;
+    const { isDragging, setWidth, progress = 0, width = 0 } = this.props;
+    // const translateX = isDragging ? this.state.pan.x  : progress * width;
+    const translateX = isDragging ? this.state.pan.x : progress * width;
     return (
       <Animated.View
-        onLayout={(e) => { setWidth(e.nativeEvent.layout.width); }}
+        onLayout={(e) => {
+          console.log(e.nativeEvent.layout);
+          setWidth(e.nativeEvent.layout.width);
+        }}
         style={{
           paddingVertical: 20,
           flex: 1,
@@ -272,9 +277,6 @@ class Seeker extends Component {
                 {
                   translateX,
                 },
-                {
-                  translateY: this.state.pan.y
-                },
               ]
             },
           ]}
@@ -289,7 +291,7 @@ const EnhancedSeeker = compose(
   connect(
     (state, { progress }) => {
       const duration = durationSelector(state);
-      const percent = progress / duration;
+      const percent = duration ? progress / duration : 0;
       return {
         duration,
         progress: percent,
@@ -419,7 +421,7 @@ class ControllerComponent extends Component {
   componentWillReceiveProps(newProps) {
     const { visiable: oldVisiable } = this.props;
     const { visiable } = newProps
-    console.log('visiable', newProps, this.props);
+    // console.log('visiable', newProps, this.props);
     if (visiable !== oldVisiable) {
       Animated.timing(       // Uses easing functions
         this.state.fadeAnimation, // The value to drive

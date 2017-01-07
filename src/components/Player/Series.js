@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
+import { AndroidBackButtonBehavior } from '@exponent/ex-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { flow, getOr } from 'lodash/fp';
 import {
@@ -70,22 +71,23 @@ const ListSeries = ({ listSeries }) => {
     <SeasonCell
       key={series}
       isSelected={series.toLowerCase() === 'season 1'}
-      title={series} />
+      title={series}
+    />
   ));
   return (
     <ScrollView
-      style={{ flex: 1, height: 60, backgroundColor: 'transparent', }}
+      style={{ flex: 1, height: 60, backgroundColor: 'transparent' }}
       horizontal
     >
       {seriesCells}
     </ScrollView>
   );
-}
+};
 
 const StillImage = ({ width = 500, stillPath }) => (
   <Image
     source={{
-      uri: `https://image.tmdb.org/t/p/w${width}${stillPath}`
+      uri: `https://image.tmdb.org/t/p/w${width}${stillPath}`,
     }}
     resizeMode="cover"
     style={{
@@ -94,7 +96,7 @@ const StillImage = ({ width = 500, stillPath }) => (
       backgroundColor: 'purple',
     }}
   />
-)
+);
 
 const PlayButton = ({
   episode,
@@ -137,7 +139,7 @@ const Episode = ({
     overview,
     still_path: stillPath,
     name,
-  }
+  },
 }) => (
   <View
     style={{
@@ -166,8 +168,10 @@ const Episode = ({
         <PlayButton />
       </View>
     </View>
-    <Text style={{ paddingTop: 10, paddingBottom: 6, color: '#808182', }}>{`${episodeNumber}. ${name}`}</Text>
-    <Text style={{ color: '#979899', }}>{overview}</Text>
+    <Text style={{ paddingTop: 10, paddingBottom: 6, color: '#808182' }}>
+      {`${episodeNumber}. ${name}`}
+    </Text>
+    <Text style={{ color: '#979899' }}>{overview}</Text>
   </View>
 );
 
@@ -217,53 +221,68 @@ const ConnectedListEpisodes = compose(
   )
 )(ListEpisides);
 
-const Series = () => (
-  <View
-    style={{
-      left: -(height - width) / 2,
-      top: (height - width) / 2,
-      height: width,
-      width: height,
-      transform: [{
-        rotate: '90deg',
-      }],
-      backgroundColor: '#131415',
-    }}
+const Series = ({ closeEpisode }) => (
+  <AndroidBackButtonBehavior
+    isForcused
+    onBackButtonPress={() => Promise.resolve(closeEpisode())}
   >
     <View
       style={{
-        flex: 1,
-        flexDirection: 'column',
+        left: -(height - width) / 2,
+        top: (height - width) / 2,
+        height: width,
+        width: height,
+        transform: [{
+          rotate: '90deg',
+        }],
+        backgroundColor: '#131415',
       }}
     >
       <View
-        style={{ paddingTop: 20, height: 60 }}
-      >
-        <View
-          style={{ flex: 1, flexDirection: 'row' }}
-        >
-          <ListSeries listSeries={['SEASON 1', 'SEASON 2', 'SEASON 3']} />
-          <EnhancedCloseButton
-            style={{
-              marginRight: 20,
-            }}
-          />
-        </View>
-      </View>
-      <View
         style={{
           flex: 1,
-          marginTop: 20,
+          flexDirection: 'column',
         }}
       >
-        <ConnectedListEpisodes />
+        <View
+          style={{ paddingTop: 20, height: 60 }}
+        >
+          <View
+            style={{ flex: 1, flexDirection: 'row' }}
+          >
+            <ListSeries listSeries={['SEASON 1', 'SEASON 2', 'SEASON 3']} />
+            <EnhancedCloseButton
+              style={{
+                marginRight: 20,
+              }}
+            />
+          </View>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            marginTop: 20,
+          }}
+        >
+          <ConnectedListEpisodes />
+        </View>
       </View>
     </View>
-  </View>
+  </AndroidBackButtonBehavior>
 );
 
+const ConnectedSeries = compose(
+  connect(
+    null,
+    ({
+      closeEpisode,
+    }),
+  ),
+)(Series);
+
+/* eslint-disable */
 export default class SeriesClass extends Component {
   render() {
-    return <Series />
+    return <ConnectedSeries />
   }
 }

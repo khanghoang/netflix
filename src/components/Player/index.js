@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Video from 'react-native-video';
+import { AndroidBackButtonBehavior } from '@exponent/ex-navigation';
 import { compose, withState } from 'recompose';
 import { flow, getOr, isNumber, noop } from 'lodash/fp';
 import { connect } from 'react-redux';
@@ -86,87 +87,92 @@ export default class EnhancedPlayerClass extends Component {
       >
         {
           isFetching ?
-          <ActivityIndicator
-            animating
-            style={{
-              height: 165,
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: '#171819',
-            }}
-            size="large"
-            color='white'
-          /> :
-          <View
-            style={{
-              left: -(height - width) / 2,
-              top: (height - width) / 2,
-              height: width,
-              width: height,
-              transform: [{
-                rotate: '90deg',
-              }],
-              backgroundColor: '#171819',
-            }}
-          >
-            <StatusBar
-              barStyle="light-content"
-              hidden
-            />
-              <Video
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  bottom: 0,
-                  right: 0,
-                  backgroundColor: '#171819',
-                }}
-                ref={(ref) => {
-                  this.videoPlayer = ref;
-                }}
-                source={{ uri: contentURL }}
-                rate={1.0}
-                volume={1.0}
-                muted={false}
-                paused={isPaused}
-                resizeMode="cover"
-                repeat={false}
-                onLoad={e => { updateDuration(e.duration); }}
-                onProgress={e => { updateProgress(e.currentTime); }}
-                playInBackground={false}
-                playWhenInactive={false}
-                progressUpdateInterval={250.0}
-                onEnd={closePlayer}
-              />
-            <HeaderComponent
-              visiable={isShowController}
-            />
-            <TouchableOpacity onPress={toggleController}
+            <ActivityIndicator
+              animating
               style={{
+                height: 165,
                 flex: 1,
-                top: 60,
-                left: 0,
-                right: 0,
-                bottom: 60,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#171819',
               }}
-            />
-            <ControllerComponent
-              visiable={isShowController}
-              progress={progress}
-            />
-            <Modal
-              animation="fade"
-              visible={isOpenEpisodes}
+              size="large"
+              color='white'
+            /> :
+            <View
               style={{
-                flex: 1,
+                left: -(height - width) / 2,
+                top: (height - width) / 2,
+                height: width,
+                width: height,
+                transform: [{
+                  rotate: '90deg',
+                }],
+                backgroundColor: '#171819',
               }}
-              onRequestClose={noop}
             >
-              <Series />
-            </Modal>
-          </View>
+              <StatusBar
+                barStyle="light-content"
+                hidden
+              />
+              <AndroidBackButtonBehavior
+                isFocused
+                onBackButtonPress={() => Promise.resolve(closePlayer())}
+              >
+                <Video
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    bottom: 0,
+                    right: 0,
+                    backgroundColor: '#171819',
+                  }}
+                  ref={(ref) => {
+                    this.videoPlayer = ref;
+                  }}
+                  source={{ uri: contentURL }}
+                  rate={1.0}
+                  volume={1.0}
+                  muted={false}
+                  paused={isPaused}
+                  resizeMode="cover"
+                  repeat={false}
+                  onLoad={e => { updateDuration(e.duration); }}
+                  onProgress={e => { updateProgress(e.currentTime); }}
+                  playInBackground={false}
+                  playWhenInactive={false}
+                  progressUpdateInterval={250.0}
+                  onEnd={closePlayer}
+                />
+              </AndroidBackButtonBehavior>
+              <HeaderComponent
+                visiable={isShowController}
+              />
+              <TouchableOpacity onPress={toggleController}
+                style={{
+                  flex: 1,
+                  top: 60,
+                  left: 0,
+                  right: 0,
+                  bottom: 60,
+                }}
+              />
+              <ControllerComponent
+                visiable={isShowController}
+                progress={progress}
+              />
+              <Modal
+                animation="fade"
+                visible={isOpenEpisodes}
+                style={{
+                  flex: 1,
+                }}
+                onRequestClose={noop}
+              >
+                <Series />
+              </Modal>
+            </View>
         }
       </Modal>
     )
