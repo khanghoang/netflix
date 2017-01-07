@@ -226,18 +226,24 @@ const MovieDetails = ({
     big_img: backgroundImageURI,
     actor: actorString,
   } = {},
+  hideDetails: hideMovideDetailsPopup,
 }) => (
-  <ScrollView
-    style={{
-      flex: 1,
-      backgroundColor: '#161718',
-    }}
+  <AndroidBackButtonBehavior
+    isFocused
+    onBackButtonPress={() => Promise.resolve(hideMovideDetailsPopup())}
   >
-    <TopFeatureImage source={backgroundImageURI} />
-    <MoviesDescription text={story} />
-    <CastsText cast={actorString} />
-    <Actions />
-  </ScrollView>
+   <ScrollView
+     style={{
+       flex: 1,
+       backgroundColor: '#161718',
+     }}
+   >
+     <TopFeatureImage source={backgroundImageURI} />
+     <MoviesDescription text={story} />
+     <CastsText cast={actorString} />
+     <Actions />
+   </ScrollView>
+ </AndroidBackButtonBehavior>
 );
 
 const FullscreenLoader = () => (
@@ -260,6 +266,12 @@ const FullscreenLoader = () => (
 );
 
 const ConnectedMovieDetails = compose(
+  connect(
+    null,
+    ({
+      hideDetails,
+    }),
+  ),
   branch(
     ({ isFetching }) => isFetching,
     renderComponent(FullscreenLoader),
