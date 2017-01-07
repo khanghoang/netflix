@@ -8,10 +8,11 @@ import {
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
+import { AndroidBackButtonBehavior } from '@exponent/ex-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
-import { flow, getOr } from 'lodash/fp';
-import { compose } from 'recompose';
+import { flow, getOr, identity } from 'lodash/fp';
+import { compose, branch, renderComponent } from 'recompose';
 import { connect } from 'react-redux';
 import {
   showDetails,
@@ -225,9 +226,21 @@ const MovieDetails = ({
     big_img: backgroundImageURI,
     actor: actorString,
   } = {},
-  isFetching,
 }) => (
-  isFetching ?
+  <ScrollView
+    style={{
+      flex: 1,
+      backgroundColor: '#161718',
+    }}
+  >
+    <TopFeatureImage source={backgroundImageURI} />
+    <MoviesDescription text={story} />
+    <CastsText cast={actorString} />
+    <Actions />
+  </ScrollView>
+);
+
+const FullscreenLoader = () => (
   <ScrollView
     style={{
       flex: 1,
@@ -243,24 +256,21 @@ const MovieDetails = ({
       }}
       size="large"
     />
-  </ScrollView> :
-  <ScrollView
-    style={{
-      flex: 1,
-      backgroundColor: '#161718',
-    }}
-  >
-    <TopFeatureImage source={backgroundImageURI} />
-    <MoviesDescription text={story} />
-    <CastsText cast={actorString} />
-    <Actions />
   </ScrollView>
 );
+
+const ConnectedMovieDetails = compose(
+  branch(
+    ({ isFetching }) => isFetching,
+    renderComponent(FullscreenLoader),
+    identity,
+  )
+)(MovieDetails);
 
 /* eslint-disable */
 export default class DetailsView extends Component {
   render() {
-    return <MovieDetails {...this.props}/>
+    return <ConnectedMovieDetails {...this.props}/>;
   }
 };
 /* eslint-enable */
