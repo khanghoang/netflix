@@ -8,36 +8,36 @@
     "storybook": "storybook start -p 7007"
   },
   "dependencies": {
-    "@exponent/ex-navigation": "^2.1.5",
-    "babel-polyfill": "^6.20.0",
-    "es6-symbol": "^3.1.0",
-    "lodash": "^4.17.2",
-    "react": "15.4.1",
-    "react-native": "0.38.0",
-    "react-native-linear-gradient": "^1.5.15",
-    "react-native-modalbox": "^1.3.8",
+    "@exponent/ex-navigation": "^2.9.1",
+    "babel-polyfill": "^6.23.0",
+    "es6-symbol": "^3.1.1",
+    "lodash": "^4.17.4",
+    "react": "^15.4.2",
+    "react-native": "^0.42.3",
+    "react-native-linear-gradient": "^2.0.0",
+    "react-native-modalbox": "^1.3.9",
     "react-native-vector-icons": "^4.0.0",
     "react-native-video": "git+https://github.com/react-native-community/react-native-video.git#master",
-    "react-redux": "^4.4.6",
-    "recompose": "^0.20.2",
+    "react-redux": "^5.0.3",
+    "recompose": "^0.22.0",
     "redux": "^3.6.0",
-    "redux-actions": "^1.1.0",
-    "redux-api-call": "^0.3.13",
-    "redux-observable": "^0.12.2",
+    "redux-actions": "^2.0.1",
+    "redux-api-call": "^0.3.14",
+    "redux-observable": "^0.14.1",
     "reselect": "^2.5.4",
-    "rxjs": "5.0.0-rc.1"
+    "rxjs": "^5.2.0"
   },
   "jest": {
     "preset": "react-native"
   },
   "devDependencies": {
-    "@kadira/react-native-storybook": "^2.0.0",
-    "babel-jest": "17.0.2",
-    "babel-preset-react-native": "1.9.0",
+    "@kadira/react-native-storybook": "^2.2.4",
+    "babel-jest": "^19.0.0",
+    "babel-preset-react-native": "^1.9.1",
     "babel-preset-react-native-stage-0": "^1.0.1",
-    "jest": "17.0.3",
-    "react-test-renderer": "15.4.1",
-    "reactotron-react-native": "^1.5.3",
-    "redux-mock-store": "^1.2.1"
+    "jest": "^19.0.2",
+    "react-test-renderer": "^15.4.2",
+    "reactotron-react-native": "^1.9.1",
+    "redux-mock-store": "^1.2.2"
   }
 }

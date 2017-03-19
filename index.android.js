@@ -4,6 +4,7 @@
  * @flow
  */
 
+require('es6-symbol/implement');
 import 'babel-polyfill';
 import {
   AppRegistry,
