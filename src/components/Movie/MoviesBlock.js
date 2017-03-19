@@ -34,7 +34,7 @@ const MovieCells = ({ movies = [] }) => {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        height: 200,
+        height: 165,
       }}
     >
       {movieCells}
