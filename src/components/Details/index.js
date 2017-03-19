@@ -7,12 +7,13 @@ import {
   TouchableOpacity,
   Dimensions,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import { AndroidBackButtonBehavior } from '@exponent/ex-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import { flow, getOr, identity } from 'lodash/fp';
-import { compose, branch, renderComponent } from 'recompose';
+import { compose, branch, renderComponent, withProps } from 'recompose';
 import { connect } from 'react-redux';
 import {
   showDetails,
@@ -21,6 +22,8 @@ import {
   HOCMakeFetchAction,
 } from '../Details/state';
 import { playMovieWithID } from '../Player/state';
+
+const CLOSE_DETAILS_POPUP_THREDHOLD = -80;
 
 const { width } = Dimensions.get('window');
 
@@ -227,6 +230,7 @@ const MovieDetails = ({
     actor: actorString,
   } = {},
   hideDetails: hideMovideDetailsPopup,
+  handleScroll = () => {},
 }) => (
   <AndroidBackButtonBehavior
     isFocused
@@ -237,6 +241,8 @@ const MovieDetails = ({
        flex: 1,
        backgroundColor: '#161718',
      }}
+     onScroll={handleScroll}
+     scrollEventThrottle={Platform.OS === 'ios' ? 90 : null}
    >
      <TopFeatureImage source={backgroundImageURI} />
      <MoviesDescription text={story} />
@@ -272,6 +278,14 @@ const ConnectedMovieDetails = compose(
       hideDetails,
     }),
   ),
+  withProps(({ hideDetails }) => ({
+    handleScroll({ nativeEvent }) {
+      const { contentOffset: { y: offsetY } } = nativeEvent;
+      if (offsetY < CLOSE_DETAILS_POPUP_THREDHOLD) {
+        hideDetails();
+      }
+    }
+  })),
   branch(
     ({ isFetching }) => isFetching,
     renderComponent(FullscreenLoader),
