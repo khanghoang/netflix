@@ -28,7 +28,7 @@ const {
 
 const hotMoviesSelector = flow(rawHotMoviesSelector, get('results'));
 
-const HighOrderHomeFetchMovies = ({ name, url }) => {
+const HighOrderHomeFetchMovies = ({ name }) => {
   const {
     actionCreator,
     isFetchingSelector,

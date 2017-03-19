@@ -28,7 +28,6 @@ const Dashboard = () => (
       <HotMovieBlock />
       <SeriesMovieBlock />
       <RecentMoviesBlock />
-      <MoviesBlock />
     </ScrollView>
   </View>
 );
@@ -42,7 +41,7 @@ export default class DashboardClass extends Component {
 const HighlightMovieBlock = compose(
   withProps(props => ({
     ...props,
-    headerText: 'Highlights',
+    headerText: 'Up coming',
   })),
   connect(
     state => ({
@@ -63,7 +62,7 @@ const HighlightMovieBlock = compose(
 const HotMovieBlock = compose(
   withProps(props => ({
     ...props,
-    headerText: 'Hot movies',
+    headerText: 'Top rated',
   })),
   connect(
     state => ({
@@ -112,12 +111,12 @@ const {
   actionCreator: fetchRecentMovies,
   isFetchingSelector: isFetchingRecentMovies,
   dataSelector: moviesSelector,
-} = HighOrderHomeFetchMovies({ name: 'latest' });
+} = HighOrderHomeFetchMovies({ name: 'now_playing' });
 
 const RecentMoviesBlock = compose(
   withProps(props => ({
     ...props,
-    headerText: 'Latest',
+    headerText: 'Playing now',
   })),
   connect(
     state => ({
