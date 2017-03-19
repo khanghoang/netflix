@@ -13,6 +13,7 @@ import { AndroidBackButtonBehavior } from '@exponent/ex-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import { flow, getOr, identity } from 'lodash/fp';
+import { get } from 'lodash';
 import { compose, branch, renderComponent, withProps } from 'recompose';
 import { connect } from 'react-redux';
 import {
@@ -94,13 +95,16 @@ const EnhancedPlayButton = compose(
   )
 )(PlayButton);
 
-const TopFeatureImage = ({ source: backgroundImageURI }) => (
+const TopFeatureImage = ({ source }) => (
   <View style={{ height: 270 }}>
     <View style={{ height: 270 }} >
       <Image
-        style={{ flex: 1 }}
+        style={{
+          backgroundColor: 'black',
+          flex: 1,
+        }}
         source={{
-          uri: `http://hdvn.tv/${backgroundImageURI}`,
+          uri: `https://image.tmdb.org/t/p/w300${source}`,
         }}
       />
       <View
@@ -224,33 +228,34 @@ const Actions = ({ onLayout }) => (
 );
 
 const MovieDetails = ({
-  movie: {
-    story,
-    big_img: backgroundImageURI,
-    actor: actorString,
-  } = {},
+  movie = {},
   hideDetails: hideMovideDetailsPopup,
   handleScroll = () => {},
-}) => (
-  <AndroidBackButtonBehavior
-    isFocused
-    onBackButtonPress={() => Promise.resolve(hideMovideDetailsPopup())}
-  >
-   <ScrollView
-     style={{
-       flex: 1,
-       backgroundColor: '#161718',
-     }}
-     onScroll={handleScroll}
-     scrollEventThrottle={Platform.OS === 'ios' ? 90 : null}
-   >
-     <TopFeatureImage source={backgroundImageURI} />
-     <MoviesDescription text={story} />
-     <CastsText cast={actorString} />
-     <Actions />
-   </ScrollView>
- </AndroidBackButtonBehavior>
-);
+}) => {
+  const story = get(movie, 'overview', '');
+  const backgroundImageURI = get(movie, 'backdrop_path', '');
+  const actorString = get(movie, 'actor', '');
+  return (
+    <AndroidBackButtonBehavior
+      isFocused
+      onBackButtonPress={() => Promise.resolve(hideMovideDetailsPopup())}
+    >
+      <ScrollView
+        style={{
+          flex: 1,
+            backgroundColor: '#161718',
+        }}
+        onScroll={handleScroll}
+        scrollEventThrottle={Platform.OS === 'ios' ? 90 : null}
+      >
+        <TopFeatureImage source={backgroundImageURI} />
+        <MoviesDescription text={story} />
+        <CastsText cast={actorString} />
+        <Actions />
+      </ScrollView>
+    </AndroidBackButtonBehavior>
+  );
+}
 
 const FullscreenLoader = () => (
   <ScrollView

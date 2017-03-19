@@ -21,7 +21,7 @@ const HOCMakeFetchAction = (movieID) => {
   return {
     fetchMovieDetails,
     isFetching,
-    dataSelector: flow(dataSelector, getOr({ movie: {} }, 'response.movie[0]')),
+    dataSelector: flow(dataSelector),
     espisodesSelector: flow(dataSelector, getOr([], 'response.episodes')),
   };
 };
