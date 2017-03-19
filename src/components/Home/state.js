@@ -9,11 +9,11 @@ const {
 } = makeFetchAction(
   'HIGHLIGHT_MOVIES',
   () => ({
-    endpoint: 'http://hdvn.tv/api/collect/phim-de-cu.html',
+    endpoint: 'https://api.themoviedb.org/3/movie/upcoming?api_key=eb32a449fa8baebded9cd3b02bc0fef4&language=en-US&page=1',
   }),
 );
 
-const highlightMoviesSelector = flow(rawHighlightMoviesSelector, get('response'));
+const highlightMoviesSelector = flow(rawHighlightMoviesSelector, get('results'));
 
 const {
   actionCreator: fetchHotMovies,
@@ -22,28 +22,30 @@ const {
 } = makeFetchAction(
   'HOT_MOVIES',
   () => ({
-    endpoint: 'http://hdvn.tv/api/collect/phim-chieu-rap.html',
+    endpoint: 'https://api.themoviedb.org/3/movie/top_rated?api_key=eb32a449fa8baebded9cd3b02bc0fef4&language=en-US&page=1',
   }),
 );
 
-const hotMoviesSelector = flow(rawHotMoviesSelector, get('response'));
+const hotMoviesSelector = flow(rawHotMoviesSelector, get('results'));
 
 const HighOrderHomeFetchMovies = ({ name, url }) => {
   const {
     actionCreator,
     isFetchingSelector,
-    dataSelector: rawDataSelector,
+    dataSelector: rawHotMoviesSelector,
   } = makeFetchAction(
-    name,
+    'HOT_MOVIES',
     () => ({
-      endpoint: url,
+      endpoint: 'https://api.themoviedb.org/3/movie/popular?api_key=eb32a449fa8baebded9cd3b02bc0fef4&language=en-US&page=1',
     }),
   );
+
+  const dataSelector = flow(rawHotMoviesSelector, get('results'));
 
   return {
     actionCreator,
     isFetchingSelector,
-    dataSelector: flow(rawDataSelector, get('response')),
+    dataSelector,
   };
 };
 

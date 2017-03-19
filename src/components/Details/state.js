@@ -14,7 +14,7 @@ const HOCMakeFetchAction = (movieID) => {
   } = makeFetchAction(
     `movie_${movieID}`,
     () => ({
-      endpoint: `http://hdvn.tv/api/phim-x-${movieID}.html`,
+      endpoint: `https://api.themoviedb.org/3/movie/${movieID}?api_key=eb32a449fa8baebded9cd3b02bc0fef4&language=en-US`
     }),
   );
 

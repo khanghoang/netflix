@@ -6,7 +6,7 @@ import {
 
 export default ({
   onPress: openDetails,
-  movie: { poster: imageURI, movie_id: movieID },
+  movie: { poster_path: poster, id: movieID },
 }) => (
   <TouchableOpacity
     onPress={() => { openDetails(movieID); }}
@@ -18,7 +18,7 @@ export default ({
         height: 165,
       }}
       source={{
-        uri: `http://hdvn.tv/${imageURI}`,
+        uri: `https://image.tmdb.org/t/p/w300${poster}`,
       }}
     />
   </TouchableOpacity>
