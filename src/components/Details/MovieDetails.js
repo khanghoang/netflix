@@ -1,4 +1,5 @@
 import React from 'react';
+import { StatusBar } from 'react-native';
 import Modal from 'react-native-modalbox';
 import { isEmpty } from 'lodash';
 import { compose, lifecycle } from 'recompose';
@@ -21,6 +22,10 @@ const ModalMovieDetails = ({
     onClosed={hideDetails}
     swipeToClose={false}
   >
+    <StatusBar
+      barStyle="light-content"
+      hidden={isVisible}
+    />
     <MoviesDetails
       isFetching={isFetching}
       movie={movie}
