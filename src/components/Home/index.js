@@ -85,12 +85,12 @@ const {
   actionCreator: fetchRecentSeries,
   isFetchingSelector: isFetchingRecentSeries,
   dataSelector: seriesSelector,
-} = HighOrderHomeFetchMovies({ name: 'SERIES', url: 'http://hdvn.tv/api/list/recently-tv-series.html' });
+} = HighOrderHomeFetchMovies({ name: 'popular' });
 
 const SeriesMovieBlock = compose(
   withProps(props => ({
     ...props,
-    headerText: 'Series',
+    headerText: 'Popular',
   })),
   connect(
     state => ({
@@ -112,12 +112,12 @@ const {
   actionCreator: fetchRecentMovies,
   isFetchingSelector: isFetchingRecentMovies,
   dataSelector: moviesSelector,
-} = HighOrderHomeFetchMovies({ name: 'RECENT_MOVIES', url: 'http://hdvn.tv/api/list/recently-movies.html' });
+} = HighOrderHomeFetchMovies({ name: 'latest' });
 
 const RecentMoviesBlock = compose(
   withProps(props => ({
     ...props,
-    headerText: 'Recent Movies',
+    headerText: 'Latest',
   })),
   connect(
     state => ({

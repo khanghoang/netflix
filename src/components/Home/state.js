@@ -34,9 +34,9 @@ const HighOrderHomeFetchMovies = ({ name, url }) => {
     isFetchingSelector,
     dataSelector: rawHotMoviesSelector,
   } = makeFetchAction(
-    'HOT_MOVIES',
+    name,
     () => ({
-      endpoint: 'https://api.themoviedb.org/3/movie/popular?api_key=eb32a449fa8baebded9cd3b02bc0fef4&language=en-US&page=1',
+      endpoint: `https://api.themoviedb.org/3/movie/${name}?api_key=eb32a449fa8baebded9cd3b02bc0fef4&language=en-US&page=1`,
     }),
   );
 
