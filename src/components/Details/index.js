@@ -108,29 +108,6 @@ const TopFeatureImage = ({ source, height = 270 }) => (
           uri: `https://image.tmdb.org/t/p/w300${source}`,
         }}
       />
-      <View
-        style={{
-          width,
-          height: 270,
-          top: 0,
-          position: 'absolute',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <EnhancedPlayButton />
-      </View>
-      <View
-        style={{
-          position: 'absolute',
-          top: 20,
-          right: 20,
-          alignItems: 'center',
-          backgroundColor: 'transparent',
-        }}
-      >
-        <EnhancedCloseButton />
-      </View>
     </Animated.View>
   </Animated.View>
 );
@@ -252,7 +229,6 @@ const MovieDetails = ({
           style={{
             position: 'absolute',
             top: 0,
-            paddingTop: 270,
             left: 0,
             right: 0,
             bottom: 0,
@@ -260,6 +236,17 @@ const MovieDetails = ({
           onScroll={handleScroll}
           scrollEventThrottle={Platform.OS === 'ios' ? 16 : null}
         >
+          <View
+            style={{
+              width,
+                height: 270,
+                top: 0,
+                alignItems: 'center',
+                justifyContent: 'center',
+            }}
+          >
+            <EnhancedPlayButton />
+          </View>
           <LinearGradient
             style={{ height: 100, left: 0, right: 0, top: -100 }}
             colors={['transparent', '#161718']}
@@ -275,6 +262,17 @@ const MovieDetails = ({
             <Actions />
           </View>
         </Animated.ScrollView>
+        <View
+          style={{
+            position: 'absolute',
+              top: 20,
+              right: 20,
+              alignItems: 'center',
+              backgroundColor: 'transparent',
+          }}
+        >
+          <EnhancedCloseButton />
+        </View>
       </View>
     </AndroidBackButtonBehavior>
   );
