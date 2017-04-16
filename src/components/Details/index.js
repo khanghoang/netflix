@@ -8,13 +8,14 @@ import {
   Dimensions,
   ActivityIndicator,
   Platform,
+  Animated,
 } from 'react-native';
 import { AndroidBackButtonBehavior } from '@exponent/ex-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import { flow, getOr, identity } from 'lodash/fp';
 import { get } from 'lodash';
-import { compose, branch, renderComponent, withProps } from 'recompose';
+import { compose, branch, renderComponent, withProps, withState } from 'recompose';
 import { connect } from 'react-redux';
 import {
   showDetails,
@@ -95,13 +96,13 @@ const EnhancedPlayButton = compose(
   )
 )(PlayButton);
 
-const TopFeatureImage = ({ source }) => (
-  <View style={{ height: 270 }}>
-    <View style={{ height: 270 }} >
-      <Image
+const TopFeatureImage = ({ source, height = 270 }) => (
+  <Animated.View style={{ height: height }}>
+    <Animated.View style={{ flex: 1 }} >
+      <Animated.Image
         style={{
           backgroundColor: 'black',
-          flex: 1,
+            flex: 1,
         }}
         source={{
           uri: `https://image.tmdb.org/t/p/w300${source}`,
@@ -130,12 +131,8 @@ const TopFeatureImage = ({ source }) => (
       >
         <EnhancedCloseButton />
       </View>
-      <LinearGradient
-        style={{ position: 'absolute', height: 100, left: 0, right: 0, bottom: 0 }}
-        colors={['transparent', '#161718']}
-      />
-    </View>
-  </View>
+    </Animated.View>
+  </Animated.View>
 );
 
 const MoviesDescription = ({ text = '' }) => (
@@ -231,6 +228,7 @@ const MovieDetails = ({
   movie = {},
   hideDetails: hideMovideDetailsPopup,
   handleScroll = () => {},
+  topImageHeight, 
 }) => {
   const story = get(movie, 'overview', '');
   const backgroundImageURI = get(movie, 'backdrop_path', '');
@@ -240,19 +238,44 @@ const MovieDetails = ({
       isFocused
       onBackButtonPress={() => Promise.resolve(hideMovideDetailsPopup())}
     >
-      <ScrollView
+      <View
         style={{
           flex: 1,
             backgroundColor: '#161718',
         }}
-        onScroll={handleScroll}
-        scrollEventThrottle={Platform.OS === 'ios' ? 90 : null}
       >
-        <TopFeatureImage source={backgroundImageURI} />
-        <MoviesDescription text={story} />
-        <CastsText cast={actorString} />
-        <Actions />
-      </ScrollView>
+        <TopFeatureImage
+          source={backgroundImageURI}
+          height={topImageHeight}
+        />
+        <Animated.ScrollView
+          style={{
+            position: 'absolute',
+            top: 0,
+            paddingTop: 270,
+            left: 0,
+            right: 0,
+            bottom: 0,
+          }}
+          onScroll={handleScroll}
+          scrollEventThrottle={Platform.OS === 'ios' ? 16 : null}
+        >
+          <LinearGradient
+            style={{ height: 100, left: 0, right: 0, top: -100 }}
+            colors={['transparent', '#161718']}
+          />
+          <View
+            style={{
+              top: -100,
+                backgroundColor: '#161718',
+            }}
+          >
+            <MoviesDescription text={story} />
+            <CastsText cast={actorString} />
+            <Actions />
+          </View>
+        </Animated.ScrollView>
+      </View>
     </AndroidBackButtonBehavior>
   );
 }
@@ -276,32 +299,44 @@ const FullscreenLoader = () => (
   </ScrollView>
 );
 
-const ConnectedMovieDetails = compose(
-  connect(
-    null,
-    ({
-      hideDetails,
-    }),
-  ),
-  withProps(({ hideDetails }) => ({
-    handleScroll({ nativeEvent }) {
-      const { contentOffset: { y: offsetY } } = nativeEvent;
-      if (offsetY < CLOSE_DETAILS_POPUP_THREDHOLD) {
-        hideDetails();
-      }
+@connect(
+  null,
+  ({
+    hideDetails,
+  }),
+)
+@branch(
+  ({ isFetching }) => isFetching,
+  renderComponent(FullscreenLoader),
+  identity
+)
+class MovieDetailsWithAnimationTopImage extends Component {
+  constructor(props) {
+    super(props);
+    this.topAnimation = new Animated.ValueXY({ x: 0, y: 270 });
+  }
+
+  handleScroll = ({ nativeEvent }) => {
+    const { contentOffset: { y: offsetY } } = nativeEvent;
+    this.topAnimation.setValue({ x: 0, y: -offsetY + 270 });
+    if (offsetY < CLOSE_DETAILS_POPUP_THREDHOLD) {
+      this.props.hideDetails();
     }
-  })),
-  branch(
-    ({ isFetching }) => isFetching,
-    renderComponent(FullscreenLoader),
-    identity,
-  )
-)(MovieDetails);
+  }
+
+  render() {
+    return <MovieDetails
+      {...this.props}
+      topImageHeight={this.topAnimation.getLayout().top}
+      handleScroll={this.handleScroll}
+    />
+  }
+}
 
 /* eslint-disable */
 export default class DetailsView extends Component {
   render() {
-    return <ConnectedMovieDetails {...this.props}/>;
+    return <MovieDetailsWithAnimationTopImage {...this.props}/>;
   }
 };
 /* eslint-enable */
