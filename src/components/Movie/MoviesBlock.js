@@ -1,5 +1,11 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
+import {
+  ScrollView,
+  View,
+  TouchableOpacity,
+  Text,
+  ActivityIndicator,
+} from 'react-native';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import MovieCell from './MovieCell';
@@ -13,19 +19,25 @@ const EnhancedMovieCell = compose(
 
 const MovieCells = ({ movies = [] }) => {
   const movieCells = movies.map(movie =>
-    <EnhancedMovieCell key={movie.movie_id} movie={movie} />
-  );
-  return (
     <View
       style={{
+        paddingLeft: 4,
+        paddingRight: 4,
+      }}
+    >
+      <EnhancedMovieCell key={movie.movie_id} movie={movie} />
+    </View>
+  );
+  return (
+    <ScrollView
+      horizontal
+      style={{
         flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
         height: 165,
       }}
     >
       {movieCells}
-    </View>
+    </ScrollView>
   );
 };
 

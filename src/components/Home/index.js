@@ -41,7 +41,7 @@ const HighlightMovieBlock = compose(
   connect(
     state => ({
       isFetching: isFetchingHighlightMoviesSelector(state),
-      movies: flow(highlightMoviesSelector, take(4))(state),
+      movies: flow(highlightMoviesSelector)(state),
     }),
     {
       fetchHighlightMovies,
@@ -62,7 +62,7 @@ const HotMovieBlock = compose(
   connect(
     state => ({
       isFetching: isFetchingHotMoviesSelector(state),
-      movies: flow(hotMoviesSelector, take(4))(state),
+      movies: flow(hotMoviesSelector)(state),
     }),
     {
       fetchHotMovies,
@@ -89,7 +89,7 @@ const SeriesMovieBlock = compose(
   connect(
     state => ({
       isFetching: isFetchingRecentSeries(state),
-      movies: flow(seriesSelector, take(4))(state),
+      movies: flow(seriesSelector)(state),
     }),
     {
       fetchRecentSeries,
@@ -116,7 +116,7 @@ const RecentMoviesBlock = compose(
   connect(
     state => ({
       isFetching: isFetchingRecentMovies(state),
-      movies: flow(moviesSelector, take(4))(state),
+      movies: flow(moviesSelector)(state),
     }),
     {
       fetchRecentMovies,
