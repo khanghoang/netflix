@@ -12,9 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { noop, constant, debounce } from 'lodash';
-import {
- selectedMovieDetails,
-} from '../Details/state';
+import { selectedMovieDetails } from '../Details/state';
 import {
   closePlayer,
   durationSelector,
@@ -31,7 +29,7 @@ import {
 
 const WHITE_COLOR = '#E6E7E8';
 
-const EpisodeButton = ({ onPress = noop }) => (
+const EpisodeButton = ({ onPress = noop }) =>
   <TouchableOpacity
     onPress={onPress}
     style={{
@@ -44,19 +42,15 @@ const EpisodeButton = ({ onPress = noop }) => (
     }}
   >
     <MaterialIcons name="playlist-play" color="white" size={30} />
-  </TouchableOpacity>
-);
+  </TouchableOpacity>;
 
 const ConnectedEpisodeButton = compose(
-  connect(
-    null,
-    ({
-      onPress: openEpisode,
-    })
-  )
+  connect(null, {
+    onPress: openEpisode,
+  })
 )(EpisodeButton);
 
-const Header = () => (
+const Header = () =>
   <LinearGradient
     colors={['#161718', 'transparent']}
     style={{
@@ -74,10 +68,9 @@ const Header = () => (
       <ConnectedCloseButton />
       <ConnectedEpisodeButton />
     </View>
-  </LinearGradient>
-);
+  </LinearGradient>;
 
-const Title = ({ movie: { name_vi: title } }) => (
+const Title = ({ movie: { name_vi: title } }) =>
   <Text
     style={{
       lineHeight: 40,
@@ -87,22 +80,19 @@ const Title = ({ movie: { name_vi: title } }) => (
     }}
   >
     {title}
-  </Text>
-);
+  </Text>;
 
 const ConnectedTitle = compose(
   connect(
     state => ({
       movie: selectedMovieDetails(state),
     }),
-    null,
+    null
   )
 )(Title);
 
-const CloseButton = ({ closePlayer }) => (
-  <TouchableOpacity
-    onPress={closePlayer}
-  >
+const CloseButton = ({ closePlayer }) =>
+  <TouchableOpacity onPress={closePlayer}>
     <View
       style={{
         flex: 1,
@@ -121,22 +111,16 @@ const CloseButton = ({ closePlayer }) => (
       />
       <ConnectedTitle />
     </View>
-  </TouchableOpacity>
-);
+  </TouchableOpacity>;
 
 const ConnectedCloseButton = compose(
-  connect(
-    null,
-    ({
-      closePlayer,
-    })
-  )
+  connect(null, {
+    closePlayer,
+  })
 )(CloseButton);
 
-const PlayButton = ({ play }) => (
-  <TouchableOpacity
-    onPress={play}
-  >
+const PlayButton = ({ play }) =>
+  <TouchableOpacity onPress={play}>
     <Icon
       style={{
         backgroundColor: 'transparent',
@@ -147,19 +131,15 @@ const PlayButton = ({ play }) => (
       size={30}
       color={WHITE_COLOR}
     />
-  </TouchableOpacity>
-);
+  </TouchableOpacity>;
 
 const ConnectedPlayButton = compose(
-  connect(
-    null,
-    ({
-      play: playCurrentMovie,
-    })
-  )
+  connect(null, {
+    play: playCurrentMovie,
+  })
 )(PlayButton);
 
-const PauseButton = ({ pause }) => (
+const PauseButton = ({ pause }) =>
   <TouchableOpacity onPress={pause}>
     <Icon
       style={{
@@ -171,23 +151,18 @@ const PauseButton = ({ pause }) => (
       size={30}
       color={WHITE_COLOR}
     />
-  </TouchableOpacity>
-);
+  </TouchableOpacity>;
 
 const ConnectedPauseButton = compose(
-  connect(
-    null,
-    ({
-      pause: pauseCurrentMovie,
-    })
-  )
+  connect(null, {
+    pause: pauseCurrentMovie,
+  })
 )(PauseButton);
 
 class Seeker extends Component {
-
   state = {
     pan: new Animated.ValueXY({ x: 0, y: 0 }),
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -204,10 +179,13 @@ class Seeker extends Component {
         // console.log('pan capture: ');
         return true;
       },
-      onPanResponderGrant: (e) => {
+      onPanResponderGrant: e => {
         // console.log('grant: ');
         this.props.setIsDragging();
-        this.state.pan.setOffset({ x: this.state.pan.x._value, y: this.state.pan.y._value });
+        this.state.pan.setOffset({
+          x: this.state.pan.x._value,
+          y: this.state.pan.y._value,
+        });
         this.state.pan.setValue({ x: 0, y: 0 });
       },
       onPanResponderMove: (e, gesture) => {
@@ -218,15 +196,19 @@ class Seeker extends Component {
         let dy = this.state.pan.x;
 
         if (gesture.moveY <= 60 || gesture.moveY >= MAX_Y) {
-          dy = 0; 
+          dy = 0;
         }
 
-        const nextProp = this.props.duration * ((gesture.moveY - 60) / this.props.width);
+        const nextProp =
+          this.props.duration * ((gesture.moveY - 60) / this.props.width);
         this.props.updateSeekerProgress(nextProp);
 
-        return Animated.event([ null, {
-          dy,
-        }])(e, gesture);
+        return Animated.event([
+          null,
+          {
+            dy,
+          },
+        ])(e, gesture);
       },
       onPanResponderRelease: () => {
         this.state.pan.flattenOffset();
@@ -242,7 +224,7 @@ class Seeker extends Component {
     const translateX = isDragging ? this.state.pan.x : progress * width;
     return (
       <Animated.View
-        onLayout={(e) => {
+        onLayout={e => {
           console.log(e.nativeEvent.layout);
           setWidth(e.nativeEvent.layout.width);
         }}
@@ -251,15 +233,17 @@ class Seeker extends Component {
           flex: 1,
         }}
       >
-        <View style={{ backgroundColor:"#262728", height: 1 }} />
-        <View style={{
-          top: 20,
-          left: 0,
-          width: progress * width,
-          backgroundColor:"#DE1321",
-          height: 1,
-          position: 'absolute'
-        }} />
+        <View style={{ backgroundColor: '#262728', height: 1 }} />
+        <View
+          style={{
+            top: 20,
+            left: 0,
+            width: progress * width,
+            backgroundColor: '#DE1321',
+            height: 1,
+            position: 'absolute',
+          }}
+        />
         <Animated.View
           {...this.panResponder.panHandlers}
           style={[
@@ -269,7 +253,7 @@ class Seeker extends Component {
               // left: progress * width - 8,
               width: 16,
               height: 16,
-              backgroundColor:"#DE1321",
+              backgroundColor: '#DE1321',
               position: 'absolute',
             },
             {
@@ -277,12 +261,12 @@ class Seeker extends Component {
                 {
                   translateX,
                 },
-              ]
+              ],
             },
           ]}
         />
       </Animated.View>
-    )
+    );
   }
 }
 
@@ -298,11 +282,11 @@ const EnhancedSeeker = compose(
         isDragging: isDraggingSelector(state),
       };
     },
-    ({
+    {
       updateSeekerProgress,
       setIsDragging,
       setIsNotDragging,
-    })
+    }
   ),
   mapProps(({ updateSeekerProgress, ...other }) => ({
     ...other,
@@ -310,7 +294,7 @@ const EnhancedSeeker = compose(
   }))
 )(Seeker);
 
-const Timer = ({ text }) => (
+const Timer = ({ text }) =>
   <Text
     style={{
       fontSize: 16,
@@ -322,31 +306,27 @@ const Timer = ({ text }) => (
     }}
   >
     {text}
-  </Text>
-);
+  </Text>;
 
 const ConnectedTimer = compose(
-  connect(
-    (state, { progress }) => {
-      const duration = durationSelector(state);
-      const timeLeft = duration - progress;
-      const mins = parseInt(timeLeft / 60, 10);
-      // eslint-disable-next-line no-mixed-operators
-      const secs = parseInt(timeLeft - mins * 60, 10);
-      if (mins === 0 && secs === 0) {
-        return {
-          text: '',
-        };
-      }
+  connect((state, { progress }) => {
+    const duration = durationSelector(state);
+    const timeLeft = duration - progress;
+    const mins = parseInt(timeLeft / 60, 10);
+    // eslint-disable-next-line no-mixed-operators
+    const secs = parseInt(timeLeft - mins * 60, 10);
+    if (mins === 0 && secs === 0) {
       return {
-        text: `${mins}:${secs}`,
+        text: '',
       };
-    },
-    null,
-  )
+    }
+    return {
+      text: `${mins}:${secs}`,
+    };
+  }, null)
 )(Timer);
 
-const Controller = ({ isPaused, progress }) => (
+const Controller = ({ isPaused, progress }) =>
   <LinearGradient
     colors={['transparent', '#161718']}
     style={{
@@ -356,18 +336,17 @@ const Controller = ({ isPaused, progress }) => (
       paddingTop: 20,
     }}
   >
-    { isPaused ? <ConnectedPlayButton /> : <ConnectedPauseButton /> }
+    {isPaused ? <ConnectedPlayButton /> : <ConnectedPauseButton />}
     <EnhancedSeeker progress={progress} />
     <ConnectedTimer progress={progress} />
-   </LinearGradient>
-);
+  </LinearGradient>;
 
 const ConnectedController = compose(
   connect(
     state => ({
       isPaused: isPausedSelector(state),
     }),
-    null,
+    null
   )
 )(Controller);
 
@@ -376,19 +355,20 @@ class HeaderComponent extends Component {
     super(props);
     this.state = {
       fadeAnimation: new Animated.Value(1),
-    }
+    };
   }
 
   componentWillReceiveProps({ visiable }) {
     const { visiable: oldVisiable } = this.props;
     if (visiable !== oldVisiable) {
-      Animated.timing(       // Uses easing functions
+      Animated.timing(
+        // Uses easing functions
         this.state.fadeAnimation, // The value to drive
         {
-          toValue: visiable ? 1 : 0,        // Target
-          duration: 350,    // Configuration
-        },
-      ).start();             // Don't forget start!
+          toValue: visiable ? 1 : 0, // Target
+          duration: 350, // Configuration
+        }
+      ).start(); // Don't forget start!
     }
   }
 
@@ -403,33 +383,33 @@ class HeaderComponent extends Component {
           opacity: this.state.fadeAnimation,
         }}
       >
-        <Header {...this.props}/>
+        <Header {...this.props} />
       </Animated.View>
     );
   }
-};
+}
 
 class ControllerComponent extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       fadeAnimation: new Animated.Value(1),
-    }
+    };
   }
 
   componentWillReceiveProps(newProps) {
     const { visiable: oldVisiable } = this.props;
-    const { visiable } = newProps
+    const { visiable } = newProps;
     // console.log('visiable', newProps, this.props);
     if (visiable !== oldVisiable) {
-      Animated.timing(       // Uses easing functions
+      Animated.timing(
+        // Uses easing functions
         this.state.fadeAnimation, // The value to drive
         {
-          toValue: visiable ? 1 : 0,        // Target
-          duration: 350,    // Configuration
-        },
-      ).start();             // Don't forget start!
+          toValue: visiable ? 1 : 0, // Target
+          duration: 350, // Configuration
+        }
+      ).start(); // Don't forget start!
     }
   }
 
@@ -445,13 +425,10 @@ class ControllerComponent extends Component {
           opacity: this.state.fadeAnimation,
         }}
       >
-        <ConnectedController {...this.props}/>
+        <ConnectedController {...this.props} />
       </Animated.View>
     );
   }
 }
 
-export {
-  HeaderComponent,
-  ControllerComponent,
-};
+export { HeaderComponent, ControllerComponent };

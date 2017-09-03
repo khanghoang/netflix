@@ -1,15 +1,14 @@
 import React from 'react';
-import {
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import { TouchableOpacity, Image } from 'react-native';
 
 export default ({
   onPress: openDetails,
   movie: { poster_path: poster, id: movieID },
-}) => (
+}) =>
   <TouchableOpacity
-    onPress={() => { openDetails(movieID); }}
+    onPress={() => {
+      openDetails(movieID);
+    }}
   >
     <Image
       style={{
@@ -21,5 +20,4 @@ export default ({
         uri: `https://image.tmdb.org/t/p/w300${poster}`,
       }}
     />
-  </TouchableOpacity>
-);
+  </TouchableOpacity>;

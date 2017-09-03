@@ -22,25 +22,18 @@ import {
 
 const { width, height } = Dimensions.get('window');
 
-const CloseButton = ({ onPress, style = {} }) => (
-  <TouchableOpacity
-    style={style}
-    onPress={onPress}
-  >
+const CloseButton = ({ onPress, style = {} }) =>
+  <TouchableOpacity style={style} onPress={onPress}>
     <Icon name="ios-close" size={40} color="white" />
-  </TouchableOpacity>
-);
+  </TouchableOpacity>;
 
 const EnhancedCloseButton = compose(
-  connect(
-    null,
-    ({
-      onPress: closeEpisode,
-    }),
-  )
+  connect(null, {
+    onPress: closeEpisode,
+  })
 )(CloseButton);
 
-const SeasonCell = ({ title, isSelected }) => (
+const SeasonCell = ({ title, isSelected }) =>
   <TouchableOpacity
     style={{
       paddingHorizontal: 20,
@@ -63,17 +56,16 @@ const SeasonCell = ({ title, isSelected }) => (
         {title}
       </Text>
     </View>
-  </TouchableOpacity>
-);
+  </TouchableOpacity>;
 
 const ListSeries = ({ listSeries }) => {
-  const seriesCells = listSeries.map(series => (
+  const seriesCells = listSeries.map(series =>
     <SeasonCell
       key={series}
       isSelected={series.toLowerCase() === 'season 1'}
       title={series}
     />
-  ));
+  );
   return (
     <ScrollView
       style={{ flex: 1, height: 60, backgroundColor: 'transparent' }}
@@ -84,7 +76,7 @@ const ListSeries = ({ listSeries }) => {
   );
 };
 
-const StillImage = ({ width = 500, stillPath }) => (
+const StillImage = ({ width = 500, stillPath }) =>
   <Image
     source={{
       uri: `https://image.tmdb.org/t/p/w${width}${stillPath}`,
@@ -95,13 +87,9 @@ const StillImage = ({ width = 500, stillPath }) => (
       height: 140,
       backgroundColor: 'purple',
     }}
-  />
-);
+  />;
 
-const PlayButton = ({
-  episode,
-  playMovieWithID,
-}) => (
+const PlayButton = ({ episode, playMovieWithID }) =>
   <TouchableOpacity
     onPress={() => {
       playMovieWithID(episode);
@@ -130,8 +118,7 @@ const PlayButton = ({
         color="white"
       />
     </View>
-  </TouchableOpacity>
-);
+  </TouchableOpacity>;
 
 const Episode = ({
   episode: {
@@ -140,7 +127,7 @@ const Episode = ({
     still_path: stillPath,
     name,
   },
-}) => (
+}) =>
   <View
     style={{
       width: 250,
@@ -171,9 +158,10 @@ const Episode = ({
     <Text style={{ paddingTop: 10, paddingBottom: 6, color: '#808182' }}>
       {`${episodeNumber}. ${name}`}
     </Text>
-    <Text style={{ color: '#979899' }}>{overview}</Text>
-  </View>
-);
+    <Text style={{ color: '#979899' }}>
+      {overview}
+    </Text>
+  </View>;
 
 const ListEpisides = ({ isFetching, episodes = [] }) => {
   if (isFetching) {
@@ -187,23 +175,15 @@ const ListEpisides = ({ isFetching, episodes = [] }) => {
           backgroundColor: '#171819',
         }}
         size="large"
-        color='white'
+        color="white"
       />
     );
   }
 
-  const listEposides = episodes.map(e => (
-    <Episode
-      key={e.id}
-      episode={e}
-    />
-  ));
- 
+  const listEposides = episodes.map(e => <Episode key={e.id} episode={e} />);
+
   return (
-    <ScrollView
-      style={{ flex: 1 }}
-      horizontal
-    >
+    <ScrollView style={{ flex: 1 }} horizontal>
       {listEposides}
     </ScrollView>
   );
@@ -215,13 +195,13 @@ const ConnectedListEpisodes = compose(
       isFetching: isFetchingDetailsEpisodes(state),
       episodes: flow(detailsEpisodesSelector, getOr([], 'episodes'))(state),
     }),
-    ({
+    {
       fetchDetailsEspisodes,
-    })
+    }
   )
 )(ListEpisides);
 
-const Series = ({ closeEpisode }) => (
+const Series = ({ closeEpisode }) =>
   <AndroidBackButtonBehavior
     isForcused
     onBackButtonPress={() => Promise.resolve(closeEpisode())}
@@ -232,9 +212,11 @@ const Series = ({ closeEpisode }) => (
         top: (height - width) / 2,
         height: width,
         width: height,
-        transform: [{
-          rotate: '90deg',
-        }],
+        transform: [
+          {
+            rotate: '90deg',
+          },
+        ],
         backgroundColor: '#131415',
       }}
     >
@@ -244,12 +226,8 @@ const Series = ({ closeEpisode }) => (
           flexDirection: 'column',
         }}
       >
-        <View
-          style={{ paddingTop: 20, height: 60 }}
-        >
-          <View
-            style={{ flex: 1, flexDirection: 'row' }}
-          >
+        <View style={{ paddingTop: 20, height: 60 }}>
+          <View style={{ flex: 1, flexDirection: 'row' }}>
             <ListSeries listSeries={['SEASON 1', 'SEASON 2', 'SEASON 3']} />
             <EnhancedCloseButton
               style={{
@@ -268,21 +246,17 @@ const Series = ({ closeEpisode }) => (
         </View>
       </View>
     </View>
-  </AndroidBackButtonBehavior>
-);
+  </AndroidBackButtonBehavior>;
 
 const ConnectedSeries = compose(
-  connect(
-    null,
-    ({
-      closeEpisode,
-    }),
-  ),
+  connect(null, {
+    closeEpisode,
+  })
 )(Series);
 
 /* eslint-disable */
 export default class SeriesClass extends Component {
   render() {
-    return <ConnectedSeries />
+    return <ConnectedSeries />;
   }
 }

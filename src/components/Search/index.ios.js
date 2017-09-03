@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 
-const SearchBarSearchIcon = () => (
+const SearchBarSearchIcon = () =>
   <Icon
     name="magnifying-glass"
     style={{
@@ -20,10 +20,9 @@ const SearchBarSearchIcon = () => (
     }}
     size={18}
     color="#7E7F80"
-  />
-);
+  />;
 
-const Search = () => (
+const Search = () =>
   <View style={{ flex: 1 }}>
     <View
       style={{
@@ -53,8 +52,7 @@ const Search = () => (
       <SearchBarSearchIcon />
     </View>
     <ListSuggestions />
-  </View>
-);
+  </View>;
 
 const ListSuggestions = () => {
   const ds = new ListView.DataSource({
@@ -80,7 +78,7 @@ const ListSuggestions = () => {
         backgroundColor: '#171819',
       }}
       dataSource={data}
-      renderRow={(rowData) => (
+      renderRow={rowData =>
         <TouchableOpacity>
           <Text
             style={{
@@ -92,8 +90,7 @@ const ListSuggestions = () => {
           >
             {rowData}
           </Text>
-        </TouchableOpacity>
-      )}
+        </TouchableOpacity>}
     />
   );
 };
@@ -101,7 +98,7 @@ const ListSuggestions = () => {
 /* eslint-disable */
 export default class SearchScreen extends Component {
   render() {
-    return <Search />
+    return <Search />;
   }
 }
 /* eslint-enable */

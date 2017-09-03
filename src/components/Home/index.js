@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import {
-  ScrollView,
-  View,
-  StyleSheet,
-} from 'react-native';
+import { ScrollView, View, StyleSheet } from 'react-native';
 import { compose, lifecycle, withProps } from 'recompose';
 import { connect } from 'react-redux';
 import { flow, take } from 'lodash/fp';
@@ -18,7 +14,7 @@ import {
   HighOrderHomeFetchMovies,
 } from './state';
 
-const Dashboard = () => (
+const Dashboard = () =>
   <View style={{ flex: 1 }}>
     <ScrollView
       contentContainerStyle={styles.contentContainer}
@@ -29,14 +25,13 @@ const Dashboard = () => (
       <SeriesMovieBlock />
       <RecentMoviesBlock />
     </ScrollView>
-  </View>
-);
+  </View>;
 
 export default class DashboardClass extends Component {
   render() {
     return <Dashboard />;
   }
-};
+}
 
 const HighlightMovieBlock = compose(
   withProps(props => ({
@@ -48,9 +43,9 @@ const HighlightMovieBlock = compose(
       isFetching: isFetchingHighlightMoviesSelector(state),
       movies: flow(highlightMoviesSelector, take(4))(state),
     }),
-    ({
+    {
       fetchHighlightMovies,
-    }),
+    }
   ),
   lifecycle({
     componentDidMount() {
@@ -69,9 +64,9 @@ const HotMovieBlock = compose(
       isFetching: isFetchingHotMoviesSelector(state),
       movies: flow(hotMoviesSelector, take(4))(state),
     }),
-    ({
+    {
       fetchHotMovies,
-    }),
+    }
   ),
   lifecycle({
     componentDidMount() {
@@ -96,9 +91,9 @@ const SeriesMovieBlock = compose(
       isFetching: isFetchingRecentSeries(state),
       movies: flow(seriesSelector, take(4))(state),
     }),
-    ({
+    {
       fetchRecentSeries,
-    }),
+    }
   ),
   lifecycle({
     componentDidMount() {
@@ -123,9 +118,9 @@ const RecentMoviesBlock = compose(
       isFetching: isFetchingRecentMovies(state),
       movies: flow(moviesSelector, take(4))(state),
     }),
-    ({
+    {
       fetchRecentMovies,
-    }),
+    }
   ),
   lifecycle({
     componentDidMount() {

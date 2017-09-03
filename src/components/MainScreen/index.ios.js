@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  StatusBar,
-  Text,
-} from 'react-native';
+import { StatusBar, Text } from 'react-native';
 import {
   createRouter,
   StackNavigation,
@@ -24,12 +21,15 @@ const navigationContext = new NavigationContext({
   store,
 });
 
-const DashboardIcon = ({ color }) => (<Icon name="home" size={20} color={color} />);
-const SearchIcon = ({ color }) => (<Icon name="magnifying-glass" size={20} color={color} />);
-const UserIcon = ({ color }) => (<Icon name="user" size={20} color={color} />);
-const renderTitle = (selected, title) => (
-  <Text style={{ color: selected ? '#CD1729' : '#919293' }}>{title}</Text>
-);
+const DashboardIcon = ({ color }) =>
+  <Icon name="home" size={20} color={color} />;
+const SearchIcon = ({ color }) =>
+  <Icon name="magnifying-glass" size={20} color={color} />;
+const UserIcon = ({ color }) => <Icon name="user" size={20} color={color} />;
+const renderTitle = (selected, title) =>
+  <Text style={{ color: selected ? '#CD1729' : '#919293' }}>
+    {title}
+  </Text>;
 
 // eslint-disable-next-line immutable/no-mutation
 Dashboard.route = {
@@ -49,12 +49,10 @@ const Router = createRouter(() => ({
   search: () => Search,
 }));
 
-export default () => (
+export default () =>
   <Provider store={store}>
     <NavigationProvider context={navigationContext}>
-      <StatusBar
-        barStyle="light-content"
-      />
+      <StatusBar barStyle="light-content" />
       <TabNavigation
         tabBarColor="#2B2C2D"
         tabBarHeight={50}
@@ -71,7 +69,8 @@ export default () => (
           id="dashboard"
           title="Home"
           renderTitle={renderTitle}
-          renderIcon={(selected) => <DashboardIcon color={selected ? '#CD1729' : '#919293'} />}
+          renderIcon={selected =>
+            <DashboardIcon color={selected ? '#CD1729' : '#919293'} />}
         >
           <StackNavigation
             id="dashboard"
@@ -82,7 +81,8 @@ export default () => (
           id="search"
           title="Search"
           renderTitle={renderTitle}
-          renderIcon={(selected) => <SearchIcon color={selected ? '#CD1729' : '#919293'} />}
+          renderIcon={selected =>
+            <SearchIcon color={selected ? '#CD1729' : '#919293'} />}
         >
           <StackNavigation
             id="search"
@@ -93,7 +93,8 @@ export default () => (
           id="settings"
           title="User"
           renderTitle={renderTitle}
-          renderIcon={(selected) => <UserIcon color={selected ? '#CD1729' : '#919293'} />}
+          renderIcon={selected =>
+            <UserIcon color={selected ? '#CD1729' : '#919293'} />}
         >
           <StackNavigation
             id="search"
@@ -104,5 +105,4 @@ export default () => (
       <EnhancedMovieDetails />
       <EnhancedPlayer />
     </NavigationProvider>
-  </Provider>
-);
+  </Provider>;

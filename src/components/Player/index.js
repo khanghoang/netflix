@@ -24,10 +24,7 @@ import {
   isShowControllerSelector,
   toggleController,
 } from './state';
-import {
-  HeaderComponent,
-  ControllerComponent,
-} from './PlayerController';
+import { HeaderComponent, ControllerComponent } from './PlayerController';
 import Series from './Series';
 
 const { width, height } = Dimensions.get('window');
@@ -36,10 +33,9 @@ const { width, height } = Dimensions.get('window');
 @connect(
   state => {
     const currentPlayedMovieID = currentPlayedMovieSelector(state);
-    const {
-      isFetchingEspisode,
-      espisodeSelector,
-    } = fetchEspisodeAction(currentPlayedMovieID);
+    const { isFetchingEspisode, espisodeSelector } = fetchEspisodeAction(
+      currentPlayedMovieID
+    );
     const url = flow(espisodeSelector, getOr(null, 'link.l[0]'))(state);
     return {
       isVisible: currentPlayedMovieSelector(state),
@@ -51,11 +47,11 @@ const { width, height } = Dimensions.get('window');
       isShowController: isShowControllerSelector(state),
     };
   },
-  ({
+  {
     closePlayer,
     updateDuration,
     toggleController,
-  }),
+  }
 )
 @withState('progress', 'updateProgress', null)
 export default class EnhancedPlayerClass extends Component {
@@ -85,9 +81,8 @@ export default class EnhancedPlayerClass extends Component {
         visible={Boolean(isVisible)}
         onRequestClose={noop}
       >
-        {
-          isFetching ?
-            <ActivityIndicator
+        {isFetching
+          ? <ActivityIndicator
               animating
               style={{
                 height: 165,
@@ -97,24 +92,23 @@ export default class EnhancedPlayerClass extends Component {
                 backgroundColor: '#171819',
               }}
               size="large"
-              color='white'
-            /> :
-            <View
+              color="white"
+            />
+          : <View
               style={{
                 left: -(height - width) / 2,
                 top: (height - width) / 2,
                 height: width,
                 width: height,
-                transform: [{
-                  rotate: '90deg',
-                }],
+                transform: [
+                  {
+                    rotate: '90deg',
+                  },
+                ],
                 backgroundColor: '#171819',
               }}
             >
-              <StatusBar
-                barStyle="light-content"
-                hidden
-              />
+              <StatusBar barStyle="light-content" hidden />
               <AndroidBackButtonBehavior
                 isFocused
                 onBackButtonPress={() => Promise.resolve(closePlayer())}
@@ -128,7 +122,7 @@ export default class EnhancedPlayerClass extends Component {
                     right: 0,
                     backgroundColor: '#171819',
                   }}
-                  ref={(ref) => {
+                  ref={ref => {
                     this.videoPlayer = ref;
                   }}
                   source={{ uri: contentURL }}
@@ -138,18 +132,21 @@ export default class EnhancedPlayerClass extends Component {
                   paused={isPaused}
                   resizeMode="cover"
                   repeat={false}
-                  onLoad={e => { updateDuration(e.duration); }}
-                  onProgress={e => { updateProgress(e.currentTime); }}
+                  onLoad={e => {
+                    updateDuration(e.duration);
+                  }}
+                  onProgress={e => {
+                    updateProgress(e.currentTime);
+                  }}
                   playInBackground={false}
                   playWhenInactive={false}
                   progressUpdateInterval={250.0}
                   onEnd={closePlayer}
                 />
               </AndroidBackButtonBehavior>
-              <HeaderComponent
-                visiable={isShowController}
-              />
-              <TouchableOpacity onPress={toggleController}
+              <HeaderComponent visiable={isShowController} />
+              <TouchableOpacity
+                onPress={toggleController}
                 style={{
                   flex: 1,
                   top: 60,
@@ -172,10 +169,9 @@ export default class EnhancedPlayerClass extends Component {
               >
                 <Series />
               </Modal>
-            </View>
-        }
+            </View>}
       </Modal>
-    )
+    );
   }
 }
 /* eslint-enable */

@@ -36,7 +36,7 @@ Dashboard.route = {
     titleStyle: {
       color: '#E7E8E9',
     },
-    renderRight: () => (
+    renderRight: () =>
       <View
         style={{
           flex: 1,
@@ -46,36 +46,27 @@ Dashboard.route = {
         }}
       >
         <Icon name="magnifying-glass" size={25} color="white" />
-      </View>
-    ),
+      </View>,
   },
 };
 
-export default () => (
+export default () =>
   <Provider store={store}>
     <NavigationProvider context={navigationContext}>
       <DrawerNavigation
-        id='main'
+        id="main"
         initialItem="dashboard"
         drawerWidth={300}
-        renderHeader={() => (
-          <Text>foo</Text>
-        )}
+        renderHeader={() => <Text>foo</Text>}
       >
-        <DrawerNavigationItem
-          id='dashboard'
-          title='Home'
-        >
+        <DrawerNavigationItem id="dashboard" title="Home">
           <StackNavigation
             id="dashboard"
             initialRoute={Router.getRoute('dashboard')}
           />
         </DrawerNavigationItem>
 
-        <DrawerNavigationItem
-          id='settings'
-          title='User'
-        >
+        <DrawerNavigationItem id="settings" title="User">
           <StackNavigation
             id="search"
             initialRoute={Router.getRoute('dashboard')}
@@ -85,5 +76,4 @@ export default () => (
       <EnhancedMovieDetails />
       <EnhancedPlayer />
     </NavigationProvider>
-  </Provider>
-);
+  </Provider>;

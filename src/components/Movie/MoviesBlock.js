@@ -1,32 +1,19 @@
 import React from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  ActivityIndicator,
-} from 'react-native';
+import { View, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import MovieCell from './MovieCell';
-import {
-  showDetails,
-} from '../Details/state';
+import { showDetails } from '../Details/state';
 
 const EnhancedMovieCell = compose(
-  connect(
-    null,
-    ({
-      onPress: showDetails,
-    })
-  )
+  connect(null, {
+    onPress: showDetails,
+  })
 )(MovieCell);
 
 const MovieCells = ({ movies = [] }) => {
   const movieCells = movies.map(movie =>
-    <EnhancedMovieCell
-      key={movie.movie_id}
-      movie={movie}
-    />
+    <EnhancedMovieCell key={movie.movie_id} movie={movie} />
   );
   return (
     <View
@@ -42,7 +29,12 @@ const MovieCells = ({ movies = [] }) => {
   );
 };
 
-export default ({ headerText = "Popuplar", isFetching, movies, titleStyle = {} }) => (
+export default ({
+  headerText = 'Popuplar',
+  isFetching,
+  movies,
+  titleStyle = {},
+}) =>
   <View
     style={{
       flex: 1,
@@ -88,17 +80,15 @@ export default ({ headerText = "Popuplar", isFetching, movies, titleStyle = {} }
         </TouchableOpacity>
       </View>
     </View>
-    {
-      isFetching ?
-      <ActivityIndicator
-        animating
-        style={{
-          height: 165,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-        size="large"
-      /> : <MovieCells movies={movies} />
-    }
-  </View>
-);
+    {isFetching
+      ? <ActivityIndicator
+          animating
+          style={{
+            height: 165,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          size="large"
+        />
+      : <MovieCells movies={movies} />}
+  </View>;

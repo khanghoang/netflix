@@ -15,7 +15,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import { flow, getOr, identity } from 'lodash/fp';
 import { get } from 'lodash';
-import { compose, branch, renderComponent, withProps, withState } from 'recompose';
+import {
+  compose,
+  branch,
+  renderComponent,
+  withProps,
+  withState,
+} from 'recompose';
 import { connect } from 'react-redux';
 import {
   showDetails,
@@ -29,27 +35,18 @@ const CLOSE_DETAILS_POPUP_THREDHOLD = -80;
 
 const { width } = Dimensions.get('window');
 
-const CloseButton = ({ onPress }) => (
-  <TouchableOpacity
-    onPress={onPress}
-  >
+const CloseButton = ({ onPress }) =>
+  <TouchableOpacity onPress={onPress}>
     <Icon name="ios-close-circle-outline" size={40} color="white" />
-  </TouchableOpacity>
-);
+  </TouchableOpacity>;
 
 const EnhancedCloseButton = compose(
-  connect(
-    null,
-    ({
-      onPress: hideDetails,
-    })
-  )
+  connect(null, {
+    onPress: hideDetails,
+  })
 )(CloseButton);
 
-const PlayButton = ({
-  episode,
-  playMovieWithID,
-}) => (
+const PlayButton = ({ episode, playMovieWithID }) =>
   <TouchableOpacity
     onPress={() => {
       playMovieWithID(episode);
@@ -78,8 +75,7 @@ const PlayButton = ({
         color="white"
       />
     </View>
-  </TouchableOpacity>
-);
+  </TouchableOpacity>;
 
 const EnhancedPlayButton = compose(
   connect(
@@ -90,29 +86,28 @@ const EnhancedPlayButton = compose(
         episode: flow(espisodesSelector, getOr(null, '[0].episode_id'))(state),
       };
     },
-    ({
+    {
       playMovieWithID,
-    })
+    }
   )
 )(PlayButton);
 
-const TopFeatureImage = ({ source, height = 270 }) => (
+const TopFeatureImage = ({ source, height = 270 }) =>
   <Animated.View style={{ height: height }}>
-    <Animated.View style={{ flex: 1 }} >
+    <Animated.View style={{ flex: 1 }}>
       <Animated.Image
         style={{
           backgroundColor: 'black',
-            flex: 1,
+          flex: 1,
         }}
         source={{
           uri: `https://image.tmdb.org/t/p/w300${source}`,
         }}
       />
     </Animated.View>
-  </Animated.View>
-);
+  </Animated.View>;
 
-const MoviesDescription = ({ text = '' }) => (
+const MoviesDescription = ({ text = '' }) =>
   <Text
     style={{
       fontSize: 14,
@@ -121,10 +116,9 @@ const MoviesDescription = ({ text = '' }) => (
     }}
   >
     {text}
-  </Text>
-);
+  </Text>;
 
-const CastsText = ({ casts }) => (
+const CastsText = ({ casts }) =>
   <Text
     style={{
       fontSize: 13,
@@ -133,10 +127,9 @@ const CastsText = ({ casts }) => (
     }}
   >
     Casts: {casts}
-  </Text>
-);
+  </Text>;
 
-const AddToPlaylist = () => (
+const AddToPlaylist = () =>
   <View
     style={{
       height: 70,
@@ -146,7 +139,12 @@ const AddToPlaylist = () => (
   >
     <TouchableOpacity>
       <View>
-        <Icon style={{ textAlign: 'center' }} name="ios-add-outline" size={30} color="#E5E6E7" />
+        <Icon
+          style={{ textAlign: 'center' }}
+          name="ios-add-outline"
+          size={30}
+          color="#E5E6E7"
+        />
         <Text
           style={{
             fontSize: 12,
@@ -157,10 +155,9 @@ const AddToPlaylist = () => (
         </Text>
       </View>
     </TouchableOpacity>
-  </View>
-);
+  </View>;
 
-const Share = () => (
+const Share = () =>
   <View
     style={{
       height: 70,
@@ -171,7 +168,12 @@ const Share = () => (
   >
     <TouchableOpacity>
       <View>
-        <Icon style={{ textAlign: 'center' }} name="ios-share-outline" size={25} color="#E5E6E7" />
+        <Icon
+          style={{ textAlign: 'center' }}
+          name="ios-share-outline"
+          size={25}
+          color="#E5E6E7"
+        />
         <Text
           style={{
             fontSize: 12,
@@ -182,10 +184,9 @@ const Share = () => (
         </Text>
       </View>
     </TouchableOpacity>
-  </View>
-);
+  </View>;
 
-const Actions = ({ onLayout }) => (
+const Actions = ({ onLayout }) =>
   <View
     style={{
       flex: 1,
@@ -198,14 +199,13 @@ const Actions = ({ onLayout }) => (
     <AddToPlaylist />
     <View style={{ padding: 10 }} />
     <Share />
-  </View>
-);
+  </View>;
 
 const MovieDetails = ({
   movie = {},
   hideDetails: hideMovideDetailsPopup,
   handleScroll = () => {},
-  topImageHeight, 
+  topImageHeight,
 }) => {
   const story = get(movie, 'overview', '');
   const backgroundImageURI = get(movie, 'backdrop_path', '');
@@ -218,13 +218,10 @@ const MovieDetails = ({
       <View
         style={{
           flex: 1,
-            backgroundColor: '#161718',
+          backgroundColor: '#161718',
         }}
       >
-        <TopFeatureImage
-          source={backgroundImageURI}
-          height={topImageHeight}
-        />
+        <TopFeatureImage source={backgroundImageURI} height={topImageHeight} />
         <Animated.ScrollView
           style={{
             position: 'absolute',
@@ -239,10 +236,10 @@ const MovieDetails = ({
           <View
             style={{
               width,
-                height: 270,
-                top: 0,
-                alignItems: 'center',
-                justifyContent: 'center',
+              height: 270,
+              top: 0,
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
             <EnhancedPlayButton />
@@ -254,7 +251,7 @@ const MovieDetails = ({
           <View
             style={{
               top: -100,
-                backgroundColor: '#161718',
+              backgroundColor: '#161718',
             }}
           >
             <MoviesDescription text={story} />
@@ -265,10 +262,10 @@ const MovieDetails = ({
         <View
           style={{
             position: 'absolute',
-              top: 20,
-              right: 20,
-              alignItems: 'center',
-              backgroundColor: 'transparent',
+            top: 20,
+            right: 20,
+            alignItems: 'center',
+            backgroundColor: 'transparent',
           }}
         >
           <EnhancedCloseButton />
@@ -276,9 +273,9 @@ const MovieDetails = ({
       </View>
     </AndroidBackButtonBehavior>
   );
-}
+};
 
-const FullscreenLoader = () => (
+const FullscreenLoader = () =>
   <ScrollView
     style={{
       flex: 1,
@@ -294,15 +291,11 @@ const FullscreenLoader = () => (
       }}
       size="large"
     />
-  </ScrollView>
-);
+  </ScrollView>;
 
-@connect(
-  null,
-  ({
-    hideDetails,
-  }),
-)
+@connect(null, {
+  hideDetails,
+})
 @branch(
   ({ isFetching }) => isFetching,
   renderComponent(FullscreenLoader),
@@ -320,21 +313,23 @@ class MovieDetailsWithAnimationTopImage extends Component {
     if (offsetY < CLOSE_DETAILS_POPUP_THREDHOLD) {
       this.props.hideDetails();
     }
-  }
+  };
 
   render() {
-    return <MovieDetails
-      {...this.props}
-      topImageHeight={this.topAnimation.getLayout().top}
-      handleScroll={this.handleScroll}
-    />
+    return (
+      <MovieDetails
+        {...this.props}
+        topImageHeight={this.topAnimation.getLayout().top}
+        handleScroll={this.handleScroll}
+      />
+    );
   }
 }
 
 /* eslint-disable */
 export default class DetailsView extends Component {
   render() {
-    return <MovieDetailsWithAnimationTopImage {...this.props}/>;
+    return <MovieDetailsWithAnimationTopImage {...this.props} />;
   }
-};
+}
 /* eslint-enable */
