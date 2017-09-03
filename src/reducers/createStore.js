@@ -3,6 +3,7 @@ import {
   createNavigationEnabledStore,
   NavigationReducer,
 } from '@exponent/ex-navigation';
+import { enableBatching } from 'redux-batched-actions';
 import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import {
   reducers as apiReducers,
@@ -66,13 +67,15 @@ const middlewares = applyMiddleware(apiMiddleware(), epicMiddleware);
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStoreWithNavigation(
-  combineReducers({
-    navigation: NavigationReducer,
-    ...apiReducers,
-    ...Details,
-    ...Player,
-    ...modalsReducer,
-  }),
+  enableBatching(
+    combineReducers({
+      navigation: NavigationReducer,
+      ...apiReducers,
+      ...Details,
+      ...Player,
+      ...modalsReducer,
+    })
+  ),
   {},
   composeEnhancers(middlewares)
 );

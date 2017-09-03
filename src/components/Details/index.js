@@ -11,6 +11,7 @@ import {
   Animated,
 } from 'react-native';
 import { AndroidBackButtonBehavior } from '@exponent/ex-navigation';
+import { batchActions } from 'redux-batched-actions';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import { flow, getOr, identity } from 'lodash/fp';
@@ -44,8 +45,12 @@ const CloseButton = ({ onPress }) =>
 const EnhancedCloseButton = compose(
   connect(null, dispatch => ({
     onPress: () => {
-      dispatch(hideDetails());
-      dispatch(close('MovieDetails'));
+      dispatch(
+        batchActions([
+          hideDetails(),
+          close('MovieDetails'),
+        ])
+      );
     },
   })
 ))(CloseButton);
@@ -300,8 +305,12 @@ const FullscreenLoader = () =>
 
 @connect(null, dispatch => ({
     hideDetails: () => {
-      dispatch(hideDetails());
-      dispatch(close('MovieDetails'));
+      dispatch(
+        batchActions([
+          hideDetails(),
+          close('MovieDetails'),
+        ])
+      );
     },
   }))
 @branch(

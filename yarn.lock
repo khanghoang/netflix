@@ -5052,6 +5052,10 @@ redux-batched-actions@^0.1.2:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/redux-batched-actions/-/redux-batched-actions-0.1.5.tgz#b39b84775f4499a4724f3154b882968073b58bed"
 
+redux-batched-actions@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/redux-batched-actions/-/redux-batched-actions-0.1.6.tgz#47be903d16378bae13611ced754ab419b66b632a"
+
 redux-mock-store@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/redux-mock-store/-/redux-mock-store-1.2.2.tgz#38007dc38f12ca8d965c7521afee5ccacc234d03"
