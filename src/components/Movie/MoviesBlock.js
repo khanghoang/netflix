@@ -8,9 +8,11 @@ import {
 } from 'react-native';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
+import { withNavigation } from '@exponent/ex-navigation';
+import { open } from '@khanghoang/redux-modal';
+import Router from '../../router';
 import MovieCell from './MovieCell';
 import { showDetails } from '../Details/state';
-import { open } from '@khanghoang/redux-modal';
 
 const EnhancedMovieCell = compose(
   connect(null, dispatch => ({
@@ -45,11 +47,12 @@ const MovieCells = ({ movies = [] }) => {
   );
 };
 
-export default ({
+const MoviesBlock = ({
   headerText = 'Popuplar',
   isFetching,
   movies,
   titleStyle = {},
+  navigator,
 }) =>
   <View
     style={{
@@ -82,7 +85,11 @@ export default ({
         >
           {headerText}
         </Text>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigator.push(Router.getRoute('CategoryScreen'));
+          }}
+        >
           <Text
             style={{
               width: 100,
@@ -108,3 +115,5 @@ export default ({
         />
       : <MovieCells movies={movies} />}
   </View>;
+
+export default compose(withNavigation)(MoviesBlock);

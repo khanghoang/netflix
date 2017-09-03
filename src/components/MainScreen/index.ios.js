@@ -13,8 +13,9 @@ import Icon from 'react-native-vector-icons/Entypo';
 import EnhancedMovieDetails from '../Details/MovieDetails';
 import { ModalPortal } from '@khanghoang/redux-modal';
 import EnhancedPlayer from '../Player';
-import Dashboard from '../Home';
-import Search from '../Search';
+// import Dashboard from '../Home';
+// import Search from '../Search';
+import Router from '../../router';
 import store from '../../reducers/createStore';
 
 const navigationContext = new NavigationContext({
@@ -33,23 +34,6 @@ const renderTitle = (selected, title) =>
   </Text>;
 
 // eslint-disable-next-line immutable/no-mutation
-Dashboard.route = {
-  navigationBar: {
-    title: 'Nextflix',
-    backgroundColor: '#28292A',
-    borderBottomWidth: 1,
-    borderBottomColor: '#2B2C2D',
-    titleStyle: {
-      color: '#E7E8E9',
-    },
-  },
-};
-
-const Router = createRouter(() => ({
-  dashboard: () => Dashboard,
-  search: () => Search,
-}));
-
 export default () =>
   <Provider store={store}>
     <NavigationProvider context={navigationContext}>
@@ -76,6 +60,16 @@ export default () =>
           <StackNavigation
             id="dashboard"
             initialRoute={Router.getRoute('dashboard')}
+            defaultRouteConfig={{
+              navigationBar: {
+                backgroundColor: '#28292A',
+                borderBottomWidth: 1,
+                borderBottomColor: '#2B2C2D',
+                titleStyle: {
+                  color: '#E7E8E9',
+                },
+              },
+            }}
           />
         </TabItem>
         <TabItem
@@ -88,6 +82,16 @@ export default () =>
           <StackNavigation
             id="search"
             initialRoute={Router.getRoute('search')}
+            defaultRouteConfig={{
+              navigationBar: {
+                backgroundColor: '#28292A',
+                borderBottomWidth: 1,
+                borderBottomColor: '#2B2C2D',
+                titleStyle: {
+                  color: '#E7E8E9',
+                },
+              },
+            }}
           />
         </TabItem>
         <TabItem
@@ -100,6 +104,16 @@ export default () =>
           <StackNavigation
             id="search"
             initialRoute={Router.getRoute('dashboard')}
+            defaultRouteConfig={{
+              navigationBar: {
+                backgroundColor: '#28292A',
+                borderBottomWidth: 1,
+                borderBottomColor: '#2B2C2D',
+                titleStyle: {
+                  color: '#E7E8E9',
+                },
+              },
+            }}
           />
         </TabItem>
       </TabNavigation>
