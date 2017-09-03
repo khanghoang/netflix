@@ -10,11 +10,15 @@ import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import MovieCell from './MovieCell';
 import { showDetails } from '../Details/state';
+import { open } from '@khanghoang/redux-modal';
 
 const EnhancedMovieCell = compose(
-  connect(null, {
-    onPress: showDetails,
-  })
+  connect(null, dispatch => ({
+    onPress: movieID => {
+      dispatch(open('MovieDetails'));
+      dispatch(showDetails(movieID));
+    },
+  }))
 )(MovieCell);
 
 const MovieCells = ({ movies = [] }) => {

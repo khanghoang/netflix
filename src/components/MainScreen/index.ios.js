@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar, Text } from 'react-native';
+import { StatusBar, Text, View } from 'react-native';
 import {
   createRouter,
   StackNavigation,
@@ -11,6 +11,7 @@ import {
 import { Provider } from 'react-redux';
 import Icon from 'react-native-vector-icons/Entypo';
 import EnhancedMovieDetails from '../Details/MovieDetails';
+import { ModalPortal } from '@khanghoang/redux-modal';
 import EnhancedPlayer from '../Player';
 import Dashboard from '../Home';
 import Search from '../Search';
@@ -102,7 +103,7 @@ export default () =>
           />
         </TabItem>
       </TabNavigation>
-      <EnhancedMovieDetails />
+      <ModalPortal wrapComponent={View} />
       <EnhancedPlayer />
     </NavigationProvider>
   </Provider>;

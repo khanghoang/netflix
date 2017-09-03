@@ -9,6 +9,7 @@ import {
   middleware as apiMiddleware,
 } from 'redux-api-call';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
+import { reducer as modalsReducer } from '@khanghoang/redux-modal';
 import Details, {
   HOCMakeFetchAction,
   isShowPopupDetail as selectedMovieID,
@@ -70,6 +71,7 @@ const store = createStoreWithNavigation(
     ...apiReducers,
     ...Details,
     ...Player,
+    ...modalsReducer,
   }),
   {},
   composeEnhancers(middlewares)

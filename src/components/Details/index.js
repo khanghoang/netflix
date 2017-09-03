@@ -23,6 +23,7 @@ import {
   withState,
 } from 'recompose';
 import { connect } from 'react-redux';
+import { close } from '@khanghoang/redux-modal';
 import {
   showDetails,
   hideDetails,
@@ -33,7 +34,7 @@ import { playMovieWithID } from '../Player/state';
 
 const CLOSE_DETAILS_POPUP_THREDHOLD = -80;
 
-const { width } = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
 const CloseButton = ({ onPress }) =>
   <TouchableOpacity onPress={onPress}>
@@ -41,10 +42,13 @@ const CloseButton = ({ onPress }) =>
   </TouchableOpacity>;
 
 const EnhancedCloseButton = compose(
-  connect(null, {
-    onPress: hideDetails,
+  connect(null, dispatch => ({
+    onPress: () => {
+      dispatch(hideDetails());
+      dispatch(close('MovieDetails'));
+    },
   })
-)(CloseButton);
+))(CloseButton);
 
 const PlayButton = ({ episode, playMovieWithID }) =>
   <TouchableOpacity
@@ -217,7 +221,8 @@ const MovieDetails = ({
     >
       <View
         style={{
-          flex: 1,
+          width,
+          height,
           backgroundColor: '#161718',
         }}
       >
@@ -293,9 +298,12 @@ const FullscreenLoader = () =>
     />
   </ScrollView>;
 
-@connect(null, {
-  hideDetails,
-})
+@connect(null, dispatch => ({
+    hideDetails: () => {
+      dispatch(hideDetails());
+      dispatch(close('MovieDetails'));
+    },
+  }))
 @branch(
   ({ isFetching }) => isFetching,
   renderComponent(FullscreenLoader),
